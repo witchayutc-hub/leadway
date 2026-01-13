@@ -1,64 +1,162 @@
-import Image from "next/image";
+import Brand from "@/components/brand";
+import Footer from "@/components/footer";
+import Navbar from "@/components/navbar";
+import Link from "next/link";
 
 export default function Home() {
+  const Allproducts = [
+    {
+      id: 1,
+      image: "https://app.leadway.co.th/uploads/All_product_01_660e948cc1.jpg",
+    },
+    {
+      id: 2,
+      image: "https://app.leadway.co.th/uploads/All_product_02_deed7f3b65.jpg",
+    },
+    {
+      id: 3,
+      image: "https://app.leadway.co.th/uploads/All_product_03_c99866cd43.jpg",
+    },
+    {
+      id: 4,
+      image: "https://app.leadway.co.th/uploads/MINING_TRUCK_EV_72a0ccd45a.jpg",
+    },
+    {
+      id: 5,
+      image: "https://app.leadway.co.th/uploads/MINING_TRUCKS_38c938544e.jpg",
+    },
+    {
+      id: 6,
+      image: "https://app.leadway.co.th/uploads/All_product_04_fe4ef19622.jpg",
+    },
+  ];
+  const newsEvents = [
+    {
+      id: 1,
+      image:
+        "https://app.leadway.co.th/uploads/what_should_you_consider_when_buying_a_vibratory_roller_1da7b15541.png",
+    },
+    {
+      id: 2,
+      image:
+        "https://app.leadway.co.th/uploads/what_is_a_vibratory_compactor_32298d57c2.png",
+    },
+    {
+      id: 3,
+      image:
+        "https://app.leadway.co.th/uploads/what_is_a_dc_charging_cabinet_ee82504156.png",
+    },
+    {
+      id: 4,
+      image:
+        "https://app.leadway.co.th/uploads/getting_to_know_sumitomo_machinery_46272320ab.png",
+    },
+    {
+      id: 5,
+      image:
+        "https://app.leadway.co.th/uploads/are_sumitomo_excavators_good_5f8d95ca8c.png",
+    },
+    {
+      id: 6,
+      image:
+        "https://app.leadway.co.th/uploads/sumitomo_asphalt_paver_d20b61039a.png",
+    },
+  ];
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+    <div className="min-h-screen bg-white">
+      <main>
+        <section>
+          <div className="flex items-center justify-center">
+            <img
+              src="https://app.leadway.co.th/uploads/BANNAR_01_67b8417878.jpg"
+              alt="Banner"
+              className="w-full h-auto"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+          </div>
+        </section>
+        <section className="pt-6 pb-12">
+          <div className="mx-auto max-w-7xl px-4">
+            <Brand />
+          </div>
+        </section>
+        <section>
+          <div className="flex items-center justify-center px-3">
+            <div className="w-full max-w-5xl aspect-video">
+              <iframe
+                className="w-full h-full"
+                src="https://www.youtube.com/embed/wqP2SVk3uC8?autoplay=1&mute=1&loop=1&playlist=wqP2SVk3uC8"
+                title="LEADWAY HEAVY MACHINERY"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </div>
+        </section>
+        <section className="py-12">
+          <div className="flex items-center justify-center py-4 mb-2">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl text-[#ecb51d]">
+              สินค้าทั้งหมด
+            </h2>
+          </div>
+          <div className="w-full max-w-7xl mx-auto px-3">
+            <div className="flex flex-wrap justify-center">
+              {Allproducts.map((item) => (
+                <div
+                  key={item.id}
+                  className="relative group w-full sm:w-1/2 lg:w-1/3 shrink-0
+                 border border-[#e5e7eb] overflow-hidden cursor-pointer"
+                >
+                  <img
+                    src={item.image}
+                    alt="product"
+                    className="w-full h-full object-cover
+                   transition-transform duration-300"
+                  />
+                  <div
+                    className="absolute inset-0 bg-[#0d6efd]/40
+                   opacity-0 group-hover:opacity-100
+                   transition-opacity duration-300"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+        <section className="py-5">
+          <div className="flex items-center justify-center">
+            <h2 className="py-2 text-3xl sm:text-4xl lg:text-5xl text-[#ecb51d]">
+              ข่าวสารและกิจกรรม
+            </h2>
+          </div>
+          <div className="w-full max-w-7xl mx-auto py-12">
+            <div className="flex flex-wrap">
+              {newsEvents.map((item) => (
+                <div
+                  key={item.id}
+                  className="relative group w-full sm:w-1/2 lg:w-1/3 shrink-0
+                   overflow-hidden cursor-pointer px-3 pb-3"
+                >
+                  <div className="relative overflow-hidden">
+                    <img
+                      src={item.image}
+                      alt="product"
+                      className="w-full h-full object-cover
+                       transition-transform duration-500
+                       group-hover:scale-105"
+                    />
+                    <div className="grid bg-black mx-auto h-auto p-3.25 gap-y-2">
+                      <span className="text-xl text-[#ffcb00] font-semibold">
+                        รถบดอัดสั่นสะเทือน
+                      </span>
+                      <span className="text-white">18-12-2025 13:34 PM</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
       </main>
     </div>
   );
