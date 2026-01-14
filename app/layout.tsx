@@ -3,11 +3,12 @@ import { Kanit } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import Bounce from "@/components/bounce";
 
 const kanit = Kanit({
   subsets: ["latin"],
   variable: "--font-geist-sans",
-  weight: ["400", "700"],
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
@@ -23,10 +24,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${kanit.variable} antialiased`}>
-        <header className="fixed top-0 z-50 w-full bg-white shadow-md">
+        <header
+          className="fixed top-0 z-50 w-full shadow-md 
+        bg-white"
+        >
           <Navbar />
         </header>
         <main className="pt-20">{children}</main>
+        <Bounce />
         <Footer />
       </body>
     </html>

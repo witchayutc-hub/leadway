@@ -27,11 +27,16 @@ export default function Brand() {
   return (
     <div className="flex flex-wrap justify-center items-center gap-3">
       {brands.map((brand) => (
-        <div key={brand.id} className="w-1/2 sm:w-1/3 lg:w-1/5 p-2">
+        <div
+          key={brand.id}
+          className="w-1/2 p-1.25
+          sm:w-1/3
+          md:w-1/5"
+        >
           <img
             src={brand.src}
             alt={brand.name}
-            className="w-full h-auto border-2 border-[#ccc] object-contain"
+            className="w-full h-auto border-2 object-contain border-[#ccc]"
           />
         </div>
       ))}

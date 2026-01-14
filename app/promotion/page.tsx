@@ -1,6 +1,4 @@
-import Navbar from "@/components/navbar";
-import Footer from "@/components/footer";
-import Brand from "@/components/brand";
+import Brand from "@/components/Section/brand";
 
 const promotion = [
   {
@@ -57,18 +55,15 @@ export default function Page() {
               {promotion.map((item) => (
                 <div
                   key={item.id}
-                  className="relative group w-full sm:w-1/2 lg:w-1/3 shrink-0
-                   overflow-hidden cursor-pointer px-3 py-3 mt-12"
+                  className="group relative w-full sm:w-1/2 lg:w-1/3 shrink-0 overflow-hidden cursor-pointer px-3 pt-2 mt-12"
                 >
                   <div className="relative overflow-hidden">
                     <img
                       src={item.image}
                       alt="product"
-                      className="w-full h-full object-cover
-                       transition-transform duration-500
-                       group-hover:scale-105"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
-                    <div className="grid bg-white mx-auto h-auto p-2.5 gap-y-2 my-2 ">
+                    <div className="grid mx-auto h-auto p-2.5 gap-y-2 my-2 bg-white">
                       <span className="text-[#7E7E7E]">{item.title}</span>
                     </div>
                   </div>

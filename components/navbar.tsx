@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Navbar() {
   return (
-    <header className="fixed top-0 z-50 w-full bg-white shadow-lg">
+    <header className="fixed top-0 z-50 w-full shadow-lg bg-white">
       <nav className="group max-w-7xl w-full mx-auto flex items-center justify-between px-4 py-3 lg:px-8">
         <Link href="/" className="flex items-center">
           <img
@@ -11,7 +11,11 @@ export default function Navbar() {
             className="h-14 w-auto object-contain"
           />
         </Link>
-        <div className="hidden lg:flex lg:gap-6 xl:gap-x-12 text-base font-semibold">
+        <div
+          className="hidden text-base font-semibold 
+            lg:flex lg:gap-6
+            xl:gap-x-12"
+        >
           <Link
             href="/"
             className="text-[#7e7e7d] group-hover:text-black hover:text-[#ffab00]"

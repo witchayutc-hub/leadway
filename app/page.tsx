@@ -1,4 +1,4 @@
-import Brand from "@/components/brand";
+import Brand from "@/components/Section/brand";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import Link from "next/link";
@@ -95,7 +95,11 @@ export default function Home() {
         </section>
         <section className="py-12">
           <div className="flex items-center justify-center py-4 mb-2">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl text-[#ecb51d]">
+            <h2
+              className="text-3xl text-[#ecb51d]
+                sm:text-4xl
+                lg:text-5xl"
+            >
               สินค้าทั้งหมด
             </h2>
           </div>
@@ -104,19 +108,19 @@ export default function Home() {
               {Allproducts.map((item) => (
                 <div
                   key={item.id}
-                  className="relative group w-full sm:w-1/2 lg:w-1/3 shrink-0
-                 border border-[#e5e7eb] overflow-hidden cursor-pointer"
+                  className="relative group w-full shrink-0 overflow-hidden cursor-pointer
+                    sm:w-1/2 
+                    lg:w-1/3 
+                    border border-[#e5e7eb]"
                 >
                   <img
                     src={item.image}
                     alt="product"
-                    className="w-full h-full object-cover
-                   transition-transform duration-300"
+                    className="w-full h-full object-cover transition-transform duration-300"
                   />
                   <div
-                    className="absolute inset-0 bg-[#0d6efd]/40
-                   opacity-0 group-hover:opacity-100
-                   transition-opacity duration-300"
+                    className="absolute inset-0 group-hover:opacity-100 transition-opacity duration-300 
+                   bg-[#0d6efd]/40 opacity-0"
                   />
                 </div>
               ))}
@@ -125,7 +129,11 @@ export default function Home() {
         </section>
         <section className="py-5">
           <div className="flex items-center justify-center">
-            <h2 className="py-2 text-3xl sm:text-4xl lg:text-5xl text-[#ecb51d]">
+            <h2
+              className="py-2 text-3xl text-[#ecb51d]
+                sm:text-4xl
+                lg:text-5xl"
+            >
               ข่าวสารและกิจกรรม
             </h2>
           </div>
@@ -134,19 +142,18 @@ export default function Home() {
               {newsEvents.map((item) => (
                 <div
                   key={item.id}
-                  className="relative group w-full sm:w-1/2 lg:w-1/3 shrink-0
-                   overflow-hidden cursor-pointer px-3 pb-3"
+                  className="relative group w-full shrink-0 px-3 pb-3 overflow-hidden cursor-pointer
+                  sm:w-1/2 
+                  lg:w-1/3"
                 >
                   <div className="relative overflow-hidden">
                     <img
                       src={item.image}
                       alt="product"
-                      className="w-full h-full object-cover
-                       transition-transform duration-500
-                       group-hover:scale-105"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
-                    <div className="grid bg-black mx-auto h-auto p-3.25 gap-y-2">
-                      <span className="text-xl text-[#ffcb00] font-semibold">
+                    <div className="grid  mx-auto h-auto p-3.25 gap-y-2 bg-black">
+                      <span className="text-xl font-semibold text-[#ffcb00]">
                         รถบดอัดสั่นสะเทือน
                       </span>
                       <span className="text-white">18-12-2025 13:34 PM</span>

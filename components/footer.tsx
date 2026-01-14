@@ -1,15 +1,19 @@
 export default function Footer() {
   return (
     <footer className="w-full">
-      <div className="w-full bg-blue-900 py-12">
-        <div className="grid max-w-7xl mx-auto grid-cols-1 gap-8 px-4 lg:grid-cols-3 sm:px-6 lg:px-8">
+      <div className="w-full py-12 bg-blue-900">
+        <div
+          className="grid max-w-7xl mx-auto grid-cols-1 gap-8 px-4 
+            sm:px-6
+            lg:grid-cols-3 lg:px-8"
+        >
           <div className="flex flex-col px-3">
             <img
               src="https://leadway.co.th/assets/logo-footer.png"
               alt="logo"
               className="mb-4 max-w-90"
             />
-            <p className="text-sm text-white">
+            <p className="text-white">
               บริษัท ลีดเวย์ เฮฟวี แมชชีนเนอร์รี จำกัด
               เราพัฒนาศักยภาพอย่างรอบด้านเพื่อขยายกลุ่มผลิตภัณฑ์
               เครื่องจักรกลหนักให้มีความหลากหลาย โดยรักษาสมดุลระหว่างเทคโนโลยี
@@ -21,23 +25,27 @@ export default function Footer() {
           </div>
           <div className="px-3 text-white">
             <span className="text-2xl">ติดตามข่าวสารและโปรโมชั่นจากเรา</span>
-
-            <div className="flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:gap-4">
+            <div
+              className="flex flex-col gap-3 py-4 
+                sm:flex-row sm:items-center sm:gap-4"
+            >
               <input
                 type="email"
                 placeholder="Email Address"
-                className="w-full bg-white py-2.5 px-3 text-base text-gray-800  placeholder:text-gray-500"
+                className="w-full py-2.5 px-3 text-base bg-white text-gray-800 placeholder:text-gray-500"
               />
-              <button className=" w-full sm:w-auto bg-[#f6af1f] text-[#212529] font-bold py-2.5 px-6">
+              <button
+                className=" w-full font-bold py-2.5 px-6 bg-[#f6af1f] text-[#212529]
+                  sm:w-auto"
+              >
                 ส่ง
               </button>
             </div>
           </div>
-
           <div className="px-3 text-white">
             <span className="text-4xl text-white">ติดต่อ</span>
             <div className="grid gap-2">
-              <h3 className="text-2xl text-[#f6af1f] pt-6">
+              <h3 className="text-2xl pt-6 text-[#f6af1f]">
                 บริษัท ลีดเวย์ เฮฟวี่ แมชชีนเนอร์รี่ จำกัด
               </h3>
               <h3>
@@ -51,10 +59,13 @@ export default function Footer() {
         </div>
       </div>
       <div
-        className="max-w-7xl mx-auto px-3 py-2
-                  flex items-center justify-center sm:justify-end"
+        className="flex items-center justify-center max-w-7xl mx-auto px-3 py-2 
+          sm:justify-end"
       >
-        <p className="text-[#212529] text-sm sm:text-base text-center sm:text-right">
+        <p
+          className="text-center text-sm text-[#212529]
+            sm:text-base sm:text-right"
+        >
           Copyright 2022 All right reserved Leadway Heavy Machinery co., ltd.
         </p>
       </div>
