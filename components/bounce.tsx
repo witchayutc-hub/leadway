@@ -6,8 +6,7 @@ export default function Bounce() {
         lg:bottom-10 lg:right-10"
     >
       <div
-        className="relative flex items-center justify-center
-          w-14 h-14
+        className="relative flex items-center justify-center w-14 h-14
           sm:w-16 sm:h-16
           lg:w-20 lg:h-20"
       >

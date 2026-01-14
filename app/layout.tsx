@@ -8,7 +8,7 @@ import Bounce from "@/components/bounce";
 const kanit = Kanit({
   subsets: ["latin"],
   variable: "--font-geist-sans",
-  weight: ["400", "500"],
+  weight: ["700", "500"],
 });
 
 export const metadata: Metadata = {
