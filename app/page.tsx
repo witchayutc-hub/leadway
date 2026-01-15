@@ -1,3 +1,5 @@
+"use client";
+import { useState } from "react";
 import Brand from "@/components/Section/brand";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
@@ -63,16 +65,67 @@ export default function Home() {
     },
   ];
 
+  let slides = [
+    "https://app.leadway.co.th/uploads/BANNAR_01_67b8417878.jpg",
+    "https://app.leadway.co.th/uploads/2_04c399e5d8_4071b53fe8.jpg",
+    "https://app.leadway.co.th/uploads/SANY_EV_d40ce8a1d4.png",
+  ];
+
+  const [current, setCurrent] = useState(0);
+  const prevSlide = () => {
+    setCurrent((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+  };
+  const nextSlide = () => {
+    setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <main>
         <section>
-          <div className="flex items-center justify-center">
-            <img
-              src="https://app.leadway.co.th/uploads/BANNAR_01_67b8417878.jpg"
-              alt="Banner"
-              className="w-full h-auto"
-            />
+          <div className="relative w-full overflow-hidden">
+            <div
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{ transform: `translateX(-${current * 100}%)` }}
+            >
+              {slides.map((img, index) => (
+                <img
+                  key={index}
+                  src={img}
+                  alt="Banner"
+                  className="w-full shrink-0"
+                />
+              ))}
+            </div>
+            <div className="absolute top-0 h-full w-full justify-between items-center flex text-white px-10 text-3xl">
+              <button
+                onClick={prevSlide}
+                className="absolute left-20 top-1/2 -translate-y-1/2 bg-black/50 text-white px-5 py-2 rounded-full hover:bg-black/70"
+              >
+                ‹
+              </button>
+              <button
+                onClick={nextSlide}
+                className="absolute right-20 top-1/2 -translate-y-1/2 bg-black/50 text-white px-5 py-2 rounded-full hover:bg-black/70"
+              >
+                ›
+              </button>
+            </div>
+            <div className="absolute bottom-0 py-4 flex justify-center gap-3 w-full">
+              {slides.map((s, i) => {
+                return (
+                  <div
+                    onClick={() => {
+                      setCurrent(i);
+                    }}
+                    key={"circle" + i}
+                    className={`rounded-full w-3 h-3 cursor-pointer  ${
+                      i == current ? "bg-white" : "bg-gray-500"
+                    }`}
+                  ></div>
+                );
+              })}
+            </div>
           </div>
         </section>
         <section className="pt-6 pb-12">
@@ -104,7 +157,7 @@ export default function Home() {
             </h2>
           </div>
           <div className="w-full max-w-7xl mx-auto px-3">
-            <div className="flex flex-wrap justify-center">
+            <div className="flex flex-wrap">
               {Allproducts.map((item) => (
                 <div
                   key={item.id}
@@ -152,7 +205,7 @@ export default function Home() {
                       alt="product"
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
-                    <div className="grid  mx-auto h-auto p-3.25 gap-y-2 bg-black">
+                    <div className="grid mx-auto h-auto p-3.25 gap-y-2 bg-black">
                       <span className="text-xl font-semibold text-[#ffcb00]">
                         รถบดอัดสั่นสะเทือน
                       </span>
