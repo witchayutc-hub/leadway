@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="w-full">
+    <footer className="w-full bg-white">
       <div className="w-full py-12 bg-blue-900">
         <div
           className="grid max-w-7xl mx-auto grid-cols-1 gap-8 px-4 
@@ -59,7 +59,7 @@ export default function Footer() {
         </div>
       </div>
       <div
-        className="flex items-center justify-center max-w-7xl mx-auto px-3 py-2 
+        className="flex items-center justify-center max-w-7xl mx-auto px-3 py-2
           sm:justify-end"
       >
         <p

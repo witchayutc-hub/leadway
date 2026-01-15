@@ -97,16 +97,20 @@ export default function Home() {
                 />
               ))}
             </div>
-            <div className="absolute top-0 h-full w-full justify-between items-center flex text-white px-10 text-3xl">
+            <div className="absolute inset-0 flex items-center justify-between px-3 sm:px-6 lg:px-10 text-white">
               <button
                 onClick={prevSlide}
-                className="absolute left-20 top-1/2 -translate-y-1/2 bg-black/50 text-white px-5 py-2 rounded-full hover:bg-black/70"
+                className="px-3 py-1 text-xl rounded-full bg-black/50 hover:bg-black/70
+                sm:px-4 sm:py-2 sm:text-2xl
+                 lg:text-3xl"
               >
                 ‹
               </button>
               <button
                 onClick={nextSlide}
-                className="absolute right-20 top-1/2 -translate-y-1/2 bg-black/50 text-white px-5 py-2 rounded-full hover:bg-black/70"
+                className="px-3 py-1 text-xl rounded-full bg-black/50 hover:bg-black/70 
+                sm:px-4 sm:py-2 sm:text-2xl
+                 lg:text-3xl"
               >
                 ›
               </button>

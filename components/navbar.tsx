@@ -4,7 +4,20 @@ import Link from "next/link";
 
 const menu = [
   { id: 1, title: "หน้าแรก", href: "/" },
-  { id: 2, title: "สินค้าและบริการ", href: "/" },
+  {
+    id: 2,
+    title: "สินค้าและบริการ",
+    href: "",
+    submenu: [
+      { id: "2-1", title: "SUMITOMO", href: "/" },
+      { id: "2-2", title: "SANY", href: "/" },
+      { id: "2-3", title: "SANY EV", href: "/" },
+      { id: "2-4", title: "METSO", href: "/" },
+      { id: "2-5", title: "JGM", href: "/" },
+      { id: "2-6", title: "บริการ", href: "/" },
+      { id: "2-7", title: "รถมือสอง", href: "/" },
+    ],
+  },
   { id: 3, title: "โปรโมชั่น", href: "/promotion" },
   { id: 4, title: "ข่าวสารและกิจกรรม", href: "/news" },
   { id: 5, title: "ติดต่อ", href: "/contact" },
@@ -14,6 +27,8 @@ const menu = [
 
 export default function Navbar() {
   const [openMenu, setOpenMenu] = useState<boolean | null>(null);
+  const [openProductMenu, setOpenProductMenu] = useState<boolean | null>(null);
+  const [openSubmenu, setOpenSubmenu] = useState<number | null>(null);
 
   return (
     <header className="fixed top-0 z-50 w-full shadow-lg bg-white">
@@ -26,15 +41,32 @@ export default function Navbar() {
           />
         </Link>
         <div className="hidden text-base lg:flex lg:gap-6 xl:gap-x-12">
-          {menu.map((item) => (
-            <Link
-              key={item.id}
-              href={item.href}
-              className="text-[#7e7e7d] group-hover:text-black hover:text-[#ffab00]"
-            >
-              {item.title}
-            </Link>
-          ))}
+          {menu.map((item) =>
+            item.id === 2 ? (
+              <button
+                key={item.id}
+                onClick={() => setOpenProductMenu(!openProductMenu)}
+                className="font-semibold text-[#7e7e7d] group-hover:text-black hover:text-[#ffab00]"
+              >
+                {item.title}
+                <span
+                  className={`ml-1 inline-block transition-transform duration-300 ease-in-out ${
+                    openProductMenu ? "rotate-180" : "rotate-0"
+                  }`}
+                >
+                  ▾
+                </span>
+              </button>
+            ) : (
+              <Link
+                key={item.id}
+                href={item.href}
+                className="font-semibold text-[#7e7e7d] group-hover:text-black hover:text-[#ffab00]"
+              >
+                {item.title}
+              </Link>
+            )
+          )}
         </div>
         <button
           onClick={() => setOpenMenu(!openMenu)}
@@ -44,22 +76,71 @@ export default function Navbar() {
             MENU
           </span>
         </button>
+
+        <div
+          className={`absolute top-full left-0 z-50 w-full overflow-hidden bg-[#1E4183] shadow-lg
+    transition-all duration-700 ease-in-out
+    ${openProductMenu ? "max-h-screen" : "max-h-0"}
+  `}
+        >
+          <div>TEST</div>
+          <div>TEST</div>
+          <div>TEST</div>
+        </div>
+
         <div
           className={`absolute top-full left-0 z-50 w-full overflow-hidden bg-[#1E4183] shadow-lg ${openMenu ? "max-h-screen" : "max-h-0"} 
-            lg:hidden
-            transition-all duration-700`}
+            lg:hidden transition-all duration-700`}
         >
           <div className="py-2">
             {menu.map((item) => (
-              <Link
-                key={item.id}
-                href={item.href}
-                onClick={() => setOpenMenu(false)}
-                className="block px-6 py-4 text-base font-medium
-                 text-white active:bg-[#1E4193] hover:bg-[#1E4193] hover:text-[#ffab00]"
-              >
-                {item.title}
-              </Link>
+              <div key={item.id}>
+                {item.submenu ? (
+                  <button
+                    onClick={() =>
+                      setOpenSubmenu(openSubmenu === item.id ? null : item.id)
+                    }
+                    className="w-full flex justify-between items-center px-6 py-4 text-base font-medium
+                    text-white hover:bg-[#1E4193] hover:text-[#ffab00]"
+                  >
+                    {item.title}
+                    <span
+                      className={`transition-transform duration-300 ${
+                        openSubmenu === item.id ? "rotate-180" : ""
+                      }`}
+                    >
+                      ▾
+                    </span>
+                  </button>
+                ) : (
+                  <Link
+                    href={item.href}
+                    onClick={() => setOpenMenu(false)}
+                    className="block px-6 py-4 text-base font-medium
+                    text-white hover:bg-[#1E4193] hover:text-[#ffab00]"
+                  >
+                    {item.title}
+                  </Link>
+                )}
+                {item.submenu && (
+                  <div
+                    className={`overflow-hidden transition-all duration-500 bg-[#00225B9C]
+              ${openSubmenu === item.id ? "max-h-96" : "max-h-0"}`}
+                  >
+                    {item.submenu.map((sub) => (
+                      <Link
+                        key={sub.id}
+                        href={sub.href}
+                        onClick={() => setOpenMenu(false)}
+                        className="block px-10 py-3 text-sm text-white
+                        hover:bg-[#00225B9C] hover:text-[#ffab00]"
+                      >
+                        {sub.title}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
           </div>
         </div>
