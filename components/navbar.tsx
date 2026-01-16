@@ -46,7 +46,7 @@ export default function Navbar() {
               <button
                 key={item.id}
                 onClick={() => setOpenProductMenu(!openProductMenu)}
-                className="font-semibold text-[#7e7e7d] group-hover:text-black hover:text-[#ffab00]"
+                className="font-semibold cursor-pointer text-[#7e7e7d] group-hover:text-black hover:text-[#ffab00]"
               >
                 {item.title}
                 <span
@@ -76,18 +76,34 @@ export default function Navbar() {
             MENU
           </span>
         </button>
-
         <div
-          className={`absolute top-full left-0 z-50 w-full overflow-hidden bg-[#1E4183] shadow-lg
-    transition-all duration-700 ease-in-out
-    ${openProductMenu ? "max-h-screen" : "max-h-0"}
-  `}
+          className={`absolute top-full left-0 z-50 w-full overflow-hidden bg-[#1E4183]  ${openProductMenu ? "max-h-screen" : "max-h-0"}
+          shadow-lg transition-all duration-700 ease-in-out`}
         >
-          <div>TEST</div>
-          <div>TEST</div>
-          <div>TEST</div>
+          <div className="max-w-7xl mx-auto py-12 px-3 justify-between">
+            <div className="flex items-center w-full h-30 px-3">
+              <div className="w-1/2">
+                <span className="text-5xl text-white font-semibold">
+                  สินค้าและบริการ
+                </span>
+              </div>
+              <div className="grid grid-flow-col grid-rows-4 w-full gap-2 px-12 border-l-4">
+                {menu
+                  .find((item) => item.submenu)
+                  ?.submenu?.map((sub) => (
+                    <Link
+                      key={sub.id}
+                      href={sub.href}
+                      onClick={() => setOpenMenu(false)}
+                      className="block text-xl text-white hover:text-[#ffab00]"
+                    >
+                      {sub.title}
+                    </Link>
+                  ))}
+              </div>
+            </div>
+          </div>
         </div>
-
         <div
           className={`absolute top-full left-0 z-50 w-full overflow-hidden bg-[#1E4183] shadow-lg ${openMenu ? "max-h-screen" : "max-h-0"} 
             lg:hidden transition-all duration-700`}
