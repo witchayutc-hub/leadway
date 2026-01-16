@@ -1,3 +1,5 @@
+import Icon from "@/components/icon";
+
 export default function Page() {
   const images = Array.from({ length: 6 });
 
@@ -146,40 +148,58 @@ export default function Page() {
         <div className="flex justify-center items-center h-11.25 bg-[#0045A4]">
           <h2 className="text-xl sm:text-3xl">สำนักงานใหญ่</h2>
         </div>
-        <section className="h-150 bg-gray-100">
-          <div className="flex w-full h-full max-w-7xl mx-auto py-12 gap-8">
-            <iframe
-              className="w-full h-full"
-              loading="lazy"
-              src="https://www.google.com/maps?q=13.54858,100.958625&hl=th&z=16&output=embed"
-            ></iframe>
-            <div className="flex w-full h-full justify-center">
-              <div className="flex flex-col gap-2">
+        <section className="bg-gray-100">
+          <div
+            className="flex flex-col w-full max-w-7xl mx-auto px-4 py-12 gap-8
+              lg:flex-row"
+          >
+            <div className="w-full h-75 lg:h-112.5">
+              <iframe
+                className="w-full h-full"
+                loading="lazy"
+                src="https://www.google.com/maps?q=13.54858,100.958625&hl=th&z=16&output=embed"
+              ></iframe>
+            </div>
+            <div className="flex w-full justify-center lg:justify-start">
+              <div className="flex flex-col gap-3 px-3 max-w-xl">
                 <img
                   src="https://leadway.co.th/contact/assets/contact.png"
                   alt="contact"
-                  className="max-w-120 mx-auto object-contain"
+                  className="max-w-60  mx-auto  object-contain 
+                    sm:max-w-120 
+                    lg:mx-0"
                 />
-                <h2 className="text-4xl text-[#003C8C]">สำนักงานใหญ่</h2>
-                <h3 className="text-3xl text-[#C88619]">
+                <h2 className="text-2xl sm:text-4xl text-[#003C8C]">
+                  สำนักงานใหญ่
+                </h2>
+                <h3 className="text-xl sm:text-3xl text-[#C88619]">
                   บริษัท ลีดเวย์ เฮฟวี่ แมชชีนเนอร์รี่ จำกัด
                 </h3>
-                <span className="text-xl text-[#808080]">
-                  เลขที่ 1/2 หมู่ที่ 2 ตำบลบางวัว อำเภอบางปะกง จังหวัดฉะเชิงเทรา
-                  24130
-                </span>
-                <div className="grid grid-cols-2">
-                  <span className="text-xl text-[#808080]">038 086 731-9</span>
+                <div className="flex gap-2">
+                  <Icon name="city" size={32} fill="#7e7e7d" />
+                  <span className="text-base sm:text-xl text-[#808080]">
+                    เลขที่ 1/2 หมู่ที่ 2 ตำบลบางวัว อำเภอบางปะกง
+                    จังหวัดฉะเชิงเทรา 24130
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 items-center gap-3 mt-2">
+                  <div className="flex gap-2">
+                    <Icon name="call" size={32} fill="#7e7e7d" />
+                    <span className="text-lg lg:text-xl text-[#808080]">
+                      038 086 731-9
+                    </span>
+                  </div>
                   <img
                     src="https://leadway.co.th/contact/assets/Group%20514.png"
                     alt="Banner"
-                    className="w-auto h-auto"
+                    className="max-w-30 sm:max-w-full"
                   />
                 </div>
               </div>
             </div>
           </div>
         </section>
+
         <section>
           <div className="flex w-full justify-center items-center max-w-7xl mx-auto p-3">
             <div
@@ -255,9 +275,12 @@ export default function Page() {
                           <span className="text-sm lg:text-base text-[#808080]">
                             {branch.address}
                           </span>
-                          <span className="text-sm lg:text-base text-[#808080]">
-                            {branch.phone}
-                          </span>
+                          <div className="flex gap-2">
+                            <Icon name="call" fill="#7e7e7d" />
+                            <span className="text-sm lg:text-base text-[#808080]">
+                              {branch.phone}
+                            </span>
+                          </div>
                         </div>
                       ))}
                     </div>

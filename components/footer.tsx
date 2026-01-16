@@ -1,9 +1,11 @@
+import Icon from "@/components/icon";
+
 export default function Footer() {
   return (
     <footer className="w-full bg-white">
       <div className="w-full py-12 bg-blue-900">
         <div
-          className="grid max-w-7xl mx-auto grid-cols-1 gap-8 px-4 
+          className="grid max-w-7xl mx-auto grid-cols-1 gap-8 px-4 mb-12 pb-12
             sm:px-6
             lg:grid-cols-3 lg:px-8"
         >
@@ -22,6 +24,44 @@ export default function Footer() {
               อีกทั้งยังก้าวข้ามข้อจำกัดการใช้งานเครื่องจักรกลในรูปแบบเดิมๆ
               ในฐานะผู้จัดจำหน่ายเครื่องจักรกลหนักของประเทศไทย
             </p>
+            <div className="flex flex-wrap justify-center gap-5 mt-4">
+              <Icon
+                name="call"
+                size={28}
+                className="rounded-full bg-[#ecb51d]"
+                fill="#003C8C"
+              />
+              <Icon
+                name="email"
+                size={28}
+                className="rounded-full bg-[#ecb51d]"
+                fill="#003C8C"
+              />
+              <Icon
+                name="pin"
+                size={28}
+                className="rounded-full bg-[#ecb51d]"
+                fill="#003C8C"
+              />
+              <Icon
+                name="youtube"
+                size={28}
+                className="rounded-full bg-[#ecb51d]"
+                fill="#003C8C"
+              />
+              <Icon
+                name="line"
+                size={28}
+                className="rounded-full bg-[#ecb51d]"
+                fill="#003C8C"
+              />
+              <Icon
+                name="facebook"
+                size={28}
+                className="rounded-full bg-[#ecb51d]"
+                fill="#003C8C"
+              />
+            </div>
           </div>
           <div className="px-3 text-white">
             <span className="text-2xl">ติดตามข่าวสารและโปรโมชั่นจากเรา</span>
@@ -42,18 +82,29 @@ export default function Footer() {
               </button>
             </div>
           </div>
-          <div className="px-3 text-white">
+          <div className="text-white">
             <span className="text-4xl text-white">ติดต่อ</span>
             <div className="grid gap-2">
-              <h3 className="text-2xl pt-6 text-[#f6af1f]">
+              <h3 className="text-2xl font-semibold pt-6 text-[#f6af1f]">
                 บริษัท ลีดเวย์ เฮฟวี่ แมชชีนเนอร์รี่ จำกัด
               </h3>
-              <h3>
-                เลขที่ 1/2 หมู่ที่ 2 ตำบลบางวัว อำเภอบางปะกง จังหวัดฉะเชิงเทรา
-                24130
-              </h3>
-              <h3>info@leadway.co.th</h3>
-              <h3 className="text-2xl text-[#f6af1f]">Call Center 1462</h3>
+              <div className="flex items-center gap-2">
+                <Icon name="home" size={28} />
+                <h3 className="text-[14px] ">
+                  เลขที่ 1/2 หมู่ที่ 2 ตำบลบางวัว อำเภอบางปะกง จังหวัดฉะเชิงเทรา
+                  24130
+                </h3>
+              </div>
+              <div className="flex items-center gap-2">
+                <Icon name="email" size={28} />
+                <h3 className="text-[14px]">info@leadway.co.th</h3>
+              </div>
+              <div className="flex items-center gap-2">
+                <Icon name="contact" size={28} />
+                <h3 className="text-3xl font-semibold text-[#f6af1f]">
+                  Call Center 1462
+                </h3>
+              </div>
             </div>
           </div>
         </div>

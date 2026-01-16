@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import Icon from "@/components/icon";
 
 const menu = [
   { id: 1, title: "หน้าแรก", href: "/" },
@@ -40,7 +41,7 @@ export default function Navbar() {
             className="h-14 w-auto object-contain"
           />
         </Link>
-        <div className="hidden text-base lg:flex lg:gap-6 xl:gap-x-12">
+        <div className="hidden text-base lg:flex lg:gap-5 xl:gap-x-12">
           {menu.map((item) =>
             item.id === 2 ? (
               <button
@@ -61,9 +62,17 @@ export default function Navbar() {
               <Link
                 key={item.id}
                 href={item.href}
+                onClick={() => setOpenProductMenu(false)}
                 className="font-semibold text-[#7e7e7d] group-hover:text-black hover:text-[#ffab00]"
               >
-                {item.title}
+                {item.id === 6 ? (
+                  <div className="flex gap-1 items-center">
+                    <Icon name="phone" fill="#EE4B75" />
+                    {item.title}
+                  </div>
+                ) : (
+                  item.title
+                )}
               </Link>
             )
           )}
@@ -78,16 +87,16 @@ export default function Navbar() {
         </button>
         <div
           className={`absolute top-full left-0 z-50 w-full overflow-hidden bg-[#1E4183]  ${openProductMenu ? "max-h-screen" : "max-h-0"}
-          shadow-lg transition-all duration-700 ease-in-out`}
+          shadow-lg transition-all duration-700 ease-in-out hidden lg:block`}
         >
           <div className="max-w-7xl mx-auto py-12 px-3 justify-between">
             <div className="flex items-center w-full h-30 px-3">
               <div className="w-1/2">
-                <span className="text-5xl text-white font-semibold">
+                <span className="font-semibold text-4xl xl:text-5xl text-white">
                   สินค้าและบริการ
                 </span>
               </div>
-              <div className="grid grid-flow-col grid-rows-4 w-full gap-2 px-12 border-l-4">
+              <div className="grid grid-flow-col grid-rows-4 w-full gap-2 px-10 border-l-4">
                 {menu
                   .find((item) => item.submenu)
                   ?.submenu?.map((sub) => (
@@ -135,7 +144,14 @@ export default function Navbar() {
                     className="block px-6 py-4 text-base font-medium
                     text-white hover:bg-[#1E4193] hover:text-[#ffab00]"
                   >
-                    {item.title}
+                    {item.id === 6 ? (
+                      <div className="flex gap-1 items-center">
+                        <Icon name="phone" fill="#EE4B75" />
+                        {item.title}
+                      </div>
+                    ) : (
+                      item.title
+                    )}
                   </Link>
                 )}
                 {item.submenu && (
