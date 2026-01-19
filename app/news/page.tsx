@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import MoreButton from "@/components/moreboutton";
 import Link from "next/link";
 import { getNews } from "@/api/getNews";
+import { formatDate } from "@/helpers/formatDate";
 
 interface NewsItem {
   id: number;
@@ -11,6 +12,7 @@ interface NewsItem {
     description: string;
     views: number;
     slug: string;
+    updatedAt: string;
   };
 }
 
@@ -88,7 +90,7 @@ export default function Page() {
                     "
                   >
                     <div className="flex items-center justify-center w-full h-full">
-                      13-2026 14:48 PM
+                      {formatDate(item.attributes.updatedAt)}
                     </div>
                     <div className="flex items-center justify-center w-full h-full">
                       {item.attributes.views}
@@ -109,7 +111,7 @@ export default function Page() {
                     </p>
                     <Link
                       href={`/news/${item.id}`}
-                      className="hover:font-semibold text-[#337AB7] "
+                      className="hover:font-semibold text-[#337AB7]"
                     >
                       Continue Reading...
                     </Link>

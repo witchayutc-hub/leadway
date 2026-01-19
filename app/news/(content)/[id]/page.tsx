@@ -36,28 +36,26 @@ export default function Page() {
       <main>
         <section>
           <div
-            className="flex flex-col w-full items-start max-w-7xl mx-auto gap-8 px-3 pt-12
-                    md:flex-row"
+            className="flex flex-col  w-full items-start max-w-7xl mx-auto gap-8 px-3 pt-12 
+              md:flex-row"
           >
-            <div className="w-full md:w-1/2">
+            <div className="w-full md:w-1/2 min-w-0">
               <img
                 src="https://app.leadway.co.th/uploads/455788784_891465753025364_7206946970431052324_n_699e68cfd4.jpg"
-                className="w-full max-h-150 object-cover"
+                className="w-full h-full object-cover"
                 alt=""
               />
             </div>
-            <div
-              className="w-full flex items-center
-                      md:w-1/2 "
-            >
-              <div className="grid gap-6">
-                <span className="text-2xl md:text-4xl text-black">
+
+            <div className="w-full min-w-0 md:w-1/2">
+              <div className="mb-12">
+                <span className="text-2xl md:text-4xl text-black ">
                   {data.attributes.name}
                 </span>
-                <span className="text-black leading-relaxed">
-                  {data.attributes.description}
-                </span>
               </div>
+              <p className="text-black leading-relaxed whitespace-pre-line wrap-break-word">
+                {data.attributes.description}
+              </p>
             </div>
           </div>
         </section>

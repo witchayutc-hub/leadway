@@ -116,7 +116,7 @@ export default function Page() {
               ))}
             </div>
             <div className="flex justify-center">
-              <MoreButton />
+              <MoreButton onClick={() => {}} />
             </div>
           </div>
         </section>
