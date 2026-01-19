@@ -1,4 +1,8 @@
+"use client";
+import React, { useState } from "react";
+import MoreButton from "@/components/moreboutton";
 import Brand from "@/components/Section/brand";
+import Modal from "@/components/modal";
 
 const promotion = [
   {
@@ -34,6 +38,7 @@ const promotion = [
 ];
 
 export default function Page() {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   return (
     <div className="min-h-screen bg-white">
       <main>
@@ -56,19 +61,29 @@ export default function Page() {
                 <div
                   key={item.id}
                   className="group relative w-full sm:w-1/2 lg:w-1/3 shrink-0 overflow-hidden cursor-pointer px-3 pt-2 mt-12"
+                  onClick={() => setSelectedImage(item.image)}
                 >
                   <div className="relative overflow-hidden">
-                    <img
-                      src={item.image}
-                      alt="product"
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="grid mx-auto h-auto p-2.5 gap-y-2 my-2 bg-white">
+                    <div className="relative overflow-hidden">
+                      <img
+                        src={item.image}
+                        alt="product"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                    <div className="grid mx-auto h-auto p-2.5 gap-y-2 my-2 bg-white border-l-8 border-[#0048A1]">
                       <span className="text-[#7E7E7E]">{item.title}</span>
                     </div>
                   </div>
                 </div>
               ))}
+              <Modal
+                image={selectedImage}
+                onClose={() => setSelectedImage(null)}
+              />
+            </div>
+            <div className="flex justify-center pt-6">
+              <MoreButton />
             </div>
           </div>
         </section>

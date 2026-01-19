@@ -1,3 +1,4 @@
+import MoreButton from "@/components/moreboutton";
 import Link from "next/link";
 
 export default function Page() {
@@ -113,6 +114,9 @@ export default function Page() {
                   </div>
                 </div>
               ))}
+            </div>
+            <div className="flex justify-center">
+              <MoreButton />
             </div>
           </div>
         </section>

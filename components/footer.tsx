@@ -85,7 +85,7 @@ export default function Footer() {
           <div className="text-white">
             <span className="text-4xl text-white">ติดต่อ</span>
             <div className="grid gap-2">
-              <h3 className="text-2xl font-semibold pt-6 text-[#f6af1f]">
+              <h3 className="text-2xl font-semibold pt-6 text-[#ecb51d]">
                 บริษัท ลีดเวย์ เฮฟวี่ แมชชีนเนอร์รี่ จำกัด
               </h3>
               <div className="flex items-center gap-2">
@@ -101,7 +101,7 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-2">
                 <Icon name="contact" size={28} />
-                <h3 className="text-3xl font-semibold text-[#f6af1f]">
+                <h3 className="text-3xl font-semibold text-[#ecb51d]">
                   Call Center 1462
                 </h3>
               </div>
