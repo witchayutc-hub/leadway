@@ -16,7 +16,7 @@ const menu = [
       { id: "2-4", title: "METSO", href: "/" },
       { id: "2-5", title: "JGM", href: "/" },
       { id: "2-6", title: "บริการ", href: "/" },
-      { id: "2-7", title: "รถมือสอง", href: "/" },
+      { id: "2-7", title: "รถมือสอง", href: "/usedmachine" },
     ],
   },
   { id: 3, title: "โปรโมชั่น", href: "/promotion" },
@@ -74,7 +74,7 @@ export default function Navbar() {
                   item.title
                 )}
               </Link>
-            )
+            ),
           )}
         </div>
         <button
@@ -103,7 +103,10 @@ export default function Navbar() {
                     <Link
                       key={sub.id}
                       href={sub.href}
-                      onClick={() => setOpenMenu(false)}
+                      onClick={() => {
+                        setOpenMenu(false);
+                        setOpenProductMenu(false);
+                      }}
                       className="block text-xl text-white hover:text-[#ffab00]"
                     >
                       {sub.title}
