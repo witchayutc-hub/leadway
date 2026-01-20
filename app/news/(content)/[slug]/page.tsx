@@ -2,25 +2,32 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { getNewsById } from "@/api/getNews";
+import { apiNewsBySlug } from "@/api/getNews";
 import MarkDown from "@/components/markdown";
 
 export default function Page() {
-  const params = useParams();
-  const id = params.id as string;
+  const { slug } = useParams();
 
   const [data, setData] = useState<any>(null);
   const [error, setError] = useState(false);
 
-  useEffect(() => {
-    if (!id) return;
+  const fetchContents = async (slug: string) => {
+    try {
+      const response = await apiNewsBySlug(slug);
+      setData(response.data[0]);
+    } catch (error) {
+      setError(true);
+      console.error("Failed to load", error);
+    }
+  };
 
-    getNewsById(id)
-      .then((res) => setData(res.data))
-      .catch((err) => {
-        console.error("Failed to load news:", err);
-      });
-  }, [id]);
+  useEffect(() => {
+    if (!slug) return;
+
+    const slugString = Array.isArray(slug) ? slug[0] : slug;
+
+    fetchContents(slugString);
+  }, [slug]);
 
   if (error) {
     return (
@@ -42,20 +49,21 @@ export default function Page() {
           >
             <div className="w-full md:w-1/2 min-w-0">
               <img
-                src="https://app.leadway.co.th/uploads/455788784_891465753025364_7206946970431052324_n_699e68cfd4.jpg"
+                src={`${process.env.NEXT_PUBLIC_API_URL}${
+                  data.attributes?.image?.data?.attributes?.formats?.large?.url
+                }`}
                 className="w-full h-full object-cover"
                 alt=""
-              />
+              ></img>
             </div>
-
             <div className="w-full min-w-0 md:w-1/2">
               <div className="mb-12">
-                <span className="text-2xl md:text-4xl text-black ">
-                  {data.attributes.name}
+                <span className="text-2xl md:text-4xl text-black">
+                  {data.attributes?.name}
                 </span>
               </div>
-              <div className="text-black whitespace-pre-line wrap-break-word">
-                <MarkDown description={data.attributes.description ?? ""} />
+              <div className="text-black whitespace-pre-line wrap-break-word pb-6">
+                <MarkDown description={data.attributes?.description ?? ""} />
               </div>
             </div>
           </div>

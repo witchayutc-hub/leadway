@@ -1,8 +1,9 @@
-import { apiClient } from "@/api/lib/apiClient";
+import { getSlug, getAll } from "@/api/lib/callApi";
 
-// GET ALL
-export const getNews = () => apiClient("/news-plural");
+// GET BY SLUG
+export const apiNewsBySlug = (slug: string) =>
+  getSlug(`/api/news-plural?filters[slug][$eq]=${slug}&populate=*`);
 
-// GET BY ID
-export const getNewsById = (id: number | string) =>
-  apiClient(`/news-plural/${id}`);
+// GET BY Paginated
+export const apiNewsByPaginated = (page: any, pageSize: any) =>
+  getAll(page, pageSize, "/api/news-plural");
