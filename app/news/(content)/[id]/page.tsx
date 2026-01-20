@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { getNewsById } from "@/api/getNews";
+import MarkDown from "@/components/markdown";
 
 export default function Page() {
   const params = useParams();
@@ -53,9 +54,9 @@ export default function Page() {
                   {data.attributes.name}
                 </span>
               </div>
-              <p className="text-black leading-relaxed whitespace-pre-line wrap-break-word">
-                {data.attributes.description}
-              </p>
+              <div className="text-black whitespace-pre-line wrap-break-word">
+                <MarkDown description={data.attributes.description ?? ""} />
+              </div>
             </div>
           </div>
         </section>
