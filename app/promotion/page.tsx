@@ -5,6 +5,7 @@ import Brand from "@/components/Section/brand";
 import Modal from "@/components/modal";
 import { apiPromotionsByPaginated } from "@/api/getPromotion";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Page() {
   const itemsPerPage = 6;
@@ -52,21 +53,30 @@ export default function Page() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      <main>
-        <section>
+    <div className="min-h-screen">
+      <div className="fixed inset-0 z-0">
+        <Image
+          src="/image/bg.png"
+          fill
+          alt="background"
+          className="object-cover"
+          priority
+        />
+      </div>
+      <main className="relative z-10">
+        <section className="bg-white">
           <div className="flex w-full justify-center items-center max-w-7xl mx-auto px-3 py-12">
             <h1 className="text-3xl sm:text-4xl lg:text-[40px] font-semibold text-[#052465]">
               โปรโมชั่น
             </h1>
           </div>
         </section>
-        <section className="py-1.25">
+        <section className="pb-4 bg-white">
           <div className="mx-auto max-w-7xl px-4">
             <Brand />
           </div>
         </section>
-        <section className="bg-gray-100">
+        <section>
           <div className="w-full max-w-7xl mx-auto py-12">
             <div className="flex flex-wrap">
               {promotions.map((item) => {
@@ -88,10 +98,10 @@ export default function Page() {
                         <img
                           src={`${process.env.NEXT_PUBLIC_API_URL}${image.formats.medium.url}`}
                           alt={image.formats.name}
-                          className="w-full h-130 object-fit transition-transform duration-500 group-hover:scale-105"
+                          className="w-full h-full object-cover aspect-4/5 transition-transform duration-500 group-hover:scale-105"
                         />
                       </div>
-                      <div className="grid mx-auto h-auto p-2.5 gap-y-2 my-2 bg-white border-l-8 border-[#0048A1]">
+                      <div className="grid mx-auto min-h-20 p-2.5 gap-y-2 my-2 bg-white border-l-8 border-[#0048A1]">
                         <Link href={`${item.attributes.link_facebook}`}>
                           <span className="text-[#7E7E7E] hover:text-[#0D6EFD]">
                             {item.attributes.name}

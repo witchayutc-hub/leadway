@@ -1,20 +1,31 @@
 import Icon from "@/components/icon";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-white">
-      <div className="w-full py-12 bg-blue-900">
+    <footer className="w-full ">
+      <div className="relative w-full h-full overflow-hidden py-12">
+        <Image
+          src="/image/footer.jpg"
+          fill
+          alt="footer"
+          className="absolute inset-0 w-full h-full object-cover z-0"
+        />
         <div
-          className="grid max-w-7xl mx-auto grid-cols-1 gap-8 px-4 mb-12 pb-12
+          className="relative z-10 grid max-w-7xl mx-auto grid-cols-1 gap-8 px-4 mb-12 pb-12
             sm:px-6
             lg:grid-cols-3 lg:px-8"
         >
           <div className="flex flex-col px-3">
-            <img
-              src="https://leadway.co.th/assets/logo-footer.png"
-              alt="logo"
-              className="mb-4 max-w-90"
-            />
+            <div className="relative max-w-90 h-20 mb-4">
+              <Image
+                src="/image/logo-footer.png"
+                fill
+                alt="logo"
+                className="object-contain"
+              />
+            </div>
             <p className="text-white">
               บริษัท ลีดเวย์ เฮฟวี แมชชีนเนอร์รี จำกัด
               เราพัฒนาศักยภาพอย่างรอบด้านเพื่อขยายกลุ่มผลิตภัณฑ์
@@ -97,28 +108,36 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-2">
                 <Icon name="email" size={28} />
-                <h3 className="text-[14px]">info@leadway.co.th</h3>
+                <h3 className="text-[14px] hover:underline">
+                  <Link href="mailto:info@leadway.co.th">
+                    info@leadway.co.th
+                  </Link>
+                </h3>
               </div>
               <div className="flex items-center gap-2">
                 <Icon name="contact" size={28} />
-                <h3 className="text-3xl font-semibold text-[#ecb51d]">
-                  Call Center 1462
-                </h3>
+                <Link href="tel:1462">
+                  <h3 className="text-3xl font-semibold hover:underline text-[#ecb51d]">
+                    Call Center 1462
+                  </h3>
+                </Link>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div
-        className="flex items-center justify-center max-w-7xl mx-auto px-3 py-2
+      <div className="relative bg-white z-10">
+        <div
+          className=" flex items-center justify-center max-w-7xl mx-auto px-3 py-2 
           sm:justify-end"
-      >
-        <p
-          className="text-center text-sm text-[#212529]
-            sm:text-base sm:text-right"
         >
-          Copyright 2022 All right reserved Leadway Heavy Machinery co., ltd.
-        </p>
+          <p
+            className="text-center text-sm text-[#212529]
+            sm:text-base sm:text-right"
+          >
+            Copyright 2022 All right reserved Leadway Heavy Machinery co., ltd.
+          </p>
+        </div>
       </div>
     </footer>
   );

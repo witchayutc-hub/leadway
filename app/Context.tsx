@@ -3,7 +3,7 @@ import { useState, createContext, useContext } from "react";
 
 export const LeadwayContext = createContext({} as any);
 
-export function EZroomProvider({ children }: any) {
+export function LeadWayProvider({ children }: any) {
   const [info, setInfo] = useState({});
   const [isLogged, setIsLogged] = useState(false);
 

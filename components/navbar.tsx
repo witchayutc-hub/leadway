@@ -14,7 +14,7 @@ const menu = [
       { id: "2-2", title: "SANY", href: "/" },
       { id: "2-3", title: "SANY EV", href: "/" },
       { id: "2-4", title: "METSO", href: "/" },
-      { id: "2-5", title: "JGM", href: "/" },
+      { id: "2-5", title: "JGM", href: "/jgm" },
       { id: "2-6", title: "บริการ", href: "/service" },
       { id: "2-7", title: "รถมือสอง", href: "/usedmachine" },
     ],
@@ -22,7 +22,7 @@ const menu = [
   { id: 3, title: "โปรโมชั่น", href: "/promotion" },
   { id: 4, title: "ข่าวสารและกิจกรรม", href: "/news" },
   { id: 5, title: "ติดต่อ", href: "/contact" },
-  { id: 6, title: "1462", href: "/" },
+  { id: 6, title: "1462", href: "tel:1462" },
   { id: 7, title: "TH | EN", href: "/" },
 ];
 

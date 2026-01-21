@@ -19,7 +19,7 @@ export default function Modal({
       onClick={onClose}
     >
       <div
-        onClick={(e) => e.stopPropagation()}
+        onClick={(event) => event.stopPropagation()}
         className={`
           transform transition-all duration-300 ease-out
           ${isOpen ? "translate-y-0 opacity-100" : "-translate-y-10 opacity-0"}`}
@@ -27,7 +27,7 @@ export default function Modal({
         {image && (
           <img
             src={image}
-            className="max-w-[90vw] max-h-[90vh] rounded-lg shadow-xl"
+            className="w-auto h-auto  object-cover rounded-lg shadow-xl"
           />
         )}
       </div>

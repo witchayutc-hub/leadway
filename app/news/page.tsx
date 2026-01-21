@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import MoreButton from "@/components/moreboutton";
 import Link from "next/link";
+import Image from "next/image";
 import { apiNewsByPaginated } from "@/api/getNews";
 import { formatDate } from "@/helpers/formatDate";
 
@@ -49,20 +50,25 @@ export default function Page() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      <main>
-        <section>
-          <div className="flex justify-center items-center w-full h-30 px-3 pt-12 pb-4 max-w-7xl mx-auto">
-            <h1
-              className="text-3xl font-semibold text-[#052465]
-                sm:text-4xl
-                lg:text-[40px]"
-            >
+    <div className="min-h-screen">
+      <div className="fixed inset-0 z-0">
+        <Image
+          src="/image/bg.png"
+          fill
+          alt="background"
+          className="object-cover"
+          priority
+        />
+      </div>
+      <main className="relative z-10">
+        <section className="bg-white">
+          <div className="flex justify-center items-center w-full h-30 px-3 pt-12 pb-4 max-w-7xl mx-auto ">
+            <h1 className="text-3xl font-semibold text-[#052465] sm:text-4xl lg:text-[40px]">
               ข่าวและกิจกรรม
             </h1>
           </div>
         </section>
-        <section className="bg-gray-100">
+        <section>
           <div className="w-full max-w-7xl mx-auto py-4">
             <div className="flex flex-wrap">
               {news.map((item) => {

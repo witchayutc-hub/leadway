@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { apiNewsBySlug } from "@/api/getNews";
 import MarkDown from "@/components/markdown";
+import Image from "next/image";
 
 export default function Page() {
   const { slug } = useParams();
@@ -40,11 +41,20 @@ export default function Page() {
   if (!data) return <div className="text-black">Loading...</div>;
 
   return (
-    <div className="min-h-screen bg-white">
-      <main>
+    <div className="min-h-screen">
+      <div className="fixed inset-0 z-0">
+        <Image
+          src="/image/bg.png"
+          fill
+          alt="background"
+          className="object-cover"
+          priority
+        />
+      </div>
+      <main className="relative z-10">
         <section>
           <div
-            className="flex flex-col  w-full items-start max-w-7xl mx-auto gap-8 px-3 pt-12 
+            className="flex flex-col w-full items-start max-w-7xl mx-auto gap-8 px-3 pt-12
               md:flex-row"
           >
             <div className="w-full md:w-1/2 min-w-0">
