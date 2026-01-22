@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import MoreButton from "@/components/moreboutton";
+import MoreButton from "@/components/button/moreboutton";
 import Link from "next/link";
 import Image from "next/image";
 import { apiNewsByPaginated } from "@/api/getNews";
@@ -63,7 +63,11 @@ export default function Page() {
       <main className="relative z-10">
         <section className="bg-white">
           <div className="flex justify-center items-center w-full h-30 px-3 pt-12 pb-4 max-w-7xl mx-auto ">
-            <h1 className="text-3xl font-semibold text-[#052465] sm:text-4xl lg:text-[40px]">
+            <h1
+              className="text-3xl font-semibold text-[#052465] 
+            sm:text-4xl
+            lg:text-[40px]"
+            >
               ข่าวและกิจกรรม
             </h1>
           </div>

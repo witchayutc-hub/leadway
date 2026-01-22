@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import MoreButton from "@/components/moreboutton";
+import MoreButton from "@/components/button/moreboutton";
 import Brand from "@/components/Section/brand";
 import Modal from "@/components/modal";
 import { apiPromotionsByPaginated } from "@/api/getPromotion";

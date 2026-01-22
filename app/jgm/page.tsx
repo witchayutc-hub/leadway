@@ -1,6 +1,68 @@
+import SpecButtons from "@/components/button/specButton";
+import SpecTable from "@/components/specTable";
 import Image from "next/image";
 
 export default function Page() {
+  type SpecButton = {
+    id: number;
+    label: string;
+    variant: "primary" | "outline";
+    colorClass: string;
+    href: string;
+  };
+
+  const specs1 = [
+    { label: "กำลังเครื่องยนต์ (แรงม้า)", value: "75" },
+    { label: "น้ำหนักปฏิบัติงาน (กก.)", value: "7,500" },
+    { label: "ความจุบุ้งกี๋ (ลบ.ม.)", value: "0.3" },
+    { label: "ความกว้างปากคีบ (มม.)", value: "1,360" },
+    { label: "ระยะยกสูงสุด (ม.)", value: "7,600" },
+    { label: "น้ำหนักยกสูงสุด (กก.)", value: "1,200" },
+  ];
+
+  const specs2 = [
+    { label: "กำลังมอเตอร์ขับเคลื่อน (กิโลวัตต์)", value: "160" },
+    { label: "น้ำหนักปฏิบัติงาน (กก.)", value: "18,400" },
+    { label: "ความจุบุ้งกี๋ (ลบ.ม.)", value: "2.4-4.5" },
+    { label: "ขนาดแบตเตอรี่ (กิโลวัตต์)", value: "350" },
+    { label: "มุมเลี้ยว (องศา)", value: "35" },
+    { label: "น้ำหนักยกสูงสุด (กก.)", value: "5,500" },
+  ];
+
+  const buttonsSpecs1: SpecButton[] = [
+    {
+      id: 1,
+      label: "JGM9085LNZ-9G",
+      variant: "primary",
+      colorClass: "bg-[#0091D2]",
+      href: "#",
+    },
+    {
+      id: 2,
+      label: "ดาวน์โหลด",
+      variant: "outline",
+      colorClass: "text-[#0091D2]",
+      href: "#",
+    },
+  ];
+
+  const buttonsSpecs2: SpecButton[] = [
+    {
+      id: 1,
+      label: "JGM857E",
+      variant: "primary",
+      colorClass: "bg-[#0091D2]",
+      href: "#",
+    },
+    {
+      id: 2,
+      label: "ดาวน์โหลด",
+      variant: "outline",
+      colorClass: "text-[#0091D2]",
+      href: "#",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-white">
       <main>
@@ -79,75 +141,113 @@ export default function Page() {
         </section>
         <section>
           <div className=" flex items-center justify-center max-w-7xl mx-auto p-7">
-            <div className="grid justify-center">
-              <table className="w-full lg:w-100 max-w-4xl border border-gray-300 text-sm md:text-base">
-                <tbody className="[&>tr:nth-child(odd)]:bg-gray-100 [&>tr:nth-child(even)]:bg-white text-black">
-                  <tr>
-                    <td className=" px-6 py-4 font-semibold">
-                      กำลังเครื่องยนต์ (แรงม้า)
-                    </td>
-                    <td className="px-6 py-4">75</td>
-                  </tr>
-                  <tr className="border-y border-gray-300">
-                    <td className=" px-6 py-4 font-semibold">
-                      น้ำหนักปฏิบัติงาน (กก.)
-                    </td>
-                    <td className="px-6 py-4">7,500</td>
-                  </tr>
-                  <tr className="border-y border-gray-300">
-                    <td className=" px-6 py-4 font-semibold">
-                      ความจุบุ้งกี๋ (ลบ.ม.)
-                    </td>
-                    <td className="px-6 py-4">0.3</td>
-                  </tr>
-                  <tr className="border-y border-gray-300">
-                    <td className="px-6 py-4 font-semibold">
-                      ความกว้างปากคีบ (มม.)
-                    </td>
-                    <td className="px-6 py-4">1,360</td>
-                  </tr>
-                  <tr className="border-y border-gray-300">
-                    <td className="px-6 py-4 font-semibold">
-                      ระยะยกสูงสุด (ม.)
-                    </td>
-                    <td className="px-6 py-4">7,600</td>
-                  </tr>
-                  <tr className="border-y border-gray-300">
-                    <td className="px-6 py-4 font-semibold">
-                      น้ำหนักยกสูงสุด (กก.)
-                    </td>
-                    <td className="px-6 py-4">1,200</td>
-                  </tr>
-                </tbody>
-              </table>
-              <div className="flex justify-between px-2 py-4">
-                <div className="group">
-                  <button
-                    className=" flex items-center justify-center h-12 px-10 rounded-full shadow-md cursor-pointer disabled:cursor-not-allowed disabled:opacity-50
-                    text-white bg-[#0091D2] transition-transform duration-300 ease-out group-hover:-translate-y-1"
-                  >
-                    <div className="flex space-x-2">
-                      <i className="bi bi-search"></i>
-                      <span className="">JGM9085LNZ-9G</span>
-                    </div>
-                  </button>
+            <div className="grid justify-center overflow-x-auto">
+              <SpecTable specs={specs1} />
+              <SpecButtons buttons={buttonsSpecs1} />
+            </div>
+          </div>
+        </section>
+        <section>
+          <div className="flex items-center justify-center max-w-7xl mx-auto px-6 py-12">
+            <div
+              className="grid grid-cols-1 gap-x-6 gap-y-8 max-w-7xl mx-auto
+              lg:grid-cols-3"
+            >
+              <div className="grid place-items-center gap-y-1">
+                <img
+                  src="/image/jgm3-1.png"
+                  alt="jgm"
+                  className="object-cover"
+                />
+                <div className="w-full p-2 text-center bg-black">
+                  <span className="text-xl text-white">
+                    ห้องโดยสารกว้างขวาง
+                  </span>
                 </div>
-                <div className="group">
-                  <button
-                    className="flex items-center justify-center h-12 px-10 rounded-full shadow-md cursor-pointer disabled:cursor-not-allowed disabled:opacity-50
-                    text-[#0091D2] bg-white border border-[#0091D2] transition-transform duration-300 ease-out group-hover:-translate-y-1"
-                  >
-                    <div className="flex space-x-2">
-                      <i className="bi bi-download"></i> <div>ดาวน์โหลด</div>
-                    </div>
-                  </button>
+              </div>
+              <div className="grid place-items-center gap-y-1">
+                <img
+                  src="/image/jgm3-2.png"
+                  alt="jgm"
+                  className="object-cover"
+                />
+                <div className="w-full p-2 text-center bg-black">
+                  <span className="text-xl text-white">จอแสดงผล LED</span>
+                </div>
+              </div>
+              <div className="grid place-items-center gap-y-1">
+                <img
+                  src="/image/jgm3-3.png"
+                  alt="jgm"
+                  className="object-cover"
+                />
+                <div className="w-full p-2 text-center bg-black">
+                  <span className="text-xl text-white">
+                    ปรับเปลี่ยนอุปกรณ์ตามลักษณะงาน
+                  </span>
                 </div>
               </div>
             </div>
           </div>
         </section>
         <section>
-          <div className=" flex items-center justify-center max-w-7xl mx-auto p-6"></div>
+          <div className="relative max-w-7xl mx-auto aspect-video">
+            <Image
+              src="/image/PRODUCTS _ SERVICE_1-10.png"
+              alt="Banner"
+              fill
+              className="object-contain"
+            />
+          </div>
+        </section>
+        <section>
+          <div className=" flex items-center justify-center max-w-7xl mx-auto p-7">
+            <div className="grid justify-center overflow-x-auto">
+              <SpecTable specs={specs2} />
+              <SpecButtons buttons={buttonsSpecs2} />
+            </div>
+          </div>
+        </section>
+        <section>
+          <div className="flex items-center justify-center max-w-7xl mx-auto px-6 py-12">
+            <div
+              className="grid grid-cols-1 gap-x-6 gap-y-8 max-w-7xl mx-auto
+              lg:grid-cols-3"
+            >
+              <div className="grid place-items-center gap-y-1">
+                <img
+                  src="/image/JGM_1-07_0.jpg"
+                  alt="jgm"
+                  className="object-cover"
+                />
+                <div className="w-full p-2 text-center bg-black">
+                  <span className="text-xl text-white">บุ้งกี๋ขนาดใหญ่</span>
+                </div>
+              </div>
+              <div className="grid place-items-center gap-y-1">
+                <img
+                  src="/image/JGM_1-08_0.jpg"
+                  alt="jgm"
+                  className="object-cover"
+                />
+                <div className="w-full p-2 text-center bg-black">
+                  <span className="text-xl text-white">กันชนสุดแกร่ง</span>
+                </div>
+              </div>
+              <div className="grid place-items-center gap-y-1">
+                <img
+                  src="/image/JGM_1-09_0.jpg"
+                  alt="jgm"
+                  className="object-cover"
+                />
+                <div className="w-full p-2 text-center bg-black">
+                  <span className="text-xl text-white">
+                    ล้อยางลุยได้ทุกพื้นที่
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
       </main>
     </div>
