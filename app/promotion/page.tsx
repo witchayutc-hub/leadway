@@ -17,7 +17,7 @@ export default function Page() {
 
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  const fetchNews = async (pageNumber: number) => {
+  const fetchPromotions = async (pageNumber: number) => {
     try {
       const response = await apiPromotionsByPaginated(pageNumber, itemsPerPage);
 
@@ -37,7 +37,7 @@ export default function Page() {
   };
 
   useEffect(() => {
-    fetchNews(page);
+    fetchPromotions(page);
   }, [page]);
 
   if (error) {
