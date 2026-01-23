@@ -52,6 +52,27 @@ export default function Page() {
     "การทดสอบแรงอัดในกระบอกสูบ",
   ];
 
+  const gallery = {
+    galleryGrid1: [
+      "/image/0403-min.jpg",
+      "/image/0923_0-min.jpg",
+      "/image/0462_0-min.jpg",
+      "/image/0403-min.jpg",
+    ],
+    galleryGrid2: [
+      "/image/0590_0-min.jpg",
+      "/image/0653_0-min.jpg",
+      "/image/0513_0-min.jpg",
+      "/image/0749_0-min.jpg",
+    ],
+    galleryGrid3: [
+      "/image/0659_0-min.jpg",
+      "/image/0672_0-min.jpg",
+      "/image/0813_0-min.jpg",
+      "/image/0762_0-min.jpg",
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <main>
@@ -118,6 +139,24 @@ export default function Page() {
                 >
                   <Icon name="check" size={16} fill="#000000" />
                   <span className="flex-1 ml-3 text-left">{text}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+        <section>
+          <div className="flex justify-center w-full px-3 py-12 max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+              {Object.values(gallery).map((column, index) => (
+                <div key={index} className="grid gap-4">
+                  {column.map((src, image) => (
+                    <img
+                      key={image}
+                      src={src}
+                      alt="gallery-photo"
+                      className="h-auto max-w-full rounded-lg object-cover object-center"
+                    />
+                  ))}
                 </div>
               ))}
             </div>
