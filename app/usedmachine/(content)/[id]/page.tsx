@@ -158,7 +158,31 @@ export default function Page() {
                 </div>
                 <div className="flex justify-between py-4 border-b border-gray-300">
                   <span>เพิ่มเติม</span>
-                  <span>ICON</span>
+                  <div className="flex justify-end gap-x-1">
+                    <Link
+                      href={data.attributes.link_youtube}
+                      className="flex items-center justify-center text-red-600"
+                    >
+                      <Icon name="youtube" size={20} />
+                    </Link>
+                    <Link
+                      href={data.attributes.link_facebook}
+                      className="flex items-center justify-center"
+                    >
+                      <Icon
+                        name="facebook"
+                        size={16}
+                        className="rounded-full bg-blue-600"
+                        fill="#FFFFFF"
+                      />
+                    </Link>
+                    <Link
+                      href={data.attributes.link_facebook}
+                      className="flex items-center justify-center text-purple-600"
+                    >
+                      <Icon name="tiktok" size={16} />
+                    </Link>
+                  </div>
                 </div>
                 <div className="grid py-4 border-b border-gray-300">
                   <span className="text-4xl font-bold text-[#ECB51D]">

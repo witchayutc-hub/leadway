@@ -17,7 +17,8 @@ interface IconProps {
     | "userservice"
     | "fireservice"
     | "mapservice"
-    | "check";
+    | "check"
+    | "tiktok";
   size?: number;
   className?: string;
   fill?: string;
@@ -75,7 +76,7 @@ export default function Icon({
       </svg>
     ),
     facebook: (
-      <svg viewBox="0 0 24 24" fill={fill}>
+      <svg viewBox="-1 0 24 24" fill={fill}>
         <path
           fillRule="evenodd"
           clipRule="evenodd"
@@ -197,6 +198,14 @@ export default function Icon({
         <path
           fill={fill}
           d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"
+        ></path>
+      </svg>
+    ),
+    tiktok: (
+      <svg viewBox="0 -16 448 512">
+        <path
+          fill={fill}
+          d="M448,209.91a210.06,210.06,0,0,1-122.77-39.25V349.38A162.55,162.55,0,1,1,185,188.31V278.2a74.62,74.62,0,1,0,52.23,71.18V0l88,0a121.18,121.18,0,0,0,1.86,22.17h0A122.18,122.18,0,0,0,381,102.39a121.43,121.43,0,0,0,67,20.14Z"
         ></path>
       </svg>
     ),

@@ -3,7 +3,7 @@ const TOKEN = process.env.NEXT_PUBLIC_API_TOKEN;
 
 // GET ALL
 export async function getAll(page: any, pageSize: any, endpoint: string) {
-  const url = `${URL}${endpoint}?sort[0]=id:desc&populate=*&pagination[page]=${page}&pagination[pageSize]=${pageSize}`;
+  const url = `${URL}${endpoint}&populate=*&pagination[page]=${page}&pagination[pageSize]=${pageSize}`;
   console.log(`Fetching paginated entries from: ${url}`);
   try {
     const response = await fetch(url, {

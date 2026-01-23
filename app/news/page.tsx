@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { apiNewsByPaginated } from "@/api/getNews";
 import { formatDate } from "@/helpers/formatDate";
+import Icon from "@/components/icon";
 
 export default function Page() {
   const itemsPerPage = 6;
@@ -107,8 +108,34 @@ export default function Page() {
                       <div className="flex items-center justify-center w-full h-full">
                         {item.attributes.views}
                       </div>
-                      <div className="flex items-center justify-center w-full h-full">
-                        ICONS
+                      <div className="flex items-center justify-center w-full h-full overflow-hidden">
+                        <div className="flex items-center justify-center w-full gap-1">
+                          <Link
+                            href={item.attributes.link_youtube || ""}
+                            className="flex items-center justify-center hover:text-red-600"
+                          >
+                            <Icon name="youtube" size={16} />
+                          </Link>
+
+                          <Link
+                            href={item.attributes.link_facebook || ""}
+                            className="flex items-center justify-center"
+                          >
+                            <Icon
+                              name="facebook"
+                              size={12}
+                              className="rounded-full bg-[#666] hover:bg-blue-600"
+                              fill="#FFFFFF"
+                            />
+                          </Link>
+
+                          <Link
+                            href={item.attributes.link_facebook || ""}
+                            className="flex items-center justify-center hover:text-purple-600"
+                          >
+                            <Icon name="tiktok" size={13} />
+                          </Link>
+                        </div>
                       </div>
                     </div>
                     <div className="grid mx-auto h-auto py-10 px-5.5 gap-y-2 mb-7.5 text-center bg-white">

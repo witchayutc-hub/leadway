@@ -6,4 +6,4 @@ export const apiNewsBySlug = (slug: string) =>
 
 // GET BY Paginated
 export const apiNewsByPaginated = (page: any, pageSize: any) =>
-  getAll(page, pageSize, "/api/news-plural");
+  getAll(page, pageSize, "/api/news-plural?sort[0]=id:desc");

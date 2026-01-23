@@ -36,42 +36,54 @@ export default function Footer() {
               ในฐานะผู้จัดจำหน่ายเครื่องจักรกลหนักของประเทศไทย
             </p>
             <div className="flex flex-wrap justify-center gap-5 mt-4">
-              <Icon
-                name="call"
-                size={28}
-                className="rounded-full bg-[#ecb51d]"
-                fill="#003C8C"
-              />
-              <Icon
-                name="email"
-                size={28}
-                className="rounded-full bg-[#ecb51d]"
-                fill="#003C8C"
-              />
-              <Icon
-                name="pin"
-                size={28}
-                className="rounded-full bg-[#ecb51d]"
-                fill="#003C8C"
-              />
-              <Icon
-                name="youtube"
-                size={28}
-                className="rounded-full bg-[#ecb51d]"
-                fill="#003C8C"
-              />
-              <Icon
-                name="line"
-                size={28}
-                className="rounded-full bg-[#ecb51d]"
-                fill="#003C8C"
-              />
-              <Icon
-                name="facebook"
-                size={28}
-                className="rounded-full bg-[#ecb51d]"
-                fill="#003C8C"
-              />
+              <Link href="tel:1462">
+                <Icon
+                  name="call"
+                  size={28}
+                  className="rounded-full bg-[#ecb51d]"
+                  fill="#003C8C"
+                />
+              </Link>
+              <Link href="mailto:info@leadway.co.th">
+                <Icon
+                  name="email"
+                  size={28}
+                  className="rounded-full bg-[#ecb51d]"
+                  fill="#003C8C"
+                />
+              </Link>
+              <Link href="https://www.youtube.com/@leadwayheavy">
+                <Icon
+                  name="youtube"
+                  size={28}
+                  className="rounded-full bg-[#ecb51d]"
+                  fill="#003C8C"
+                />
+              </Link>
+              <Link href="https://maps.app.goo.gl/693NrYTK4ZmFqJ7r6">
+                <Icon
+                  name="pin"
+                  size={28}
+                  className="rounded-full bg-[#ecb51d]"
+                  fill="#003C8C"
+                />
+              </Link>
+              <Link href="https://lin.ee/tGNi6f0">
+                <Icon
+                  name="line"
+                  size={28}
+                  className="rounded-full bg-[#ecb51d]"
+                  fill="#003C8C"
+                />
+              </Link>
+              <Link href="https://www.facebook.com/leadwayheavy">
+                <Icon
+                  name="facebook"
+                  size={28}
+                  className="rounded-full bg-[#ecb51d]"
+                  fill="#003C8C"
+                />
+              </Link>
             </div>
           </div>
           <div className="px-3 text-white">
