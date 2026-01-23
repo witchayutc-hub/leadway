@@ -378,7 +378,7 @@ export default function Page() {
                       src={location.img}
                       alt={`location${location.id}`}
                       className={`absolute ${location.main ? "w-[10%]" : "w-[7%]"} ${location.className}
-                    transition-transform duration-300 ease-out hover:scale-120 hover:opacity-75 cursor-pointer`}
+                    transition-transform duration-300 ease-out hover:scale-120 hover:opacity-75 cursor-pointer active:scale-120 active:opacity-75`}
                     />
                   </Link>
                 ))}

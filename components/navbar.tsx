@@ -10,7 +10,7 @@ const menu = [
     title: "สินค้าและบริการ",
     href: "",
     submenu: [
-      { id: "2-1", title: "SUMITOMO", href: "/" },
+      { id: "2-1", title: "SUMITOMO", href: "/sumitomo" },
       { id: "2-2", title: "SANY", href: "/" },
       { id: "2-3", title: "SANY EV", href: "/" },
       { id: "2-4", title: "METSO", href: "/" },

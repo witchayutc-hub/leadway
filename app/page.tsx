@@ -1,9 +1,12 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Brand from "@/components/Section/brand";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import Link from "next/link";
+import { apiNewsByPaginated } from "@/api/getNews";
+import { formatDate } from "@/helpers/formatDate";
+import { apiMainProducts } from "@/api/getMainProducts";
 
 export default function Home() {
   const Allproducts = [
@@ -78,6 +81,67 @@ export default function Home() {
   const nextSlide = () => {
     setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
   };
+
+  const itemsPerPage = 6;
+
+  const [news, setNews] = useState<any[]>([]);
+  const [error, setError] = useState(false);
+
+  const fetchNews = async (pageNumber: number) => {
+    try {
+      const response = await apiNewsByPaginated(pageNumber, itemsPerPage);
+
+      setNews((prev) => {
+        const existingIds = new Set(prev.map((n) => n.id));
+        const newItems = response.data.filter(
+          (n: any) => !existingIds.has(n.id),
+        );
+        return [...prev, ...newItems];
+      });
+      console.log(response);
+    } catch (error) {
+      console.error("Failed", error);
+      setError(true);
+    }
+  };
+
+  const [products, setProductNews] = useState<any[]>([]);
+  const [productError, setProductError] = useState(false);
+
+  const fetchProduct = async () => {
+    try {
+      const response = await apiMainProducts();
+
+      setProductNews((prev) => {
+        const existingIds = new Set(prev.map((n) => n.id));
+        const newItems = response.data.filter(
+          (n: any) => !existingIds.has(n.id),
+        );
+        return [...prev, ...newItems];
+      });
+      console.log(response);
+    } catch (error) {
+      console.error("Failed", error);
+      setProductError(true);
+    }
+  };
+
+  useEffect(() => {
+    fetchNews(1);
+    fetchProduct();
+  }, []);
+
+  if (error) {
+    return (
+      <div className="text-red-600 text-center py-10">
+        Failed to load data. Please try again.
+      </div>
+    );
+  }
+
+  if (!news || !products) {
+    return <div className="text-black text-center py-10">Loading...</div>;
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -162,25 +226,45 @@ export default function Home() {
           </div>
           <div className="w-full max-w-7xl mx-auto px-3">
             <div className="flex flex-wrap">
-              {Allproducts.map((item) => (
-                <div
-                  key={item.id}
-                  className="relative group w-full shrink-0 overflow-hidden cursor-pointer
+              {products.map((item) => {
+                const image = item.attributes.img?.data?.attributes;
+                return (
+                  <div
+                    key={item.id}
+                    className="relative group w-full shrink-0 overflow-hidden cursor-pointer
                     sm:w-1/2 
                     lg:w-1/3 
                     border border-[#e5e7eb]"
-                >
-                  <img
-                    src={item.image}
-                    alt="product"
-                    className="w-full h-full object-cover transition-transform duration-300"
-                  />
-                  <div
-                    className="absolute inset-0 group-hover:opacity-100 transition-opacity duration-300 
+                  >
+                    <Link href={`${item.attributes.url}`}>
+                      <div className="relative overflow-hidden">
+                        <div className="absolute inset-0 flex bottom-1/10 items-end justify-center z-10">
+                          <div className="grid place-items-center opacity-90">
+                            <span className="text-3xl font-bold text-white">
+                              {item.attributes.name}
+                            </span>
+                            <div className="flex items-center justify-center gap-x-2">
+                              <span className="text-white">
+                                รายละเอียดเพิ่มเติม
+                              </span>
+                              <i className="bi bi-caret-right-fill inline-flex items-center justify-center w-6 h-6 bg-white text-black rounded-full"></i>
+                            </div>
+                          </div>
+                        </div>
+                        <img
+                          src={`${process.env.NEXT_PUBLIC_API_URL}${image.formats.medium.url}`}
+                          alt="product"
+                          className="w-full h-full object-cover transition-transform duration-300"
+                        />
+                      </div>
+                    </Link>
+                    <div
+                      className="absolute inset-0 group-hover:opacity-100 transition-opacity duration-300 
                    bg-[#0d6efd]/40 opacity-0"
-                  />
-                </div>
-              ))}
+                    />
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -196,28 +280,33 @@ export default function Home() {
           </div>
           <div className="w-full max-w-7xl mx-auto py-12">
             <div className="flex flex-wrap">
-              {newsEvents.map((item) => (
-                <div
-                  key={item.id}
-                  className="relative group w-full shrink-0 px-3 pb-3 overflow-hidden cursor-pointer
+              {news.map((item) => {
+                const image = item.attributes.image?.data?.attributes;
+                return (
+                  <div
+                    key={item.id}
+                    className="relative group w-full shrink-0 px-3 pb-3 overflow-hidden cursor-pointer
                   sm:w-1/2 
                   lg:w-1/3"
-                >
-                  <div className="relative overflow-hidden">
-                    <img
-                      src={item.image}
-                      alt="product"
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="grid mx-auto h-auto p-3.25 gap-y-2 bg-black">
-                      <span className="text-xl font-semibold text-[#ffcb00]">
-                        รถบดอัดสั่นสะเทือน
-                      </span>
-                      <span className="text-white">18-12-2025 13:34 PM</span>
+                  >
+                    <div className="relative overflow-hidden">
+                      <img
+                        src={`${process.env.NEXT_PUBLIC_API_URL}${image.formats.medium.url}`}
+                        alt="product"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="grid mx-auto h-auto p-3.25 gap-y-2 bg-black">
+                        <span className="text-xl font-semibold line-clamp-1 text-[#ffcb00]">
+                          {item.attributes.name}
+                        </span>
+                        <span className="text-white">
+                          {formatDate("2025-12-08T12:49:50.015Z")}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>

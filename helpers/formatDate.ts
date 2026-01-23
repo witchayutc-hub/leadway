@@ -4,6 +4,7 @@ export function formatDate(dateString: string) {
   if (isNaN(date.getTime())) return "";
 
   const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
   const year = date.getFullYear();
 
   let hours = date.getHours();
@@ -11,5 +12,5 @@ export function formatDate(dateString: string) {
 
   const ampm = hours >= 12 ? "PM" : "AM";
 
-  return `${day}-${year} ${hours}:${minutes} ${ampm}`;
+  return `${day}-${month}-${year} ${hours}:${minutes} ${ampm}`;
 }
