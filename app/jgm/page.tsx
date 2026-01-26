@@ -1,16 +1,9 @@
+"use client";
 import SpecButtons from "@/components/button/specButton";
 import SpecTable from "@/components/specTable";
 import Image from "next/image";
 
 export default function Page() {
-  type SpecButton = {
-    id: number;
-    label: string;
-    variant: "primary" | "outline";
-    colorClass: string;
-    href: string;
-  };
-
   const specs1 = [
     { label: "กำลังเครื่องยนต์ (แรงม้า)", value: "75" },
     { label: "น้ำหนักปฏิบัติงาน (กก.)", value: "7,500" },
@@ -27,40 +20,6 @@ export default function Page() {
     { label: "ขนาดแบตเตอรี่ (กิโลวัตต์)", value: "350" },
     { label: "มุมเลี้ยว (องศา)", value: "35" },
     { label: "น้ำหนักยกสูงสุด (กก.)", value: "5,500" },
-  ];
-
-  const buttonsSpecs1: SpecButton[] = [
-    {
-      id: 1,
-      label: "JGM9085LNZ-9G",
-      variant: "primary",
-      colorClass: "bg-[#0091D2]",
-      href: "#",
-    },
-    {
-      id: 2,
-      label: "ดาวน์โหลด",
-      variant: "outline",
-      colorClass: "text-[#0091D2]",
-      href: "#",
-    },
-  ];
-
-  const buttonsSpecs2: SpecButton[] = [
-    {
-      id: 1,
-      label: "JGM857E",
-      variant: "primary",
-      colorClass: "bg-[#0091D2]",
-      href: "#",
-    },
-    {
-      id: 2,
-      label: "ดาวน์โหลด",
-      variant: "outline",
-      colorClass: "text-[#0091D2]",
-      href: "#",
-    },
   ];
 
   return (
@@ -143,7 +102,25 @@ export default function Page() {
           <div className=" flex items-center justify-center max-w-7xl mx-auto p-7">
             <div className="grid justify-center overflow-x-auto">
               <SpecTable specs={specs1} />
-              <SpecButtons buttons={buttonsSpecs1} />
+              <SpecButtons
+                buttons={[
+                  {
+                    id: 1,
+                    label: "JGM9085LNZ-9G",
+                    variant: "primary",
+                    colorClass: "bg-[#0091D2]",
+                    href: "#",
+                  },
+                  {
+                    id: 2,
+                    label: "ดาวน์โหลด",
+                    variant: "outline",
+                    colorClass: "text-[#0091D2]",
+                    download: true,
+                    href: "#",
+                  },
+                ]}
+              />
             </div>
           </div>
         </section>
@@ -204,7 +181,25 @@ export default function Page() {
           <div className=" flex items-center justify-center max-w-7xl mx-auto p-7">
             <div className="grid justify-center overflow-x-auto">
               <SpecTable specs={specs2} />
-              <SpecButtons buttons={buttonsSpecs2} />
+              <SpecButtons
+                buttons={[
+                  {
+                    id: 1,
+                    label: "JGM857E",
+                    variant: "primary",
+                    colorClass: "bg-[#0091D2]",
+                    href: "#",
+                  },
+                  {
+                    id: 2,
+                    label: "ดาวน์โหลด",
+                    variant: "outline",
+                    colorClass: "text-[#0091D2]",
+                    download: true,
+                    href: "#",
+                  },
+                ]}
+              />
             </div>
           </div>
         </section>

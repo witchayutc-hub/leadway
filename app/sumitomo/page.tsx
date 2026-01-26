@@ -107,7 +107,7 @@ export default function Page() {
   useEffect(() => {
     const hash = window.location.hash.replace("#", "");
 
-    if (hash && sumitomo) {
+    if (hash) {
       const timer = setTimeout(() => {
         const element = document.getElementById(hash);
         if (element) {
@@ -116,10 +116,10 @@ export default function Page() {
             block: "start",
           });
         }
-      }, 300);
+      }, 500);
       return () => clearTimeout(timer);
     }
-  }, [sumitomo, searchParams]);
+  }, [searchParams]);
 
   return (
     <div className="min-h-screen bg-white">
@@ -367,7 +367,7 @@ export default function Page() {
             </div>
             <div className="flex justify-center p-3">
               <MoreButton
-                onClick={() => setPage((prev) => prev + 1)}
+                onClick={() => setPaversPage((prev) => prev + 1)}
                 onDisabled={paversPage >= paversPageCount}
               />
             </div>

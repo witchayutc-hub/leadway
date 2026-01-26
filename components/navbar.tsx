@@ -11,8 +11,8 @@ const menu = [
     href: "",
     submenu: [
       { id: "2-1", title: "SUMITOMO", href: "/sumitomo" },
-      { id: "2-2", title: "SANY", href: "/" },
-      { id: "2-3", title: "SANY EV", href: "/" },
+      { id: "2-2", title: "SANY", href: "/sany" },
+      { id: "2-3", title: "SANY EV", href: "/sany-ev" },
       { id: "2-4", title: "METSO", href: "/metso" },
       { id: "2-5", title: "JGM", href: "/jgm" },
       { id: "2-6", title: "บริการ", href: "/service" },
@@ -96,7 +96,7 @@ export default function Navbar() {
                   สินค้าและบริการ
                 </span>
               </div>
-              <div className="grid grid-flow-col grid-rows-4 w-full gap-2 px-10 border-l-4">
+              <div className="grid grid-flow-col grid-rows-4 w-full gap-2 px-10 border-l-4 border-white">
                 {menu
                   .find((item) => item.submenu)
                   ?.submenu?.map((sub) => (

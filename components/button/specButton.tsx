@@ -18,11 +18,11 @@ export default function SpecButtons({ buttons }: { buttons: SpecButton[] }) {
           {button.download ? (
             <button
               onClick={() => downloadFile(button.href)}
-              className={`flex items-center justify-center h-12 px-10 rounded-full shadow-md cursor-pointer
+              className={`flex items-center justify-center h-12 px-8 rounded-full shadow-md cursor-pointer
               transition-transform duration-300 ease-out group-hover:-translate-y-1
               bg-white border border-current ${button.colorClass}`}
             >
-              <div className="flex space-x-2 max-w-25">
+              <div className="flex space-x-1 w-full">
                 <i className="bi bi-download"></i>
                 <span className="truncate">{button.label}</span>
               </div>
@@ -30,11 +30,11 @@ export default function SpecButtons({ buttons }: { buttons: SpecButton[] }) {
           ) : (
             <Link href={button.href}>
               <button
-                className={`flex items-center justify-center h-12 px-10 rounded-full shadow-md cursor-pointer
+                className={`flex items-center justify-center h-12 px-8 rounded-full shadow-md cursor-pointer
                 transition-transform duration-300 ease-out group-hover:-translate-y-1
                 text-white ${button.colorClass}`}
               >
-                <div className="flex space-x-2 max-w-25">
+                <div className="flex space-x-2 w-full">
                   <i className="bi bi-search"></i>
                   <span className="truncate">{button.label}</span>
                 </div>

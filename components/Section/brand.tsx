@@ -12,7 +12,7 @@ export default function Brand() {
       id: 2,
       name: "Sany",
       src: "/image/logo SANY-04.jpg",
-      href: "/",
+      href: "/sany",
     },
     {
       id: 3,
