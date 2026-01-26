@@ -7,6 +7,7 @@ import Link from "next/link";
 import { apiNewsByPaginated } from "@/api/getNews";
 import { formatDate } from "@/helpers/formatDate";
 import { apiMainProducts } from "@/api/getMainProducts";
+import { apiPageBanner } from "@/api/getPageBanner";
 
 export default function Home() {
   const Allproducts = [
@@ -126,12 +127,32 @@ export default function Home() {
     }
   };
 
+  const [banners, setBanners] = useState<any[]>([]);
+  const [bannersError, setBannersError] = useState(false);
+
+  const fetchBanners = async () => {
+    try {
+      const response = await apiPageBanner();
+      const galleryArray = response.data.attributes;
+      const bannerArray = Object.entries(galleryArray)
+        .filter(([key, value]: any) => key.startsWith("banner_") && value?.data)
+        .map(([, value]: any) => value.data);
+
+      setBanners(bannerArray);
+      console.log(response);
+    } catch (error) {
+      console.error("Failed", error);
+      setBannersError(true);
+    }
+  };
+
   useEffect(() => {
     fetchNews(1);
     fetchProduct();
+    fetchBanners();
   }, []);
 
-  if (error) {
+  if (error || productError || bannersError) {
     return (
       <div className="text-red-600 text-center py-10">
         Failed to load data. Please try again.
@@ -139,7 +160,7 @@ export default function Home() {
     );
   }
 
-  if (!news || !products) {
+  if (!news || !products || !banners) {
     return <div className="text-black text-center py-10">Loading...</div>;
   }
 
@@ -152,11 +173,11 @@ export default function Home() {
               className="flex transition-transform duration-500 ease-in-out"
               style={{ transform: `translateX(-${current * 100}%)` }}
             >
-              {slides.map((img, index) => (
+              {banners.map((item, index) => (
                 <img
-                  key={index}
-                  src={img}
-                  alt="Banner"
+                  key={item.id ?? index}
+                  src={`${process.env.NEXT_PUBLIC_API_URL}${item.attributes.url}`}
+                  alt={item.attributes.hash ?? "Banner"}
                   className="w-full shrink-0"
                 />
               ))}

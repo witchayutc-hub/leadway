@@ -13,7 +13,7 @@ export default function Footer() {
           className="absolute inset-0 w-full h-full object-cover z-0"
         />
         <div
-          className="relative z-10 grid max-w-7xl mx-auto grid-cols-1 gap-8 px-4 mb-12 pb-12
+          className="relative z-0 grid max-w-7xl mx-auto grid-cols-1 gap-8 px-4 mb-12 pb-12
             sm:px-6
             lg:grid-cols-3 lg:px-8"
         >
@@ -138,7 +138,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className="relative bg-white z-10">
+      <div className="relative bg-white z-0">
         <div
           className=" flex items-center justify-center max-w-7xl mx-auto px-3 py-2 
           sm:justify-end"

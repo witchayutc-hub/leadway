@@ -13,7 +13,7 @@ const menu = [
       { id: "2-1", title: "SUMITOMO", href: "/sumitomo" },
       { id: "2-2", title: "SANY", href: "/" },
       { id: "2-3", title: "SANY EV", href: "/" },
-      { id: "2-4", title: "METSO", href: "/" },
+      { id: "2-4", title: "METSO", href: "/metso" },
       { id: "2-5", title: "JGM", href: "/jgm" },
       { id: "2-6", title: "บริการ", href: "/service" },
       { id: "2-7", title: "รถมือสอง", href: "/usedmachine" },
