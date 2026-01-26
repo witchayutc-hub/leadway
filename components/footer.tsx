@@ -10,7 +10,7 @@ export default function Footer() {
           src="/image/footer.jpg"
           fill
           alt="footer"
-          className="absolute inset-0 w-full h-full object-cover z-0"
+          className="object-cover"
         />
         <div
           className="relative z-0 grid max-w-7xl mx-auto grid-cols-1 gap-8 px-4 mb-12 pb-12

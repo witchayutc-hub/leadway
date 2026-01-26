@@ -74,7 +74,7 @@ export default function Page() {
                     />
                   </div>
                 </Link>
-                <Link href="#">
+                <Link href="/metso#nordberg_c_Series" scroll={true}>
                   <div className="group ">
                     <img
                       src="/image/Group 738.png"
@@ -105,13 +105,9 @@ export default function Page() {
             </div>
           </div>
         </section>
-        <section>
+        <section id="nordberg_c_Series" className="scroll-mt-5">
           <div>
-            <img
-              src="/image/Metso C-07.png"
-              alt="Group 735"
-              className="transition-transform duration-300 ease-out group-hover:-translate-y-2"
-            />
+            <img src="/image/Metso C-07.png" alt="Group 735" />
           </div>
         </section>
         <section>
@@ -128,12 +124,12 @@ export default function Page() {
                 />
                 <img
                   src="/image/Group 754.png"
-                  className="w-1/2 object-contain 
-                    lg:w-full"
+                  className="w-3/5 object-contain 
+                    "
                 />
               </div>
               <div className="grid col-span-8">
-                <div className="grid lg:flex gap-x-24">
+                <div className="grid lg:flex gap-x-24 gap-y-3">
                   <span className="text-3xl text-[#212529]">
                     Technical specifications Nordberg® C Series™ jaw crushers
                   </span>
@@ -165,11 +161,187 @@ export default function Page() {
         </section>
         <section>
           <div>
-            <img
-              src="/image/Metso GP-08.jpg"
-              alt="Group 735"
-              className="transition-transform duration-300 ease-out group-hover:-translate-y-2"
-            />
+            <img src="/image/Metso GP-08.jpg" alt="Group 735" />
+          </div>
+        </section>
+        <section>
+          <div className="mx-auto max-w-7xl">
+            <div
+              className="grid grid-cols-1 p-6 
+                lg:grid-cols-12"
+            >
+              <div
+                className="lg:col-span-4 flex flex-row items-center gap-4 p-6 
+                lg:flex-col"
+              >
+                <img
+                  src="/image/GP300S_isometric_01.jpg"
+                  className="w-1/2 object-contain 
+                    lg:w-full "
+                />
+                <img
+                  src="/image/Group 778.jpg"
+                  className="w-3/5 object-contain"
+                />
+              </div>
+              <div className="grid col-span-8 place-content-start">
+                <div className="grid lg:flex gap-x-24 gap-y-3">
+                  <span className="text-3xl text-[#212529]">
+                    Technical specifications Nordberg® GP Series™ cone crushers
+                  </span>
+                  <Link href="#">
+                    <div className="group">
+                      <img
+                        src="/image/download.png"
+                        className="max-w-40 justify-self-end transition-transform duration-300 ease-out group-hover:-translate-y-1"
+                      />
+                    </div>
+                  </Link>
+                </div>
+                <div className="grid cursor-pointer py-4">
+                  <img
+                    src="/image/Group 774.jpg"
+                    onClick={() => setSelectedImage("/image/Group 774.jpg")}
+                    className="hover:opacity-75 duration-300"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div>
+            <img src="/image/Metso HP-09.jpg" alt="Group 735" />
+          </div>
+        </section>
+        <section>
+          <div className="mx-auto max-w-7xl">
+            <div
+              className="grid grid-cols-1 p-6 
+                lg:grid-cols-12"
+            >
+              <div
+                className="lg:col-span-4 flex flex-row items-center gap-4 p-6 
+                lg:flex-col"
+              >
+                <img
+                  src="/image/a.jpg"
+                  className="w-1/2 object-contain 
+                    lg:w-full "
+                />
+                <img
+                  src="/image/Group 811.jpg"
+                  className="w-3/5 object-contain"
+                />
+              </div>
+              <div className="grid col-span-8 place-content-start">
+                <div className="grid lg:flex gap-x-24 gap-y-3">
+                  <span className="text-3xl text-[#212529]">
+                    Technical specifications Nordberg® HP Series™ cone crushers
+                  </span>
+                  <Link href="#">
+                    <div className="group">
+                      <img
+                        src="/image/download.png"
+                        className="max-w-40 justify-self-end transition-transform duration-300 ease-out group-hover:-translate-y-1"
+                      />
+                    </div>
+                  </Link>
+                </div>
+                <div className="grid cursor-pointer py-4 place-content-start">
+                  <img
+                    src="/image/Group 780.jpg"
+                    onClick={() => setSelectedImage("/image/Group 780.jpg")}
+                    className="hover:opacity-75 duration-300"
+                  />
+                  <div className="flex flex-wrap justify-end py-4 gap-2">
+                    <img src="/image/Group 785.jpg" className="h-10" />
+                    <img src="/image/Group 788.jpg" className="h-10" />
+                    <img src="/image/Group 791.jpg" className="h-10" />
+                    <img src="/image/Group 794.jpg" className="h-10" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div>
+            <img src="/image/Metso crushing-10.jpg" alt="Group 735" />
+          </div>
+        </section>
+        <section>
+          <div>
+            <div className="grid lg:flex place-items-center mx-auto max-w-7xl p-3 gap-4">
+              <div>
+                <img
+                  src="/image/Metso-3.jpg"
+                  className="w-full h-auto object-contain"
+                />
+              </div>
+              <div>
+                <img
+                  src="/image/Metso-4.jpg"
+                  className="full h-auto object-contain"
+                />
+              </div>
+            </div>
+            <div className="flex justify-center p-4 bg-black">
+              <span className="text-4xl text-white">Product</span>
+            </div>
+            <div className="grid lg:flex place-items-center mx-auto max-w-7xl px-3 py-12 gap-4">
+              <div className="grid">
+                <div className="w-1/2 p-2 text-center border-r-15 border-[#D64227] bg-[#707070] ">
+                  <span className="text-white">NW106</span>
+                </div>
+                <div>
+                  <img
+                    src="/image/Group 722.jpg"
+                    className="full h-auto object-contain"
+                  />
+                </div>
+              </div>
+              <div className="grid">
+                <div className="w-1/2 p-2 text-center border-r-15 border-[#D64227] bg-[#707070]">
+                  <span className="text-white">NW220GPS</span>
+                </div>
+                <div>
+                  <img
+                    src="/image/Group 727.jpg"
+                    className="full h-auto object-contain"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div className="grid mx-auto max-w-7xl px-3">
+            <div className="grid lg:flex lg:place-content-between 4 gap-y-3">
+              <span className="text-3xl text-[#212529]">
+                Key technical specifications
+              </span>
+              <Link href="#">
+                <div className="group">
+                  <img
+                    src="/image/download.png"
+                    className="max-w-40 justify-self-end transition-transform duration-300 ease-out group-hover:-translate-y-1"
+                  />
+                </div>
+              </Link>
+            </div>
+            <div className="grid cursor-pointer py-4">
+              <img
+                src="/image/tb1.jpg"
+                onClick={() => setSelectedImage("/image/tb1.jpg")}
+                className="hover:opacity-75 duration-300"
+              />
+              <img
+                src="/image/tb2.jpg"
+                onClick={() => setSelectedImage("/image/tb2.jpg")}
+                className="hover:opacity-75 duration-300"
+              />
+            </div>
           </div>
         </section>
         <Modal image={selectedImage} onClose={() => setSelectedImage(null)} />
