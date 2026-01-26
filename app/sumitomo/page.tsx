@@ -6,6 +6,7 @@ import SpecButton from "@/components/button/specButton";
 import { apiSumitomoByPaginated } from "@/api/getSumitomo";
 import MoreButton from "@/components/button/moreboutton";
 import { apiPaversPluralByPaginated } from "@/api/getPaversPlural";
+import { useSearchParams } from "next/navigation";
 
 type SpecButton = {
   id: number;
@@ -16,6 +17,7 @@ type SpecButton = {
 };
 
 export default function Page() {
+  const searchParams = useSearchParams();
   const itemsPerPage = 6;
   const [sumitomo, setSumitomo] = useState<any[]>([]);
   const [page, setPage] = useState(1);
@@ -94,9 +96,30 @@ export default function Page() {
     );
   }
 
-  if (!sumitomo || !pavers) {
-    return <div className="text-black text-center py-10">Loading...</div>;
+  if (!sumitomo && !pavers) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        Loading...
+      </div>
+    );
   }
+
+  useEffect(() => {
+    const hash = window.location.hash.replace("#", "");
+
+    if (hash && sumitomo) {
+      const timer = setTimeout(() => {
+        const element = document.getElementById(hash);
+        if (element) {
+          element.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [sumitomo, searchParams]);
 
   return (
     <div className="min-h-screen bg-white">
@@ -151,7 +174,7 @@ export default function Page() {
             </div>
           </div>
         </section>
-        <section>
+        <section id="excavators">
           <div className="py-12">
             <div className="relative w-full aspect-video">
               <Image
@@ -273,7 +296,7 @@ export default function Page() {
             </div>
           </div>
         </section>
-        <section>
+        <section id="paverss">
           <div className="py-12">
             <div className="relative max-w-7xl mx-auto w-full aspect-video">
               <Image

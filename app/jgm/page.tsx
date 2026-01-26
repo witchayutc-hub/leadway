@@ -124,7 +124,7 @@ export default function Page() {
             </div>
           </div>
         </section>
-        <section>
+        <section id="excavators">
           <div className="text-center w-full max-w-7xl mx-auto p-7">
             <h1 className="text-4xl lg:text-7xl text-[#212529]">
               Highlight Functions
@@ -190,7 +190,7 @@ export default function Page() {
             </div>
           </div>
         </section>
-        <section>
+        <section id="JGM857E">
           <div className="relative max-w-7xl mx-auto aspect-video">
             <Image
               src="/image/PRODUCTS _ SERVICE_1-10.png"

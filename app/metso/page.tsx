@@ -74,7 +74,7 @@ export default function Page() {
                     />
                   </div>
                 </Link>
-                <Link href="/metso#nordberg_c_Series" scroll={true}>
+                <Link href="/metso#nordberg_c_Series">
                   <div className="group ">
                     <img
                       src="/image/Group 738.png"
@@ -83,7 +83,7 @@ export default function Page() {
                     />
                   </div>
                 </Link>
-                <Link href="#">
+                <Link href="/metso#nordberg_hp_series_cone">
                   <div className="group ">
                     <img
                       src="/image/Group 741.png"
@@ -92,7 +92,7 @@ export default function Page() {
                     />
                   </div>
                 </Link>
-                <Link href="#">
+                <Link href="/metso#nw_rapid_portable">
                   <div className="group ">
                     <img
                       src="/image/Group 744.png"
@@ -105,7 +105,7 @@ export default function Page() {
             </div>
           </div>
         </section>
-        <section id="nordberg_c_Series" className="scroll-mt-5">
+        <section id="nordberg_c_Series">
           <div>
             <img src="/image/Metso C-07.png" alt="Group 735" />
           </div>
@@ -209,7 +209,7 @@ export default function Page() {
             </div>
           </div>
         </section>
-        <section>
+        <section id="nordberg_hp_series_cone">
           <div>
             <img src="/image/Metso HP-09.jpg" alt="Group 735" />
           </div>
@@ -265,7 +265,7 @@ export default function Page() {
             </div>
           </div>
         </section>
-        <section>
+        <section id="nw_rapid_portable">
           <div>
             <img src="/image/Metso crushing-10.jpg" alt="Group 735" />
           </div>
