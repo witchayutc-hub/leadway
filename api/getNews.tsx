@@ -5,5 +5,9 @@ export const apiNewsBySlug = (slug: string) =>
   getSlug(`/api/news-plural?filters[slug][$eq]=${slug}&populate=*`);
 
 // GET BY Paginated
-export const apiNewsByPaginated = (page: any, pageSize: any) =>
-  getAll(page, pageSize, "/api/news-plural?sort[0]=id:desc");
+export const apiNewsByPaginated = (
+  page: number,
+  pageSize: number,
+  locale: string,
+) =>
+  getAll(page, pageSize, `/api/news-plural?sort[0]=id:desc&locale=${locale}`);

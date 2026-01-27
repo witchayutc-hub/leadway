@@ -1,8 +1,10 @@
 import Icon from "@/components/icon";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Footer() {
+  const t = useTranslations("Footer");
   return (
     <footer className="w-full ">
       <div className="relative w-full h-full overflow-hidden py-12">
@@ -26,15 +28,7 @@ export default function Footer() {
                 className="object-contain"
               />
             </div>
-            <p className="text-white">
-              บริษัท ลีดเวย์ เฮฟวี แมชชีนเนอร์รี จำกัด
-              เราพัฒนาศักยภาพอย่างรอบด้านเพื่อขยายกลุ่มผลิตภัณฑ์
-              เครื่องจักรกลหนักให้มีความหลากหลาย โดยรักษาสมดุลระหว่างเทคโนโลยี
-              ประสิทธิภาพ และความคุ้มค่า เพื่อตอบโจทย์ให้ครอบคลุมต่อทุกการใช้งาน
-              ในการสร้างผลกำไรให้แก่ธุรกิจ
-              อีกทั้งยังก้าวข้ามข้อจำกัดการใช้งานเครื่องจักรกลในรูปแบบเดิมๆ
-              ในฐานะผู้จัดจำหน่ายเครื่องจักรกลหนักของประเทศไทย
-            </p>
+            <p className="text-white">{t("leadway")}</p>
             <div className="flex flex-wrap justify-center gap-5 mt-4">
               <Link href="tel:1462">
                 <Icon
@@ -87,7 +81,7 @@ export default function Footer() {
             </div>
           </div>
           <div className="px-3 text-white">
-            <span className="text-2xl">ติดตามข่าวสารและโปรโมชั่นจากเรา</span>
+            <span className="text-2xl">{t("follow")}</span>
             <div
               className="flex flex-col gap-3 py-4 
                 sm:flex-row sm:items-center sm:gap-4"
@@ -106,17 +100,14 @@ export default function Footer() {
             </div>
           </div>
           <div className="text-white">
-            <span className="text-4xl text-white">ติดต่อ</span>
+            <span className="text-4xl text-white">{t("contact")}</span>
             <div className="grid gap-2">
               <h3 className="text-2xl font-semibold pt-6 text-[#ecb51d]">
-                บริษัท ลีดเวย์ เฮฟวี่ แมชชีนเนอร์รี่ จำกัด
+                {t("ltd")}
               </h3>
               <div className="flex items-center gap-2">
                 <Icon name="home" size={28} />
-                <h3 className="text-[14px] ">
-                  เลขที่ 1/2 หมู่ที่ 2 ตำบลบางวัว อำเภอบางปะกง จังหวัดฉะเชิงเทรา
-                  24130
-                </h3>
+                <h3 className="text-[14px] ">{t("address")}</h3>
               </div>
               <div className="flex items-center gap-2">
                 <Icon name="email" size={28} />

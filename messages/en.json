@@ -7,5 +7,19 @@
     "promotion": "Promotion",
     "news": "News & Events",
     "contact": "Contact"
+  },
+
+  "Footer": {
+    "leadway": "We are the leader in the heavy machinery business with reputation that is widely accepted in the heavy industry circle throughout the world.",
+    "follow": "follow news and promotions from us.",
+    "contact": "Contact",
+    "ltd": "Leadway Heavy Machinery Co., Ltd.",
+    "address": "1/2 Moo 2, Bang Wua, Bang Pakong, Chachoengsao 24130"
+  },
+
+  "Home": {
+    "all_products": "ALL PRODUCTS",
+    "news_and_events": "News & Event",
+    "more_detail": "More Detail"
   }
 }

@@ -6,66 +6,11 @@ import { apiNewsByPaginated } from "@/api/getNews";
 import { formatDate } from "@/helpers/formatDate";
 import { apiMainProducts } from "@/api/getMainProducts";
 import { apiPageBanner } from "@/api/getPageBanner";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function Home() {
-  const Allproducts = [
-    {
-      id: 1,
-      image: "https://app.leadway.co.th/uploads/All_product_01_660e948cc1.jpg",
-    },
-    {
-      id: 2,
-      image: "https://app.leadway.co.th/uploads/All_product_02_deed7f3b65.jpg",
-    },
-    {
-      id: 3,
-      image: "https://app.leadway.co.th/uploads/All_product_03_c99866cd43.jpg",
-    },
-    {
-      id: 4,
-      image: "https://app.leadway.co.th/uploads/MINING_TRUCK_EV_72a0ccd45a.jpg",
-    },
-    {
-      id: 5,
-      image: "https://app.leadway.co.th/uploads/MINING_TRUCKS_38c938544e.jpg",
-    },
-    {
-      id: 6,
-      image: "https://app.leadway.co.th/uploads/All_product_04_fe4ef19622.jpg",
-    },
-  ];
-  const newsEvents = [
-    {
-      id: 1,
-      image:
-        "https://app.leadway.co.th/uploads/what_should_you_consider_when_buying_a_vibratory_roller_1da7b15541.png",
-    },
-    {
-      id: 2,
-      image:
-        "https://app.leadway.co.th/uploads/what_is_a_vibratory_compactor_32298d57c2.png",
-    },
-    {
-      id: 3,
-      image:
-        "https://app.leadway.co.th/uploads/what_is_a_dc_charging_cabinet_ee82504156.png",
-    },
-    {
-      id: 4,
-      image:
-        "https://app.leadway.co.th/uploads/getting_to_know_sumitomo_machinery_46272320ab.png",
-    },
-    {
-      id: 5,
-      image:
-        "https://app.leadway.co.th/uploads/are_sumitomo_excavators_good_5f8d95ca8c.png",
-    },
-    {
-      id: 6,
-      image:
-        "https://app.leadway.co.th/uploads/sumitomo_asphalt_paver_d20b61039a.png",
-    },
-  ];
+  const t = useTranslations("Home");
+  const locale = useLocale();
 
   let slides = [
     "https://app.leadway.co.th/uploads/BANNAR_01_67b8417878.jpg",
@@ -81,26 +26,22 @@ export default function Home() {
     setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
   };
 
-  const itemsPerPage = 6;
+  const [banners, setBanners] = useState<any[]>([]);
+  const [bannersError, setBannersError] = useState(false);
 
-  const [news, setNews] = useState<any[]>([]);
-  const [error, setError] = useState(false);
-
-  const fetchNews = async (pageNumber: number) => {
+  const fetchBanners = async () => {
     try {
-      const response = await apiNewsByPaginated(pageNumber, itemsPerPage);
+      const response = await apiPageBanner();
+      const galleryArray = response.data.attributes;
+      const bannerArray = Object.entries(galleryArray)
+        .filter(([key, value]: any) => key.startsWith("banner_") && value?.data)
+        .map(([, value]: any) => value.data);
 
-      setNews((prev) => {
-        const existingIds = new Set(prev.map((n) => n.id));
-        const newItems = response.data.filter(
-          (n: any) => !existingIds.has(n.id),
-        );
-        return [...prev, ...newItems];
-      });
+      setBanners(bannerArray);
       console.log(response);
     } catch (error) {
       console.error("Failed", error);
-      setError(true);
+      setBannersError(true);
     }
   };
 
@@ -125,22 +66,30 @@ export default function Home() {
     }
   };
 
-  const [banners, setBanners] = useState<any[]>([]);
-  const [bannersError, setBannersError] = useState(false);
+  const itemsPerPage = 6;
 
-  const fetchBanners = async () => {
+  const [news, setNews] = useState<any[]>([]);
+  const [error, setError] = useState(false);
+
+  const fetchNews = async (pageNumber: number) => {
     try {
-      const response = await apiPageBanner();
-      const galleryArray = response.data.attributes;
-      const bannerArray = Object.entries(galleryArray)
-        .filter(([key, value]: any) => key.startsWith("banner_") && value?.data)
-        .map(([, value]: any) => value.data);
+      const response = await apiNewsByPaginated(
+        pageNumber,
+        itemsPerPage,
+        locale,
+      );
 
-      setBanners(bannerArray);
+      setNews((prev) => {
+        const existingIds = new Set(prev.map((n) => n.id));
+        const newItems = response.data.filter(
+          (n: any) => !existingIds.has(n.id),
+        );
+        return [...prev, ...newItems];
+      });
       console.log(response);
     } catch (error) {
       console.error("Failed", error);
-      setBannersError(true);
+      setError(true);
     }
   };
 
@@ -240,7 +189,7 @@ export default function Home() {
                 sm:text-4xl
                 lg:text-5xl"
             >
-              สินค้าทั้งหมด
+              {t("all_products")}
             </h2>
           </div>
           <div className="w-full max-w-7xl mx-auto px-3">
@@ -264,7 +213,7 @@ export default function Home() {
                             </span>
                             <div className="flex items-center justify-center gap-x-2">
                               <span className="text-white">
-                                รายละเอียดเพิ่มเติม
+                                {t("more_detail")}
                               </span>
                               <i className="bi bi-caret-right-fill inline-flex items-center justify-center w-6 h-6 bg-white text-black rounded-full"></i>
                             </div>
@@ -294,7 +243,7 @@ export default function Home() {
                 sm:text-4xl
                 lg:text-5xl"
             >
-              ข่าวสารและกิจกรรม
+              {t("news_and_events")}
             </h2>
           </div>
           <div className="w-full max-w-7xl mx-auto py-12">

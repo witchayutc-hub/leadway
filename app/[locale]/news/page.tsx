@@ -6,8 +6,10 @@ import Image from "next/image";
 import { apiNewsByPaginated } from "@/api/getNews";
 import { formatDate } from "@/helpers/formatDate";
 import Icon from "@/components/icon";
+import { useLocale } from "next-intl";
 
 export default function Page() {
+  const locale = useLocale();
   const itemsPerPage = 6;
 
   const [news, setNews] = useState<any[]>([]);
@@ -17,7 +19,11 @@ export default function Page() {
 
   const fetchNews = async (pageNumber: number) => {
     try {
-      const response = await apiNewsByPaginated(pageNumber, itemsPerPage);
+      const response = await apiNewsByPaginated(
+        pageNumber,
+        itemsPerPage,
+        locale,
+      );
 
       setNews((prev) => {
         const existingIds = new Set(prev.map((n) => n.id));
