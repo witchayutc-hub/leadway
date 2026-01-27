@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Icon from "@/components/icon";
 import MoreButton from "@/components/button/moreboutton";
-import Link from "next/link";
+import { Link } from "@/navigation";
 import Image from "next/image";
 import { apiUsedMachinesByPaginated } from "@/api/getUsedmachine";
 import { formatDate } from "@/helpers/formatDate";

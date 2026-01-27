@@ -5,7 +5,7 @@ import SpecButton from "@/components/button/specButton";
 import SpecTable from "@/components/specTable";
 import { cutAfterPipe } from "@/helpers/cutText";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/navigation";
 import { useEffect, useState } from "react";
 
 export default function Page() {

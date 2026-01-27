@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Brand from "@/components/Section/brand";
-import Link from "next/link";
+import { Link } from "@/navigation";
 import { apiNewsByPaginated } from "@/api/getNews";
 import { formatDate } from "@/helpers/formatDate";
 import { apiMainProducts } from "@/api/getMainProducts";

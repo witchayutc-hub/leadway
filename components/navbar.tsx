@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Link from "next/link";
+import { Link } from "@/navigation";
 import Icon from "@/components/icon";
 import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";

@@ -7,6 +7,7 @@ import Bounce from "@/components/bounce";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import { getLocale } from "next-intl/server";
 
 const locales = ["th", "en"];
 
@@ -23,12 +24,10 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-  params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
+  const locale = await getLocale();
   if (!locales.includes(locale)) {
     notFound();
   }

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import MoreButton from "@/components/button/moreboutton";
-import Link from "next/link";
+import { Link } from "@/navigation";
 import Image from "next/image";
 import { apiNewsByPaginated } from "@/api/getNews";
 import { formatDate } from "@/helpers/formatDate";

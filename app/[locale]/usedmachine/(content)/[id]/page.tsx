@@ -6,7 +6,7 @@ import { apiUsedMachinesById } from "@/api/getUsedmachine";
 import { formatPrice } from "@/helpers/price";
 import Icon from "@/components/icon";
 import { getStarCount } from "@/helpers/rateing";
-import Link from "next/link";
+import { Link } from "@/navigation";
 import MarkDown from "@/components/markdown";
 
 export default function Page() {

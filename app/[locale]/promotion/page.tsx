@@ -4,7 +4,7 @@ import MoreButton from "@/components/button/moreboutton";
 import Brand from "@/components/Section/brand";
 import Modal from "@/components/modal";
 import { apiPromotionsByPaginated } from "@/api/getPromotion";
-import Link from "next/link";
+import { Link } from "@/navigation";
 import Image from "next/image";
 
 export default function Page() {

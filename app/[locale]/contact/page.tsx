@@ -1,6 +1,6 @@
 import Icon from "@/components/icon";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/navigation";
 
 export default function Page() {
   const images = Array.from({ length: 6 });
