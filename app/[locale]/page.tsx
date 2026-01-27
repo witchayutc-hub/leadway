@@ -1,8 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import Brand from "@/components/Section/brand";
-import Footer from "@/components/footer";
-import Navbar from "@/components/navbar";
 import Link from "next/link";
 import { apiNewsByPaginated } from "@/api/getNews";
 import { formatDate } from "@/helpers/formatDate";
@@ -310,21 +308,23 @@ export default function Home() {
                   sm:w-1/2 
                   lg:w-1/3"
                   >
-                    <div className="relative overflow-hidden">
-                      <img
-                        src={`${process.env.NEXT_PUBLIC_API_URL}${image.formats.medium.url}`}
-                        alt="product"
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                      <div className="grid mx-auto h-auto p-3.25 gap-y-2 bg-black">
-                        <span className="text-xl font-semibold line-clamp-1 text-[#ffcb00]">
-                          {item.attributes.name}
-                        </span>
-                        <span className="text-white">
-                          {formatDate("2025-12-08T12:49:50.015Z")}
-                        </span>
+                    <Link href={`/news/${item.attributes.slug}`}>
+                      <div className="relative overflow-hidden">
+                        <img
+                          src={`${process.env.NEXT_PUBLIC_API_URL}${image.formats.medium.url}`}
+                          alt="product"
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="grid mx-auto h-auto p-3.25 gap-y-2 bg-black">
+                          <span className="text-xl font-semibold line-clamp-1 text-[#ffcb00]">
+                            {item.attributes.name}
+                          </span>
+                          <span className="text-white">
+                            {formatDate("2025-12-08T12:49:50.015Z")}
+                          </span>
+                        </div>
                       </div>
-                    </div>
+                    </Link>
                   </div>
                 );
               })}

@@ -81,9 +81,9 @@ export default function Navbar() {
           onClick={() => setOpenMenu(!openMenu)}
           className="flex lg:hidden lg:flex-1 lg:justify-end"
         >
-          <span className="px-4 py-2 text-sm font-semibold text-[#7e7e7d] hover:text-[#ffab00]">
-            MENU
-          </span>
+          <div className="flex py-1 px-2 rounded-md cursor-pointer border border-[#d2d7df]">
+            <Icon name="list" size={28} />
+          </div>
         </button>
         <div
           className={`absolute top-full left-0 z-50 w-full overflow-hidden bg-[#1E4183]  ${openProductMenu ? "max-h-screen" : "max-h-0"}

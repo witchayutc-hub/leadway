@@ -6,7 +6,6 @@ import SpecButton from "@/components/button/specButton";
 import { apiSumitomoByPaginated } from "@/api/getSumitomo";
 import MoreButton from "@/components/button/moreboutton";
 import { apiPaversPluralByPaginated } from "@/api/getPaversPlural";
-import { useSearchParams } from "next/navigation";
 
 type SpecButton = {
   id: number;
@@ -17,7 +16,6 @@ type SpecButton = {
 };
 
 export default function Page() {
-  const searchParams = useSearchParams();
   const itemsPerPage = 6;
   const [sumitomo, setSumitomo] = useState<any[]>([]);
   const [page, setPage] = useState(1);
@@ -107,19 +105,17 @@ export default function Page() {
   useEffect(() => {
     const hash = window.location.hash.replace("#", "");
 
-    if (hash) {
-      const timer = setTimeout(() => {
-        const element = document.getElementById(hash);
-        if (element) {
-          element.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-          });
-        }
-      }, 500);
-      return () => clearTimeout(timer);
-    }
-  }, [searchParams]);
+    if (!hash) return;
+
+    const timer = setTimeout(() => {
+      document.getElementById(hash)?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">

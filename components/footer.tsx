@@ -13,7 +13,7 @@ export default function Footer() {
           className="object-cover"
         />
         <div
-          className="relative z-0 grid max-w-7xl mx-auto grid-cols-1 gap-8 px-4 mb-12 pb-12
+          className="relative z-0 grid max-w-7xl mx-auto grid-cols-1 gap-8 px-4 mb-4 pb-12
             sm:px-6
             lg:grid-cols-3 lg:px-8"
         >
