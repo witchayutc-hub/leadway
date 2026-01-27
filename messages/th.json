@@ -1,5 +1,11 @@
 {
-  "placeholder": {
-    "name_surname": "ชื่อ-นามสกุล"
+  "Navbar": {
+    "home": "หน้าแรก",
+    "products_and_services": "สินค้าและบริการ",
+    "service": "บริการ",
+    "usedmachine": "รถมือสอง",
+    "promotion": "โปรโมชั่น",
+    "news": "ข่าวสารและกิจกรรม",
+    "contact": "ติดต่อ"
   }
 }

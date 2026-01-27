@@ -34,6 +34,8 @@ export default async function RootLayout({
   }
 
   const messages = await getMessages();
+  console.log("language =", locale);
+  console.log(`Loaded ${locale} messages:`, messages);
   return (
     <html lang={locale}>
       <head>
@@ -43,19 +45,14 @@ export default async function RootLayout({
         />
       </head>
       <body className={`${kanit.variable} antialiased`}>
-        <header
-          className="fixed top-0 z-50 w-full shadow-md 
-        bg-white"
-        >
-          <Navbar />
-        </header>
-        <main className="pt-20">
-          <NextIntlClientProvider messages={messages}>
-            {children}
-          </NextIntlClientProvider>
-        </main>
-        <Bounce />
-        <Footer />
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <header className="fixed top-0 z-50 w-full shadow-md bg-white">
+            <Navbar />
+          </header>
+          <main className="pt-20">{children}</main>
+          <Bounce />
+          <Footer />
+        </NextIntlClientProvider>
       </body>
     </html>
   );

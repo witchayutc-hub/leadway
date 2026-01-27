@@ -2,34 +2,47 @@
 import { useState } from "react";
 import Link from "next/link";
 import Icon from "@/components/icon";
-
-const menu = [
-  { id: 1, title: "หน้าแรก", href: "/" },
-  {
-    id: 2,
-    title: "สินค้าและบริการ",
-    href: "",
-    submenu: [
-      { id: "2-1", title: "SUMITOMO", href: "/sumitomo" },
-      { id: "2-2", title: "SANY", href: "/sany" },
-      { id: "2-3", title: "SANY EV", href: "/sany-ev" },
-      { id: "2-4", title: "METSO", href: "/metso" },
-      { id: "2-5", title: "JGM", href: "/jgm" },
-      { id: "2-6", title: "บริการ", href: "/service" },
-      { id: "2-7", title: "รถมือสอง", href: "/usedmachine" },
-    ],
-  },
-  { id: 3, title: "โปรโมชั่น", href: "/promotion" },
-  { id: 4, title: "ข่าวสารและกิจกรรม", href: "/news" },
-  { id: 5, title: "ติดต่อ", href: "/contact" },
-  { id: 6, title: "1462", href: "tel:1462" },
-  { id: 7, title: "TH | EN", href: "/" },
-];
+import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
+import { usePathname, useRouter } from "@/navigation";
 
 export default function Navbar() {
+  const t = useTranslations("Navbar");
   const [openMenu, setOpenMenu] = useState<boolean | null>(null);
   const [openProductMenu, setOpenProductMenu] = useState<boolean | null>(null);
   const [openSubmenu, setOpenSubmenu] = useState<number | null>(null);
+
+  const locale = useLocale();
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const changeLanguage = (nextLocale: "th" | "en") => {
+    if (nextLocale === locale) return;
+    router.replace(pathname, { locale: nextLocale });
+  };
+
+  const menu = [
+    { id: 1, title: t("home"), href: "/" },
+    {
+      id: 2,
+      title: t("products_and_services"),
+      href: "#",
+      submenu: [
+        { id: "2-1", title: "SUMITOMO", href: "/sumitomo" },
+        { id: "2-2", title: "SANY", href: "/sany" },
+        { id: "2-3", title: "SANY EV", href: "/sany-ev" },
+        { id: "2-4", title: "METSO", href: "/metso" },
+        { id: "2-5", title: "JGM", href: "/jgm" },
+        { id: "2-6", title: t("service"), href: "/service" },
+        { id: "2-7", title: t("usedmachine"), href: "/usedmachine" },
+      ],
+    },
+    { id: 3, title: t("promotion"), href: "/promotion" },
+    { id: 4, title: t("news"), href: "/news" },
+    { id: 5, title: t("contact"), href: "/contact" },
+    { id: 6, title: "1462", href: "tel:1462" },
+    { id: 7, title: "TH | EN", href: "/" },
+  ];
 
   return (
     <header className="fixed top-0 z-50 w-full shadow-lg bg-white">
@@ -42,23 +55,45 @@ export default function Navbar() {
           />
         </Link>
         <div className="hidden text-base lg:flex lg:gap-5 xl:gap-x-12">
-          {menu.map((item) =>
-            item.id === 2 ? (
-              <button
-                key={item.id}
-                onClick={() => setOpenProductMenu(!openProductMenu)}
-                className="font-semibold cursor-pointer text-[#7e7e7d] group-hover:text-black hover:text-[#ffab00]"
-              >
-                {item.title}
-                <span
-                  className={`ml-1 inline-block transition-transform duration-300 ease-in-out ${
-                    openProductMenu ? "rotate-180" : "rotate-0"
-                  }`}
+          {menu.map((item) => {
+            if (item.id === 2) {
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => setOpenProductMenu(!openProductMenu)}
+                  className="font-semibold cursor-pointer text-[#7e7e7d] group-hover:text-black hover:text-[#ffab00]"
                 >
-                  ▾
-                </span>
-              </button>
-            ) : (
+                  {item.title}
+                  <span
+                    className={`ml-1 inline-block transition-transform duration-300 ease-in-out ${
+                      openProductMenu ? "rotate-180" : "rotate-0"
+                    }`}
+                  >
+                    ▾
+                  </span>
+                </button>
+              );
+            }
+            if (item.id === 7) {
+              return (
+                <div key={item.id} className="flex gap-1 text-[#7e7e7d]">
+                  <button
+                    onClick={() => changeLanguage("th")}
+                    className={`font-semibold group-hover:text-black ${locale === "th" ? "text-[#ffab00]" : ""} hover:text-[#ffab00] cursor-pointer`}
+                  >
+                    TH
+                  </button>
+                  <span>|</span>
+                  <button
+                    onClick={() => changeLanguage("en")}
+                    className={`font-semibold group-hover:text-black ${locale === "en" ? "text-[#ffab00]" : ""} hover:text-[#ffab00] cursor-pointer`}
+                  >
+                    EN
+                  </button>
+                </div>
+              );
+            }
+            return (
               <Link
                 key={item.id}
                 href={item.href}
@@ -74,8 +109,8 @@ export default function Navbar() {
                   item.title
                 )}
               </Link>
-            ),
-          )}
+            );
+          })}
         </div>
         <button
           onClick={() => setOpenMenu(!openMenu)}
@@ -151,6 +186,22 @@ export default function Navbar() {
                       <div className="flex gap-1 items-center">
                         <Icon name="phone" fill="#EE4B75" />
                         {item.title}
+                      </div>
+                    ) : item.id === 7 ? (
+                      <div key={item.id} className="flex gap-1 text-white">
+                        <button
+                          onClick={() => changeLanguage("th")}
+                          className={`${locale === "th" ? "text-[#ffab00]" : ""} cursor-pointer`}
+                        >
+                          TH
+                        </button>
+                        <span>|</span>
+                        <button
+                          onClick={() => changeLanguage("en")}
+                          className={`${locale === "en" ? "text-[#ffab00]" : ""} cursor-pointer`}
+                        >
+                          EN
+                        </button>
                       </div>
                     ) : (
                       item.title
