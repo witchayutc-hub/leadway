@@ -6,8 +6,12 @@ import Modal from "@/components/modal";
 import { apiPromotionsByPaginated } from "@/api/getPromotion";
 import { Link } from "@/navigation";
 import Image from "next/image";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function Page() {
+  const locale = useLocale();
+  const t = useTranslations("Promotion");
+
   const itemsPerPage = 6;
 
   const [promotions, setPromotions] = useState<any[]>([]);
@@ -19,8 +23,11 @@ export default function Page() {
 
   const fetchPromotions = async (pageNumber: number) => {
     try {
-      const response = await apiPromotionsByPaginated(pageNumber, itemsPerPage);
-
+      const response = await apiPromotionsByPaginated(
+        pageNumber,
+        itemsPerPage,
+        locale,
+      );
       setPromotions((prev) => {
         const existingIds = new Set(prev.map((n) => n.id));
         const newItems = response.data.filter(
@@ -42,14 +49,18 @@ export default function Page() {
 
   if (error) {
     return (
-      <div className="text-red-600 text-center py-10">
+      <div className="min-h-screen flex justify-center py-10 text-5xl text-red-600">
         Failed to load data. Please try again.
       </div>
     );
   }
 
-  if (!promotions) {
-    return <div className="text-black text-center py-10">Loading...</div>;
+  if (promotions.length === 0) {
+    return (
+      <div className="min-h-screen flex justify-center py-10 text-5xl">
+        Loading...
+      </div>
+    );
   }
 
   return (
@@ -67,7 +78,7 @@ export default function Page() {
         <section className="bg-white">
           <div className="flex w-full justify-center items-center max-w-7xl mx-auto px-3 py-12">
             <h1 className="text-3xl sm:text-4xl lg:text-[40px] font-semibold text-[#052465]">
-              โปรโมชั่น
+              {t("promotions")}
             </h1>
           </div>
         </section>

@@ -1,55 +1,52 @@
 "use client";
 import Icon from "@/components/icon";
+import { useTranslations } from "next-intl";
 
 export default function Page() {
+  const t = useTranslations("Service");
   const services = [
     {
-      title: "บริการทางด้านการเงิน",
-      description:
-        "บริษัทให้บริการคำปรึกษาและสินเชื่อลีสซิ่งผ่านสถาบันการเงินชั้นนำ ทำให้ลูกค้าสามารถใช้เครื่องจักรกลหนักได้อย่างสะดวก โดยมีเงื่อนไขการเช่าซื้อที่เหมาะสมกับกระแสเงินสดและการชำระที่ยืดหยุ่น.",
+      title: t("financial.title"),
+      description: t("financial.description"),
       Icon: <Icon name="building" size={64} fill="#0D6EFD" />,
     },
     {
-      title: "บริการหลังการขาย",
-      description:
-        "มุ่งเน้นการพัฒนาทีมวิศวกรและช่างผู้เชี่ยวชาญ ด้วยการฝึกอบรม, การซ่อมบำรุง, การวิเคราะห์ปัญหา, และตรวจเช็คการใช้งาน เพื่อให้คำแนะนำและบริการหลังการขายที่มีคุณภาพ.",
+      title: t("after_sale.title"),
+      description: t("after_sale.description"),
       Icon: <Icon name="hand" size={64} fill="#0D6EFD" />,
     },
     {
-      title: "บริการด้านอะไหล่",
-      description:
-        "ให้บริการอะไหล่แท้ที่ได้รับการรับรองจากผู้ผลิตอย่างเป็นทางการ, เพื่อความยึดถือในคุณภาพและความเชื่อมั่นในการขับเคลื่อนระบบงาน.",
+      title: t("spare.title"),
+      description: t("spare.description"),
       Icon: <Icon name="gear" size={64} fill="#0D6EFD" />,
     },
     {
-      title: "ศูนย์ลูกค้าสัมพันธ์",
-      description:
-        "บริการข้อมูลเครื่องจักรเบื้องต้น, แนะนำที่ปรึกษาการขาย, แจ้งรายละเอียดโปรโมชั่น, และสิทธิประโยชน์ที่ดีที่สุดสำหรับลูกค้า.",
+      title: t("customer.title"),
+      description: t("customer.description"),
       Icon: <Icon name="userservice" size={64} fill="#0D6EFD" />,
     },
     {
-      title: "บริการช่วยเหลือเร่งด่วน",
-      description:
-        "LEADWAY MOBILE SERVICE ที่มีทีมช่างผู้ชำนาญการพร้อมให้บริการด่วนที่สถานที่.",
+      title: t("hotline.title"),
+      description: t("hotline.description"),
       Icon: <Icon name="fireservice" size={64} fill="#0D6EFD" />,
     },
     {
-      title: "ศูนย์บริการ ลีดเวย์ 15 สาขาทั่วไทย",
-      description:
-        "มีศูนย์บริการทั่วประเทศ 15 สาขาเพื่อความอุ่นใจและความสะดวกในการติดต่อ, มีทีมงานและผู้เชี่ยวชาญที่ให้บริการและช่วยเหลือด้วยเครื่องมือทันสมัย.",
+      title: t("service_centers.title"),
+      description: t("service_centers.description"),
       Icon: <Icon name="mapservice" size={64} fill="#0D6EFD" />,
     },
   ];
 
   const serviceChecks = [
-    "การวัดประสิทธิภาพการทำงานเครื่องจักร",
-    "การทดสอบแรงดันต่ำน้ำมันเชื้อเพลิง",
-    "การทดสอบตัดการจ่ายน้ำมันที่หัวฉีดเครื่องยนต์",
-    "การตรวจสภาพระบบเครื่องยนต์",
-    "การตรวจสภาพระบบไฟฟ้า",
-    "การตรวจสภาพระบบตัวเดิน",
-    "การตรวจสภาพระบบไฮดรอลิก",
-    "การทดสอบแรงอัดในกระบอกสูบ",
+    t("service_checks.performance"),
+    t("service_checks.fuel"),
+    t("service_checks.engine_injector"),
+    t("service_checks.engine_system"),
+    t("service_checks.electrical"),
+    t("service_checks.walker"),
+    t("service_checks.suspension"),
+    t("service_checks.hydraulic"),
+    t("service_checks.cylinder"),
   ];
 
   const gallery = {
@@ -83,7 +80,7 @@ export default function Page() {
                 sm:text-4xl
                 lg:text-[40px]"
             >
-              บริการของเรา
+              {t("our_business")}
             </h1>
           </div>
         </section>
@@ -121,12 +118,12 @@ export default function Page() {
                 sm:text-4xl
                 lg:text-[40px]"
             >
-              บริการตรวจสภาพและซ่อมบำรุงเครื่องจักร
+              {t("machine_testing-services")}
             </h1>
           </div>
         </section>
         <section>
-          <div className="flex justify-center w-full px-3 py-12 max-w-7xl mx-auto">
+          <div className="flex justify-center w-full px-3 pt-12 max-w-7xl mx-auto">
             <div
               className="grid grid-cols-1 gap-y-3 gap-x-2 p-3 w-full
                 sm:grid-cols-2

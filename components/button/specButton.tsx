@@ -1,5 +1,6 @@
 import { downloadFile } from "@/helpers/download";
 import { Link } from "@/navigation";
+import { useTranslations } from "next-intl";
 
 type SpecButton = {
   id: number;
@@ -11,6 +12,7 @@ type SpecButton = {
 };
 
 export default function SpecButtons({ buttons }: { buttons: SpecButton[] }) {
+  const t = useTranslations("Component");
   return (
     <div className="flex flex-wrap justify-center py-4 gap-4">
       {buttons.map((button) => (
@@ -24,7 +26,7 @@ export default function SpecButtons({ buttons }: { buttons: SpecButton[] }) {
             >
               <div className="flex space-x-1 w-full">
                 <i className="bi bi-download"></i>
-                <span className="truncate">{button.label}</span>
+                <span className="truncate">{t("download_button")}</span>
               </div>
             </button>
           ) : (

@@ -1,9 +1,13 @@
 "use client";
+
+import { useTranslations } from "next-intl";
+
 type MoreButtonProps = {
   onClick: () => void;
   onDisabled?: boolean;
 };
 export default function MoreButton({ onClick, onDisabled }: MoreButtonProps) {
+  const t = useTranslations("Component");
   return (
     <button
       className="flex items-center justify-center h-11 px-10 rounded-full shadow-xl/20 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50
@@ -11,7 +15,7 @@ export default function MoreButton({ onClick, onDisabled }: MoreButtonProps) {
       disabled={onDisabled}
       onClick={onClick}
     >
-      ดูเพิ่มเติม
+      {t("more_button")}
     </button>
   );
 }

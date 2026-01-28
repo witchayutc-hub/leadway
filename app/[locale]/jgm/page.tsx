@@ -1,25 +1,27 @@
 "use client";
 import SpecButtons from "@/components/button/specButton";
 import SpecTable from "@/components/specTable";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 
 export default function Page() {
+  const t = useTranslations("Jgm");
   const specs1 = [
-    { label: "กำลังเครื่องยนต์ (แรงม้า)", value: "75" },
-    { label: "น้ำหนักปฏิบัติงาน (กก.)", value: "7,500" },
-    { label: "ความจุบุ้งกี๋ (ลบ.ม.)", value: "0.3" },
-    { label: "ความกว้างปากคีบ (มม.)", value: "1,360" },
-    { label: "ระยะยกสูงสุด (ม.)", value: "7,600" },
-    { label: "น้ำหนักยกสูงสุด (กก.)", value: "1,200" },
+    { label: t("power"), value: "75" },
+    { label: t("weight"), value: "7,500" },
+    { label: t("capacity"), value: "0.3" },
+    { label: t("width"), value: "1,360" },
+    { label: t("lifting_height"), value: "7,600" },
+    { label: t("lifting_weight"), value: "1,200" },
   ];
 
   const specs2 = [
-    { label: "กำลังมอเตอร์ขับเคลื่อน (กิโลวัตต์)", value: "160" },
-    { label: "น้ำหนักปฏิบัติงาน (กก.)", value: "18,400" },
-    { label: "ความจุบุ้งกี๋ (ลบ.ม.)", value: "2.4-4.5" },
-    { label: "ขนาดแบตเตอรี่ (กิโลวัตต์)", value: "350" },
-    { label: "มุมเลี้ยว (องศา)", value: "35" },
-    { label: "น้ำหนักยกสูงสุด (กก.)", value: "5,500" },
+    { label: t("motor"), value: "160" },
+    { label: t("weight"), value: "18,400" },
+    { label: t("capacity"), value: "2.4-4.5" },
+    { label: t("battery"), value: "350" },
+    { label: t("angle"), value: "35" },
+    { label: t("lifting_weight"), value: "5,500" },
   ];
 
   return (
@@ -138,7 +140,7 @@ export default function Page() {
                 />
                 <div className="w-full p-2 text-center bg-black">
                   <span className="text-xl text-white">
-                    ห้องโดยสารกว้างขวาง
+                    {t("spacious_passenger_room")}
                   </span>
                 </div>
               </div>
@@ -149,7 +151,9 @@ export default function Page() {
                   className="object-cover"
                 />
                 <div className="w-full p-2 text-center bg-black">
-                  <span className="text-xl text-white">จอแสดงผล LED</span>
+                  <span className="text-xl text-white">
+                    {t("led_display_screen")}
+                  </span>
                 </div>
               </div>
               <div className="grid place-items-center gap-y-1">
@@ -160,7 +164,7 @@ export default function Page() {
                 />
                 <div className="w-full p-2 text-center bg-black">
                   <span className="text-xl text-white">
-                    ปรับเปลี่ยนอุปกรณ์ตามลักษณะงาน
+                    {t("requirements")}
                   </span>
                 </div>
               </div>
@@ -216,7 +220,9 @@ export default function Page() {
                   className="object-cover"
                 />
                 <div className="w-full p-2 text-center bg-black">
-                  <span className="text-xl text-white">บุ้งกี๋ขนาดใหญ่</span>
+                  <span className="text-xl text-white">
+                    {t("large_bucket")}
+                  </span>
                 </div>
               </div>
               <div className="grid place-items-center gap-y-1">
@@ -226,7 +232,9 @@ export default function Page() {
                   className="object-cover"
                 />
                 <div className="w-full p-2 text-center bg-black">
-                  <span className="text-xl text-white">กันชนสุดแกร่ง</span>
+                  <span className="text-xl text-white">
+                    {t("strong_bumper")}
+                  </span>
                 </div>
               </div>
               <div className="grid place-items-center gap-y-1">
@@ -237,7 +245,7 @@ export default function Page() {
                 />
                 <div className="w-full p-2 text-center bg-black">
                   <span className="text-xl text-white">
-                    ล้อยางลุยได้ทุกพื้นที่
+                    {t("rubber_wheel")}
                   </span>
                 </div>
               </div>

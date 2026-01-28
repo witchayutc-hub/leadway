@@ -8,8 +8,10 @@ import Icon from "@/components/icon";
 import { getStarCount } from "@/helpers/rateing";
 import { Link } from "@/navigation";
 import MarkDown from "@/components/markdown";
+import { useTranslations } from "next-intl";
 
 export default function Page() {
+  const t = useTranslations("UsedMachine");
   const { id } = useParams();
 
   const [data, setData] = useState<any>(null);
@@ -47,14 +49,18 @@ export default function Page() {
 
   if (error) {
     return (
-      <div className="text-red-600 text-center py-10">
+      <div className="min-h-screen flex justify-center py-10 text-5xl text-red-600">
         Failed to load data. Please try again.
       </div>
     );
   }
 
-  if (!data) {
-    return <div className="text-black text-center py-10">Loading...</div>;
+  if (!data || data.length === 0) {
+    return (
+      <div className="min-h-screen flex justify-center py-10 text-5xl">
+        Loading...
+      </div>
+    );
   }
 
   return (
@@ -72,7 +78,7 @@ export default function Page() {
         <section className="bg-white">
           <div className="flex w-full justify-center items-center max-w-7xl mx-auto px-3 py-12">
             <h1 className="text-3xl sm:text-4xl lg:text-[40px] font-semibold text-[#052465]">
-              รายละเอียด
+              {t("detail")}
             </h1>
           </div>
         </section>
@@ -115,7 +121,7 @@ export default function Page() {
             <div className="w-full min-w-0 md:w-4/12 text-[#212529]">
               <div className="mb-12">
                 <span className="text-2xl font-semibold">
-                  ข้อมูลเฉพาะเกี่ยวกับรถ
+                  {t("car_information")}
                 </span>
               </div>
               <div className="text-xl">
@@ -124,7 +130,7 @@ export default function Page() {
                   <span>{data.attributes?.brand}</span>
                 </div>
                 <div className="flex justify-between py-4 border-b border-gray-300">
-                  <span>รุ่น</span>
+                  <span> {t("brand")}</span>
                   <span>{data.attributes?.model}</span>
                 </div>
                 <div className="flex justify-between py-4 border-b border-gray-300">
@@ -132,15 +138,15 @@ export default function Page() {
                   <span>{data.attributes?.sn}</span>
                 </div>
                 <div className="flex justify-between py-4 border-b border-gray-300">
-                  <span>ประเภท</span>
+                  <span> {t("type")}</span>
                   <span>{data.attributes?.type}</span>
                 </div>
                 <div className="flex justify-between py-4 border-b border-gray-300">
-                  <span>การใช้งาน</span>
+                  <span> {t("usage")}</span>
                   <span>{data.attributes?.working_hours}</span>
                 </div>
                 <div className="flex justify-between py-4 border-b border-gray-300">
-                  <span>คะแนนประเมิน</span>
+                  <span> {t("score")}</span>
                   <span>
                     {[...Array(5)].map((_, i) => (
                       <Icon
@@ -157,7 +163,7 @@ export default function Page() {
                   </span>
                 </div>
                 <div className="flex justify-between py-4 border-b border-gray-300">
-                  <span>เพิ่มเติม</span>
+                  <span> {t("additional")}</span>
                   <div className="flex justify-end gap-x-1">
                     <Link
                       href={data.attributes.link_youtube}
@@ -201,7 +207,7 @@ export default function Page() {
                     </div>
                   </Link>
                   <div className="px-4">
-                    <span className="text-base">สนใจซื้อรถมือสองโดนใจคลิก</span>
+                    <span className="text-base"> {t("interested")}</span>
                   </div>
                 </div>
               </div>
@@ -210,7 +216,7 @@ export default function Page() {
         </section>
         <section>
           <div className="flex flex-col max-w-7xl mx-auto px-3 text-black">
-            <span className="text-4xl py-6">เพิ่มเติม</span>
+            <span className="text-4xl py-6"> {t("additional")}</span>
             <div className="py-3 whitespace-pre-line wrap-break-word">
               <MarkDown description={data.attributes?.details ?? ""} />
             </div>

@@ -95,14 +95,18 @@ export default function Home() {
 
   if (error || productError || bannersError) {
     return (
-      <div className="text-red-600 text-center py-10">
+      <div className="min-h-screen flex justify-center py-10 text-5xl text-red-600">
         Failed to load data. Please try again.
       </div>
     );
   }
 
-  if (!news || !products || !banners) {
-    return <div className="text-black text-center py-10">Loading...</div>;
+  if (news.length === 0 || products.length === 0 || banners.length === 0) {
+    return (
+      <div className="min-h-screen flex justify-center py-10 text-5xl">
+        Loading...
+      </div>
+    );
   }
 
   return (

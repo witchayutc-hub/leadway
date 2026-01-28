@@ -27,7 +27,7 @@ export async function getData(endpoint: string) {
 }
 
 // GET ALL
-export async function getAll(page: any, pageSize: any, endpoint: string) {
+export async function getAll(page: number, pageSize: number, endpoint: string) {
   const url = `${URL}${endpoint}&populate=*&pagination[page]=${page}&pagination[pageSize]=${pageSize}`;
   console.log(`Fetching paginated entries from: ${url}`);
   try {

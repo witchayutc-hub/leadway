@@ -1,25 +1,25 @@
 import { getData, getAll } from "@/api/lib/callApi";
 
 // GET CONCRETE MIXER
-export const apiConcrete = () =>
+export const apiConcrete = (locale: string) =>
   getData(
-    "/api/sanies?sort[0]=number:asc&populate=*&filters[sany_type][uid][$eq]=concrete-mixers-truck&filters[sany_type][fuel][$eq]=sany",
+    `/api/sanies?sort[0]=number:asc&populate=*&filters[sany_type][uid][$eq]=concrete-mixers-truck&filters[sany_type][fuel][$eq]=sany&locale=${locale}`,
   );
 
 // GET DIESE BY PAGINATED
-export const apiDiesel = (page: number, pageSize: number) =>
+export const apiDiesel = (page: number, pageSize: number, locale: string) =>
   getAll(
     page,
     pageSize,
-    "/api/sanies?sort[0]=publishedAt:asc&filters[sany_type][uid][$eq]=diesel",
+    `/api/sanies?sort[0]=publishedAt:asc&filters[sany_type][uid][$eq]=diesel&locale=${locale}`,
   );
 
 // GET HYBRID BY PAGINATED
-export const apiHybrid = (page: number, pageSize: number) =>
+export const apiHybrid = (page: number, pageSize: number, locale: string) =>
   getAll(
     page,
     pageSize,
-    "/api/sanies?sort[0]=publishedAt:asc&filters[sany_type][uid][$eq]=hybrid",
+    `/api/sanies?sort[0]=publishedAt:asc&filters[sany_type][uid][$eq]=hybrid&locale=${locale}`,
   );
 
 // GET MINEING TRUCK

@@ -8,39 +8,10 @@ import { apiUsedMachinesByPaginated } from "@/api/getUsedmachine";
 import { formatDate } from "@/helpers/formatDate";
 import { getStarCount } from "@/helpers/rateing";
 import { formatPrice } from "@/helpers/price";
+import { useTranslations } from "next-intl";
 
 export default function Page() {
-  const news = [
-    {
-      id: 1,
-      title: "SUMITOMO SH130-6 (STN130T6J00BH2993)",
-      image: "https://app.leadway.co.th/uploads/S_7725108_0_5e37742dd7.jpg",
-      price: "฿2,650,000",
-      discount: "฿2,500,000",
-    },
-    {
-      id: 2,
-      title: "SUMITOMO SH130-6 (STN130T6J00BH2993)",
-      image: "https://app.leadway.co.th/uploads/S_7725108_0_5e37742dd7.jpg",
-      price: "฿2,650,000",
-      discount: "฿2,500,000",
-    },
-    {
-      id: 3,
-      title: "SUMITOMO SH130-6 (STN130T6J00BH2993)",
-      image: "https://app.leadway.co.th/uploads/S_7725108_0_5e37742dd7.jpg",
-      price: "฿2,650,000",
-      discount: "฿2,500,000",
-    },
-    {
-      id: 4,
-      title: "SUMITOMO SH130-6 (STN130T6J00BH2993)",
-      image: "https://app.leadway.co.th/uploads/S_7725108_0_5e37742dd7.jpg",
-      price: "฿2,650,000",
-      discount: "฿2,500,000",
-    },
-  ];
-
+  const t = useTranslations("UsedMachine");
   const itemsPerPage = 6;
 
   const [usedMachines, setUsedMachines] = useState<any[]>([]);
@@ -76,14 +47,18 @@ export default function Page() {
 
   if (error) {
     return (
-      <div className="text-red-600 text-center py-10">
+      <div className="min-h-screen flex justify-center py-10 text-5xl text-red-600">
         Failed to load data. Please try again.
       </div>
     );
   }
 
-  if (!usedMachines) {
-    return <div className="text-black text-center py-10">Loading...</div>;
+  if (!usedMachines || usedMachines.length === 0) {
+    return (
+      <div className="min-h-screen flex justify-center py-10 text-5xl">
+        Loading...
+      </div>
+    );
   }
 
   return (
@@ -105,7 +80,7 @@ export default function Page() {
                 sm:text-4xl
                 lg:text-[40px]"
             >
-              รถมือสอง
+              {t("used_machine")}
             </h1>
           </div>
         </section>
@@ -123,7 +98,7 @@ export default function Page() {
                     {item.attributes.product_status !== "active" && (
                       <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/60">
                         <span className="text-2xl font-bold text-white">
-                          ขายแล้ว
+                          {t("sold_out")}
                         </span>
                       </div>
                     )}
@@ -216,7 +191,7 @@ export default function Page() {
                         {item.attributes.name}
                       </Link>
                       <div className="flex justify-between items-center">
-                        <span className="text-black mr-2">คะแนนประเมิน</span>
+                        <span className="text-black mr-2">{t("score")}</span>
                         <div className="flex flex-wrap justify-center">
                           {[...Array(5)].map((_, i) => (
                             <Icon

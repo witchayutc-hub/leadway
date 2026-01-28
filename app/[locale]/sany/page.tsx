@@ -3,18 +3,20 @@
 import { apiConcrete, apiDiesel, apiHybrid } from "@/api/getSany";
 import SpecButton from "@/components/button/specButton";
 import SpecTable from "@/components/specTable";
-import { cutAfterPipe } from "@/helpers/cutText";
+import { cutAfterPipe, cutBeforePipe } from "@/helpers/cutText";
 import Image from "next/image";
 import { Link } from "@/navigation";
 import { useEffect, useState } from "react";
+import { useLocale } from "next-intl";
 
 export default function Page() {
+  const locale = useLocale();
   const [concrete, setConcrete] = useState<any[]>([]);
   const [error, setError] = useState(false);
 
   const fetchSany = async () => {
     try {
-      const response = await apiConcrete();
+      const response = await apiConcrete(locale);
 
       setConcrete((prev) => {
         const existingIds = new Set(prev.map((n) => n.id));
@@ -37,7 +39,7 @@ export default function Page() {
 
   const fetchSanyDiesel = async (pageNumber: number) => {
     try {
-      const response = await apiDiesel(pageNumber, itemsPerPage);
+      const response = await apiDiesel(pageNumber, itemsPerPage, locale);
 
       setDiesel((prev) => {
         const existingIds = new Set(prev.map((n) => n.id));
@@ -60,7 +62,7 @@ export default function Page() {
 
   const fetchSanyHybrid = async (pageNumber: number) => {
     try {
-      const response = await apiHybrid(pageNumber, itemsHybridPerPage);
+      const response = await apiHybrid(pageNumber, itemsHybridPerPage, locale);
 
       setHybridl((prev) => {
         const existingIds = new Set(prev.map((n) => n.id));
@@ -82,6 +84,43 @@ export default function Page() {
     fetchSanyHybrid(pageHybrid);
   }, []);
 
+  useEffect(() => {
+    const hash = window.location.hash.replace("#", "");
+
+    if (!hash) return;
+
+    const timer = setTimeout(() => {
+      document.getElementById(hash)?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (error) {
+    return (
+      <div className="min-h-screen text-center py-10 text-red-600 ">
+        Failed to load data. Please try again.
+      </div>
+    );
+  }
+  if (
+    !hybrid ||
+    hybrid.length === 0 ||
+    !diesel ||
+    diesel.length === 0 ||
+    !concrete ||
+    concrete.length === 0
+  ) {
+    return (
+      <div className="min-h-screen flex justify-center py-10 text-5xl">
+        Loading...
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-white">
       <main>
@@ -96,7 +135,7 @@ export default function Page() {
             />
           </div>
         </section>
-        <section>
+        <section id="image-concrete-mixers-truck">
           <div className="relative w-full aspect-video">
             <Image
               src="/image/PRODUCTS _ SERVICE SANY BG-01.png"
@@ -182,9 +221,13 @@ export default function Page() {
                             />
                             <div className="flex justify-center items-center h-12 bg-[#A1272D]">
                               <span className="text-xl text-white">
-                                {cutAfterPipe(
-                                  img?.attributes?.alternativeText,
-                                ) ?? ""}
+                                {locale === "th"
+                                  ? (cutAfterPipe(
+                                      img?.attributes?.alternativeText,
+                                    ) ?? "")
+                                  : (cutBeforePipe(
+                                      img?.attributes?.alternativeText,
+                                    ) ?? "")}
                               </span>
                             </div>
                           </div>
@@ -197,7 +240,7 @@ export default function Page() {
             })}
           </div>
         </section>
-        <section>
+        <section id="MINING_TRUCK">
           <div className="max-w-7xl mx-auto">
             <div className="grid px-3 py-6">
               <div
@@ -276,9 +319,9 @@ export default function Page() {
           </div>
         </section>
         <section>
-          <div className="max-w-7xl py-6 mx-auto text-center">
-            <div>
-              <span className="text-5xl text-[#052C65]">Diesel</span>
+          <div className="max-w-7xl py-6 mx-auto ">
+            <div className="text-center">
+              <span className="text-5xl  text-[#052C65]">Diesel</span>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 p-4">
               {diesel.map((item) => {
@@ -287,19 +330,25 @@ export default function Page() {
                 return (
                   <div key={item.id} id={`${item.attributes.uid}`}>
                     <div className="grid">
-                      <img
-                        src={`${process.env.NEXT_PUBLIC_API_URL}${image.formats.medium.url}`}
-                        className="w-full h-full object-cover aspect-video"
-                      />
-                      <SpecTable
-                        specs={Object.entries(item.attributes.detail).map(
-                          ([label, value]) => ({
-                            label,
-                            value:
-                              typeof value === "string" ? value : String(value),
-                          }),
-                        )}
-                      />
+                      <div>
+                        <div className="pb-2">
+                          <img
+                            src={`${process.env.NEXT_PUBLIC_API_URL}${image.formats.medium.url}`}
+                            className="w-full h-full object-cover aspect-video"
+                          />
+                        </div>
+                        <SpecTable
+                          specs={Object.entries(item.attributes.detail).map(
+                            ([label, value]) => ({
+                              label,
+                              value:
+                                typeof value === "string"
+                                  ? value
+                                  : String(value),
+                            }),
+                          )}
+                        />
+                      </div>
                       <SpecButton
                         buttons={[
                           {
@@ -331,8 +380,8 @@ export default function Page() {
           </div>
         </section>
         <section>
-          <div className="max-w-7xl py-6 mx-auto text-center">
-            <div>
+          <div className="max-w-7xl py-6 mx-auto">
+            <div className="text-center">
               <span className="text-5xl text-[#052C65]">Hybrid</span>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 p-4">
@@ -342,19 +391,25 @@ export default function Page() {
                 return (
                   <div key={item.id} id={`${item.attributes.uid}`}>
                     <div className="grid">
-                      <img
-                        src={`${process.env.NEXT_PUBLIC_API_URL}${image.formats.medium.url}`}
-                        className="w-full h-full object-cover aspect-video"
-                      />
-                      <SpecTable
-                        specs={Object.entries(item.attributes.detail).map(
-                          ([label, value]) => ({
-                            label,
-                            value:
-                              typeof value === "string" ? value : String(value),
-                          }),
-                        )}
-                      />
+                      <div>
+                        <div className="pb-2">
+                          <img
+                            src={`${process.env.NEXT_PUBLIC_API_URL}${image.formats.medium.url}`}
+                            className="w-full h-full object-cover aspect-video"
+                          />
+                        </div>
+                        <SpecTable
+                          specs={Object.entries(item.attributes.detail).map(
+                            ([label, value]) => ({
+                              label,
+                              value:
+                                typeof value === "string"
+                                  ? value
+                                  : String(value),
+                            }),
+                          )}
+                        />
+                      </div>
                       <SpecButton
                         buttons={[
                           {

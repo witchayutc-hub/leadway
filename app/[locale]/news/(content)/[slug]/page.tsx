@@ -5,8 +5,10 @@ import { useParams } from "next/navigation";
 import { apiNewsBySlug } from "@/api/getNews";
 import MarkDown from "@/components/markdown";
 import Image from "next/image";
+import { useLocale } from "next-intl";
 
 export default function Page() {
+  const locale = useLocale();
   const { slug } = useParams();
 
   const [data, setData] = useState<any>(null);
@@ -32,13 +34,43 @@ export default function Page() {
 
   if (error) {
     return (
-      <div className="text-red-600 text-center py-10">
+      <div className="min-h-screen flex justify-center py-10 text-5xl text-red-600">
         Failed to load data. Please try again.
       </div>
     );
   }
 
-  if (!data) return <div className="text-black">Loading...</div>;
+  if (!data || data.length === 0)
+    return (
+      <div className="min-h-screen flex justify-center py-10 text-5xl">
+        Loading...
+      </div>
+    );
+
+  if (locale === "en")
+    return (
+      <div className="min-h-screen flex justify-center py-10 text-5xl">
+        <div className="fixed inset-0 z-0">
+          <Image
+            src="/image/bg.png"
+            fill
+            alt="background"
+            className="object-cover"
+            priority
+          />
+        </div>
+        <main className="relative z-10">
+          <section>
+            <div className="flex flex-col items-center">
+              <span className="text-3xl">No information found </span>
+              <span className="text-base">
+                The news content you searched for was not found.
+              </span>
+            </div>
+          </section>
+        </main>
+      </div>
+    );
 
   return (
     <div className="min-h-screen">

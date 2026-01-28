@@ -6,9 +6,10 @@ import Image from "next/image";
 import { apiNewsByPaginated } from "@/api/getNews";
 import { formatDate } from "@/helpers/formatDate";
 import Icon from "@/components/icon";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function Page() {
+  const t = useTranslations("News");
   const locale = useLocale();
   const itemsPerPage = 6;
 
@@ -46,14 +47,18 @@ export default function Page() {
 
   if (error) {
     return (
-      <div className="text-red-600 text-center py-10">
+      <div className="min-h-screen flex justify-center py-10 text-5xl text-red-600">
         Failed to load data. Please try again.
       </div>
     );
   }
 
-  if (!news) {
-    return <div className="text-black text-center py-10">Loading...</div>;
+  if (news.length === 0) {
+    return (
+      <div className="min-h-screen flex justify-center py-10 text-5xl">
+        Loading...
+      </div>
+    );
   }
 
   return (
@@ -75,7 +80,7 @@ export default function Page() {
             sm:text-4xl
             lg:text-[40px]"
             >
-              ข่าวและกิจกรรม
+              {t("news_and_events")}
             </h1>
           </div>
         </section>
@@ -93,8 +98,15 @@ export default function Page() {
                   >
                     <Link href={`/news/${item.attributes.slug}`}>
                       <div className="group relative overflow-hidden cursor-pointer">
-                        <div className="absolute flex items-center top-2 right-2  px-2 py-1 h-7.5 z-10 text-[11px] bg-[#E90505] text-white">
-                          <span>NEWS</span>
+                        <div
+                          className={`absolute flex items-center top-2 right-2  px-2 py-1 h-7.5 z-10 text-[11px] text-white
+                            ${item.attributes.content_type === "news" ? "bg-[#E90505]" : "bg-[#0553D2]"}`}
+                        >
+                          <span>
+                            {item.attributes.content_type === "news"
+                              ? "NEWS"
+                              : "EVENT"}
+                          </span>
                         </div>
                         <img
                           src={`${process.env.NEXT_PUBLIC_API_URL}${image.formats.medium.url}`}

@@ -6,6 +6,7 @@ import SpecButton from "@/components/button/specButton";
 import { apiSumitomoByPaginated } from "@/api/getSumitomo";
 import MoreButton from "@/components/button/moreboutton";
 import { apiPaversPluralByPaginated } from "@/api/getPaversPlural";
+import { useLocale, useTranslations } from "next-intl";
 
 type SpecButton = {
   id: number;
@@ -16,6 +17,8 @@ type SpecButton = {
 };
 
 export default function Page() {
+  const t = useTranslations("Sumitomo");
+  const locale = useLocale();
   const itemsPerPage = 6;
   const [sumitomo, setSumitomo] = useState<any[]>([]);
   const [page, setPage] = useState(1);
@@ -36,7 +39,11 @@ export default function Page() {
 
   const fetchSumitomo = async (pageNumber: number) => {
     try {
-      const response = await apiSumitomoByPaginated(pageNumber, itemsPerPage);
+      const response = await apiSumitomoByPaginated(
+        pageNumber,
+        itemsPerPage,
+        locale,
+      );
 
       setSumitomo((prev) => {
         const existingIds = new Set(prev.map((n) => n.id));
@@ -64,6 +71,7 @@ export default function Page() {
       const response = await apiPaversPluralByPaginated(
         pageNumber,
         itemsPaversPerPage,
+        locale,
       );
 
       setPavers((prev) => {
@@ -185,7 +193,7 @@ export default function Page() {
         <section>
           <div className="text-center w-full max-w-7xl mx-auto p-7">
             <h1 className="text-4xl lg:text-5xl text-[#052C65]">
-              รถขุด SUMITOMO
+              {t("excavators_sumitomo")}
             </h1>
           </div>
           <div className="w-full max-w-7xl mx-auto py-12">
@@ -250,7 +258,7 @@ export default function Page() {
         <section>
           <div className="flex items-center justify-center max-w-7xl mx-auto px-6 py-12">
             <div
-              className="grid grid-cols-1 gap-x-6 gap-y-8 max-w-7xl mx-auto
+              className="grid grid-cols-1 gap-x-3 gap-y-8 max-w-7xl mx-auto
               lg:grid-cols-3"
             >
               <div className="grid place-items-center gap-y-1">
@@ -259,9 +267,9 @@ export default function Page() {
                   alt="jgm"
                   className="object-cover"
                 />
-                <div className="w-full p-2 text-center bg-[#0b5dc1]">
-                  <span className="text-xl text-white">
-                    โครงสร้างตัวถังที่แข็งแกร่ง
+                <div className="w-full lg:h-18 px-1 py-2 bg-[#0b5dc1] flex items-center justify-center text-center">
+                  <span className="text-xl text-white line-clamp-2">
+                    {t("robust")}
                   </span>
                 </div>
               </div>
@@ -271,9 +279,9 @@ export default function Page() {
                   alt="jgm"
                   className="object-cover"
                 />
-                <div className="w-full p-2 text-center bg-[#0b5dc1]">
-                  <span className="text-xl text-white">
-                    ประสิทธิภาพสูงสุด ประหยัดสูงสุด
+                <div className="w-full lg:h-18 px-1 py-2 bg-[#0b5dc1] flex items-center justify-center text-center">
+                  <span className="text-xl text-white line-clamp-2">
+                    {t("performance")}
                   </span>
                 </div>
               </div>
@@ -283,9 +291,9 @@ export default function Page() {
                   alt="jgm"
                   className="object-cover"
                 />
-                <div className="w-full p-2 text-center bg-[#0b5dc1]">
-                  <span className="text-xl text-white">
-                    ออกแบบเพื่อความสะดวกสบาย
+                <div className="w-full lg:h-18 px-1 py-2 bg-[#0b5dc1] flex items-center justify-center text-center">
+                  <span className="text-xl text-white line-clamp-2">
+                    {t("convenience")}
                   </span>
                 </div>
               </div>
@@ -307,7 +315,7 @@ export default function Page() {
         <section>
           <div className="text-center w-full max-w-7xl mx-auto p-7">
             <h1 className="text-4xl lg:text-5xl text-[#052C65]">
-              รถปูยางมะตอย SUMITOMO
+              {t("pavers_sumitomo")}
             </h1>
           </div>
           <div className="w-full max-w-7xl mx-auto py-12">

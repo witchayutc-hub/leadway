@@ -1,37 +1,37 @@
 import Icon from "@/components/icon";
 import Image from "next/image";
 import { Link } from "@/navigation";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function Page() {
+  const locale = useLocale();
+  const t = useTranslations("Contact");
   const images = Array.from({ length: 6 });
 
   const regions = [
     {
       id: 1,
-      name: "ภาคเหนือ",
+      name: t("region.northern_region"),
       color: "#8FAB29",
       branches: [
         {
           id: 1,
-          name: "สาขานครสวรรค์",
-          address:
-            "เลขที่ 88 หมู่ที่ 7 ตำบลหนองกรด อำเภอเมือง จังหวัดนครสวรรค์ 60000",
+          name: t("provinces.northern.nakhon_sawan.branch"),
+          address: t("provinces.northern.nakhon_sawan.address"),
           tel: "056 053 858",
           href: "https://maps.app.goo.gl/BRXj1GuiT4YD5usH9",
         },
         {
           id: 2,
-          name: "สาขาลำปาง",
-          address:
-            "83 หมู่ที่ 4 ถนนการไฟฟ้าฝ่ายผลิตแห่งประเทศไทย ตำบลพระบาท อำเภอเมืองลำปาง จังหวัดลำปาง 52220",
+          name: t("provinces.northern.lampang.branch"),
+          address: t("provinces.northern.lampang.address"),
           tel: "054 209 253",
           href: "https://maps.app.goo.gl/mdvoSvmqQJ1ddHPx6",
         },
         {
           id: 3,
-          name: "สาขาเชียงใหม่",
-          address:
-            "เลขที่ 533 หมู่ที่ 6 ตำบลสันทรายน้อย อำเภอสันทราย จังหวัดเชียงใหม่ 50210",
+          name: t("provinces.northern.chiang_mai.branch"),
+          address: t("provinces.northern.chiang_mai.address"),
           tel: "053 492721-3",
           href: "https://maps.app.goo.gl/eMvf6W81vQhow97B6",
         },
@@ -39,38 +39,34 @@ export default function Page() {
     },
     {
       id: 2,
-      name: "ภาคตะวันออกเฉียงเหนือ",
+      name: t("region.northeastern_region"),
       color: "#F4701E",
       branches: [
         {
           id: 1,
-          name: "สาขานครราชสีมา",
-          address:
-            "เลขที่ 486 หมู่ที่ 6 ตำบลโคกกรวด อำเภอเมืองนครราชสีมา จังหวัดนครราชสีมา 30280",
+          name: t("provinces.northeastern.nakhon_ratchasima.branch"),
+          address: t("provinces.northeastern.nakhon_ratchasima.address"),
           tel: "044 305 486",
           href: "https://maps.app.goo.gl/EgQa5PcyS8rjwi6e6",
         },
         {
           id: 2,
-          name: "สาขาขอนแก่น",
-          address:
-            "เลขที่ 555/17 หมู่ที่ 1 ตำบลสำราญ อำเภอเมืองขอนแก่น จังหวัดขอนแก่น 40000",
+          name: t("provinces.northeastern.khon_kaen.branch"),
+          address: t("provinces.northeastern.khon_kaen.address"),
           tel: "043042042",
           href: "https://maps.app.goo.gl/dd2ZT6WT9QfKrKfv7",
         },
         {
           id: 3,
-          name: "สาขาอุบลราชธานี",
-          address:
-            "เลขที่ 231 หมู่ที่ 16 ตำบลไร่น้อย อำเภอเมืองอุบลราชธานี จังหวัดอุบลราชธานี 34000",
+          name: t("provinces.northeastern.ubon_ratchathani.branch"),
+          address: t("provinces.northeastern.ubon_ratchathani.address"),
           tel: "045 210 528",
           href: "https://maps.app.goo.gl/5aRWRy897Rig75Mv5",
         },
         {
           id: 4,
-          name: "สาขาอุดรธานี",
-          address:
-            "เลขที่ 346 หมู่ที่ 6 ตำบลกุดสระ อำเภอเมืองอุดรธานี จังหวัดอุดรธานี 41000",
+          name: t("provinces.northeastern.udon_thani.branch"),
+          address: t("provinces.northeastern.udon_thani.address"),
           tel: "042 241 573",
           href: "https://maps.app.goo.gl/JfoS9XMcj8Dew9o77",
         },
@@ -78,30 +74,27 @@ export default function Page() {
     },
     {
       id: 3,
-      name: "ภาคกลาง",
+      name: t("region.central_region"),
       color: "#0063B0",
       branches: [
         {
           id: 1,
-          name: "สาขาราชบุรี",
-          address:
-            "เลขที่ 99/10, 99/11 หมู่ที่ 9 ตำบลดอนทราย อำเภอโพธาราม จังหวัดราชบุรี 70120",
+          name: t("provinces.central.ratchaburi.branch"),
+          address: t("provinces.central.ratchaburi.address"),
           tel: "094 490 0376",
           href: "https://maps.app.goo.gl/iZt5Hso5p6ocv21M8",
         },
         {
           id: 2,
-          name: "สาขาจันทบุรี",
-          address:
-            "เลขที่ 257/6 หมู่ที่ 3 ตำบลทุ่งเบญจา อำเภอท่าใหม่ จังหวัดจันทบุรี 22170",
+          name: t("provinces.central.chanthaburi.branch"),
+          address: t("provinces.central.chanthaburi.address"),
           tel: "039 480 377",
           href: "https://maps.app.goo.gl/QMoh5Lu5F7V9cUbi8",
         },
         {
           id: 3,
-          name: "สาขาประจวบคีรีขันธ์",
-          address:
-            "เลขที่ 686/2, 686/3 หมู่ที่ 2 ตำบลไร่ใหม่ อำเภอสามร้อยยอด จังหวัดประจวบคีรีขันธ์ 77180",
+          name: t("provinces.central.prachuap.branch"),
+          address: t("provinces.central.prachuap.address"),
           tel: "032 510 848",
           href: "https://maps.app.goo.gl/9VRufEhq5J5LBdcWA",
         },
@@ -109,38 +102,34 @@ export default function Page() {
     },
     {
       id: 4,
-      name: "ภาคใต้",
+      name: t("region.southern_region"),
       color: "#149A98",
       branches: [
         {
           id: 1,
-          name: "สาขาชุมพร",
-          address:
-            "เลขที่ 65/3 หมู่ที่ 6 ตำบลทุ่งคา อำเภอชุมพร จังหวัดชุมพร 86100",
+          name: t("provinces.southern.chumphon.branch"),
+          address: t("provinces.southern.chumphon.address"),
           tel: "077 510 886",
           href: "https://maps.app.goo.gl/VXMqw2fJyKz6ow8P6",
         },
         {
           id: 2,
-          name: "สาขาสุราษฎร์ธานี",
-          address:
-            "เลขที่ 50/11 หมู่ที่ 1 ตำบลหัวเตย อำเภอพุนพิน จังหวัดสุราษฎร์ธานี 84130",
+          name: t("provinces.southern.surat_thani.branch"),
+          address: t("provinces.southern.surat_thani.address"),
           tel: "077 310 206",
           href: "https://maps.app.goo.gl/2cWLe6Xoc6kqGnP76",
         },
         {
           id: 3,
-          name: "สาขาทุ่งสง",
-          address:
-            "เลขที่ 58/4 หมู่ที่ 7 ตำบลที่วัง อำเภอทุ่งสง จังหวัดนครศรีธรรมราช 80110",
+          name: t("provinces.southern.thung_song.branch"),
+          address: t("provinces.southern.thung_song.address"),
           tel: "075 466 278",
           href: "https://maps.app.goo.gl/h9LrnKk4TW3AW6pn6",
         },
         {
           id: 4,
-          name: "สาขาพังงา",
-          address:
-            "เลขที่ 112, 112/6 หมู่ที่ 3 ตำบลถ้ำน้ำผุด อำเภอเมืองพังงา จังหวัดพังงา 82000",
+          name: t("provinces.southern.phang_nga.branch"),
+          address: t("provinces.southern.phang_nga.address"),
           tel: "076 678 001",
           href: "https://maps.app.goo.gl/ATaVNasfyB7B6PAq9",
         },
@@ -256,7 +245,7 @@ export default function Page() {
           </div>
         </section>
         <div className="flex justify-center items-center h-11.25 bg-[#0045A4]">
-          <h2 className="text-xl sm:text-3xl">สำนักงานใหญ่</h2>
+          <h2 className="text-xl sm:text-3xl text-white">{t("head_office")}</h2>
         </div>
         <section className="relative w-full h-full overflow-hidden">
           <Image
@@ -286,16 +275,15 @@ export default function Page() {
                     lg:mx-0"
                 />
                 <h2 className="text-2xl sm:text-4xl text-[#003C8C]">
-                  สำนักงานใหญ่
+                  {t("head_office")}
                 </h2>
                 <h3 className="text-xl sm:text-3xl text-[#C88619]">
-                  บริษัท ลีดเวย์ เฮฟวี่ แมชชีนเนอร์รี่ จำกัด
+                  {t("ltd")}
                 </h3>
                 <div className="flex gap-2">
                   <Icon name="city" size={32} fill="#7e7e7d" />
                   <span className="text-base sm:text-xl text-[#808080]">
-                    เลขที่ 1/2 หมู่ที่ 2 ตำบลบางวัว อำเภอบางปะกง
-                    จังหวัดฉะเชิงเทรา 24130
+                    {t("address")}
                   </span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 items-center gap-3 mt-2">
@@ -309,9 +297,9 @@ export default function Page() {
                   </Link>
                   <Link href="https://maps.app.goo.gl/693NrYTK4ZmFqJ7r6">
                     <img
-                      src="https://leadway.co.th/contact/assets/Group%20514.png"
+                      src={`${locale === "th" ? "/image/Group 514.png" : "/image/location.png"}`}
                       alt="Banner"
-                      className="max-w-30 sm:max-w-full transition-transform duration-300 ease-in-out hover:scale-110"
+                      className="max-w-30 sm:max-w-full transition-transform duration-300 ease-in-out hover:scale-105"
                     />
                   </Link>
                 </div>
@@ -341,14 +329,14 @@ export default function Page() {
                     sm:text-2xl
                     lg:text-3xl"
                 >
-                  บริการครอบคลุม
+                  {t("service")}
                 </span>
                 <span
                   className="text-lg  text-black 
                     sm:text-2xl
                     lg:text-3xl"
                 >
-                  ทั่วประเทศ
+                  {t("throughout_country")}
                 </span>
               </div>
               <div className="text-center">
@@ -368,7 +356,7 @@ export default function Page() {
             <div className="grid grid-cols-12 p-3 gap-3 w-full">
               <div className="relative w-full col-span-12 lg:col-span-7 aspect-video">
                 <img
-                  src="/image/contact-04.png"
+                  src={`${locale === "th" ? "/image/map-Th.png" : "/image/map-Eng.png"}`}
                   alt="map"
                   className="w-full xl:w-auto h-auto object-fill"
                 />
@@ -435,13 +423,14 @@ export default function Page() {
                 md:grid-cols-3 
                 lg:grid-cols-6"
             >
-              {images.map((_, index) => (
-                <img
-                  key={index}
-                  src="image/logo-footer.png"
-                  alt={`logo-${index}`}
-                  className="w-full max-w-50 mx-auto object-contain"
-                />
+              {images.map((image, index) => (
+                <div key={index}>
+                  <img
+                    src="/image/logo-footer.png"
+                    alt="footer"
+                    className="object-cover"
+                  />
+                </div>
               ))}
             </div>
           </div>

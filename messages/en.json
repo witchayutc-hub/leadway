@@ -17,9 +17,182 @@
     "address": "1/2 Moo 2, Bang Wua, Bang Pakong, Chachoengsao 24130"
   },
 
+  "Component": {
+    "more_button": "Read More",
+    "download_button": "Download"
+  },
+
   "Home": {
     "all_products": "ALL PRODUCTS",
     "news_and_events": "News & Event",
     "more_detail": "More Detail"
+  },
+
+  "Promotion": {
+    "promotions": "Promotions"
+  },
+
+  "News": {
+    "news_and_events": "News & Event"
+  },
+
+  "UsedMachine": {
+    "used_machine": "Used Machine",
+    "score": "Assessment Score",
+    "sold_out": "Sold Out",
+    "detail": "Details",
+    "car_information": "Car Information",
+    "brand": "Brand",
+    "model": "Model",
+    "type": "Type",
+    "usage": "Usage",
+    "additional": "Additional",
+    "interested": "Interested in buying a used car? Click here."
+  },
+
+  "Jgm": {
+    "power": "Engine Power (hp)",
+    "weight": "Operating Weight (kg)",
+    "capacity": "Bucket Capacity (cubic meters)",
+    "width": "Blade Width (mm)",
+    "lifting_height": "Maximum Lifting Height (m)",
+    "lifting_weight": "Maximum Lifting Weight (kg)",
+    "motor": "Motor power (kilowatts)",
+    "battery": "Battery capacity (kilowatts)",
+    "angle": "Turning angle (degrees)",
+    "spacious_passenger_room": "Spacious passenger room",
+    "led_display_screen": "LED display screen",
+    "requirements": "Adjust to job requirements",
+    "large_bucket": "Large bucket",
+    "strong_bumper": "Very strong bumper",
+    "rubber_wheel": "Rubber wheels can go on all areas."
+  },
+
+  "Sumitomo": {
+    "excavators_sumitomo": "EXCAVATORS SUMITOMO",
+    "pavers_sumitomo": "PAVERS SUMITOMO",
+    "robust": "Robust Chassis Structure",
+    "performance": "Maximum Performance, Maximum Efficiency",
+    "convenience": "Designed for Convenience and Comfort"
+  },
+
+  "Service": {
+    "our_business": "OUR BUSINESS",
+    "machine_testing-services": "MACHINE TESTING SERVICES",
+    "service_checks": {
+      "performance": "Measuring machine performance",
+      "fuel": "Fuel low pressure test",
+      "engine_injector": "Engine injector cut-off test",
+      "engine_system": "Engine system health check",
+      "electrical": "Electrical system inspection",
+      "walker": "Walker System Health Check",
+      "suspension": "Suspension system health check",
+      "hydraulic": "Hydraulic system inspection",
+      "cylinder": "Cylinder Compression Test"
+    },
+    "financial": {
+      "title": "FINANCIAL SERVICES",
+      "description": "The company provides consulting and leasing services through leading financial institutions. Makes it convenient for customers to use heavy machinery. with leasing conditions suitable for cash flow and flexible payments."
+    },
+    "after_sale": {
+      "title": "AFTER-SALES SERVICES",
+      "description": "Focus on developing a team of engineers and expert technicians. With training, maintenance, problem analysis, and usage checks. To provide advice and quality after-sales service."
+    },
+    "spare": {
+      "title": "SPARE PARTS",
+      "description": "Provide genuine spare parts certified by official manufacturers, for adherence to quality and confidence in driving the work system."
+    },
+    "customer": {
+      "title": "CUSTOMER SERVICE",
+      "description": "Provide basic machine information, recommend sales consultants, inform promotion details, and provide the best benefits for customers."
+    },
+    "hotline": {
+      "title": "THE LEADWAY HOTLINE",
+      "description": "LEADWAY MOBILE SERVICE with a team of expert technicians ready to provide urgent service at the location."
+    },
+    "service_centers": {
+      "title": "SERVICE CENTERS",
+      "description": "There are 15 service centers nationwide for peace of mind and convenience in contacting, with teams and experts providing service and assistance with modern tools."
+    }
+  },
+
+  "Contact": {
+    "head_office": "Head Office",
+    "ltd": "Leadway Heavy Machinery Co., Ltd.",
+    "address": "1/2 Moo 2, Bang Wua, Bang Pakong, Chachoengsao 24130",
+    "service": "Comprehensive service",
+    "throughout_country": "all over the country",
+    "region": {
+      "northern_region": "Northern Region",
+      "northeastern_region": "Northeastern Region",
+      "central_region": "Central Region",
+      "southern_region": "Southern Region"
+    },
+    "provinces": {
+      "northern": {
+        "nakhon_sawan": {
+          "branch": "Nakhon Sawan Branch",
+          "address": "88 Moo 7, Nong Krot, Mueang, Nakhon Sawan 60240"
+        },
+        "lampang": {
+          "branch": "Lampang Branch",
+          "address": "83 Moo 4, EGAT Rd., Phra Bat, Mueang Lampang, Lampang 52220, Thailand"
+        },
+        "chiang_mai": {
+          "branch": "Chiang Mai Branch",
+          "address": "533 Moo 6, San Sai Noi, San Sai, Chiang Mai 50210"
+        }
+      },
+      "northeastern": {
+        "nakhon_ratchasima": {
+          "branch": "Nakhon Ratchasima Branch",
+          "address": "486 Moo 6, Khok Kruat, Mueang Nakhon Ratchasima, Nakhon Ratchasima 30280"
+        },
+        "khon_kaen": {
+          "branch": "Khon Kaen Branch",
+          "address": "555/17, Moo 1, Samran Sub-district, Mueang Khon Kaen District, Khon Kaen Province, 40000, Thailand."
+        },
+        "ubon_ratchathani": {
+          "branch": "Ubon Ratchathani Branch",
+          "address": "231 Moo 16, Rai Noi, Mueang Ubon Ratchathani, Ubon Ratchathani 34000"
+        },
+        "udon_thani": {
+          "branch": "Udon Thani Branch",
+          "address": "346 Moo 6, Kuk Sa, Mueang Udon Thani, Udon Thani 41000"
+        }
+      },
+      "central": {
+        "ratchaburi": {
+          "branch": "Ratchaburi Branch",
+          "address": "99/10, 99/11 Moo 9, Don Sai, Photharam, Ratchaburi 70120"
+        },
+        "chanthaburi": {
+          "branch": "Chanthaburi Branch",
+          "address": "257/6 Moo 3, Thung Benja, Tha Mai, Chanthaburi 22170"
+        },
+        "prachuap": {
+          "branch": "Prachuap Khiri Khan Branch",
+          "address": "686/2, 686/3, Moo 2, Rai Mai Subdistrict, Sam Roi Yot District, Prachuap Khiri Khan 77180"
+        }
+      },
+      "southern": {
+        "chumphon": {
+          "branch": "Chumphon Branch",
+          "address": "65/3 Moo 6, Thung Ka, Mueang, Chumphon 86100"
+        },
+        "surat_thani": {
+          "branch": "Surat Thani Branch",
+          "address": "50/11 Moo 1, Hua Toei, Phunphin, Surat Thani 84130"
+        },
+        "thung_song": {
+          "branch": "Thung Song Branch",
+          "address": "58/4 Moo 7, Thie Wang, Thung Song, Nakhon Si Thammarat 80110"
+        },
+        "phang_nga": {
+          "branch": "Phang Nga Branch",
+          "address": "112, 112/6 Moo 3, Tham Nam Phud, Mueang Phang Nga, Phang Nga 82000"
+        }
+      }
+    }
   }
 }
