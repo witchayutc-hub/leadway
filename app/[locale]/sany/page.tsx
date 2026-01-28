@@ -123,9 +123,11 @@ export default function Page() {
               return (
                 <div
                   key={item.id}
-                  className={`${item.id % 2 === 0 ? "lg:flex lg:flex-row-reverse" : ""} grid gap-3 px-3 py-6 lg:grid-cols-12`}
+                  className="grid gap-3 px-3 py-6 lg:grid-cols-12"
                 >
-                  <div className="col-span-12 lg:col-span-4">
+                  <div
+                    className={`col-span-12 lg:col-span-4 ${item.attributes.number % 2 !== 0 ? "" : "lg:order-last"}`}
+                  >
                     <div className="grid">
                       <img
                         src={`${process.env.NEXT_PUBLIC_API_URL}${image.formats.small.url}`}

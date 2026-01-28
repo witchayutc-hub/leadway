@@ -1,7 +1,7 @@
 import Icon from "@/components/icon";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/navigation";
 
 export default function Footer() {
   const t = useTranslations("Footer");
@@ -25,6 +25,7 @@ export default function Footer() {
                 src="/image/logo-footer.png"
                 fill
                 alt="logo"
+                sizes="100%"
                 className="object-contain"
               />
             </div>

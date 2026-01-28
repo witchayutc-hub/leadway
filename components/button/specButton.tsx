@@ -1,5 +1,5 @@
 import { downloadFile } from "@/helpers/download";
-import Link from "next/link";
+import { Link } from "@/navigation";
 
 type SpecButton = {
   id: number;

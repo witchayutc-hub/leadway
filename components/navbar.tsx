@@ -190,14 +190,22 @@ export default function Navbar() {
                     ) : item.id === 7 ? (
                       <div key={item.id} className="flex gap-1 text-white">
                         <button
-                          onClick={() => changeLanguage("th")}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            changeLanguage("th");
+                          }}
                           className={`${locale === "th" ? "text-[#ffab00]" : ""} cursor-pointer`}
                         >
                           TH
                         </button>
                         <span>|</span>
                         <button
-                          onClick={() => changeLanguage("en")}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            changeLanguage("en");
+                          }}
                           className={`${locale === "en" ? "text-[#ffab00]" : ""} cursor-pointer`}
                         >
                           EN

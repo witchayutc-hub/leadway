@@ -12,18 +12,12 @@ export default function Home() {
   const t = useTranslations("Home");
   const locale = useLocale();
 
-  let slides = [
-    "https://app.leadway.co.th/uploads/BANNAR_01_67b8417878.jpg",
-    "https://app.leadway.co.th/uploads/2_04c399e5d8_4071b53fe8.jpg",
-    "https://app.leadway.co.th/uploads/SANY_EV_d40ce8a1d4.png",
-  ];
-
   const [current, setCurrent] = useState(0);
   const prevSlide = () => {
-    setCurrent((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+    setCurrent((prev) => (prev === 0 ? banners.length - 1 : prev - 1));
   };
   const nextSlide = () => {
-    setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    setCurrent((prev) => (prev === banners.length - 1 ? 0 : prev + 1));
   };
 
   const [banners, setBanners] = useState<any[]>([]);
@@ -148,7 +142,7 @@ export default function Home() {
               </button>
             </div>
             <div className="absolute bottom-0 py-4 flex justify-center gap-3 w-full">
-              {slides.map((s, i) => {
+              {banners.map((s, i) => {
                 return (
                   <div
                     onClick={() => {
