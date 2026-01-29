@@ -1,12 +1,12 @@
 {
   "Navbar": {
     "home": "Home",
-    "products_and_services": "Products & Services",
-    "service": "Service",
-    "usedmachine": "Used Machine",
-    "promotion": "Promotion",
-    "news": "News & Events",
-    "contact": "Contact"
+    "products_and_services": "PRODUCTS & SERVICES",
+    "service": "SERVICE",
+    "usedmachine": "USED MACHINE",
+    "promotion": "PROMOTION",
+    "news": "NEWS & EVENTS",
+    "contact": "CONTACT"
   },
 
   "Footer": {

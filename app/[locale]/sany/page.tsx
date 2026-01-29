@@ -8,9 +8,12 @@ import Image from "next/image";
 import { Link } from "@/navigation";
 import { useEffect, useState } from "react";
 import { useLocale } from "next-intl";
+import AnimatedTooltip from "@/components/ui/animated-tooltip";
 
 export default function Page() {
   const locale = useLocale();
+  const [activeId, setActiveId] = useState<number | null>(null);
+
   const [concrete, setConcrete] = useState<any[]>([]);
   const [error, setError] = useState(false);
 
@@ -99,6 +102,40 @@ export default function Page() {
     return () => clearTimeout(timer);
   }, []);
 
+  const sanys = [
+    {
+      id: 1,
+      className: "left-[37%] top-[33%]",
+      item: {
+        id: 1,
+        title: "en ห้องโดยสารกว้างขวาง",
+        description: "อุปกรณ์อำนวยความสะดวกครบครัน",
+        image: "/image/H3_0.jpg",
+      },
+    },
+    {
+      id: 2,
+      className: "left-[58%] top-[39%]",
+      item: {
+        id: 2,
+        title: "en ถังน้ำใหม่ ใหญ่กว่าเดิม",
+        description:
+          "ถังน้ำอลูมิเนียมอัลลอย ปลอดสนิม เบาขึ้น จุมากถึง 600 ลิตร",
+        image: "/image/H3_1.jpg",
+      },
+    },
+    {
+      id: 3,
+      className: "left-[69%] top-[36%]",
+      item: {
+        id: 3,
+        title: "en ไร้การเกาะติดของคราบปูนภายในโม่",
+        description: "ท่อพ่นล้าง 4 จุด พร้อมพอร์ตระบายน้ำ",
+        image: "/image/H3_2.jpg",
+      },
+    },
+  ];
+
   if (error) {
     return (
       <div className="min-h-screen text-center py-10 text-red-600 ">
@@ -136,14 +173,39 @@ export default function Page() {
           </div>
         </section>
         <section id="image-concrete-mixers-truck">
-          <div className="relative w-full aspect-video">
-            <Image
-              src="/image/PRODUCTS _ SERVICE SANY BG-01.png"
-              alt="Banner"
-              fill
-              loading="lazy"
-              className="object-cover"
-            />
+          <div className="relative w-full">
+            <div className="flex items-center justify-center">
+              <img
+                src="/image/PRODUCTS _ SERVICE SANY BG-01.png"
+                alt="Banner"
+                className="object-contain aspect-video"
+              />
+            </div>
+            {sanys.map((target) => (
+              <div
+                key={target.id}
+                className={`absolute w-[2%] group ${target.className}`}
+                onMouseEnter={() => setActiveId(target.id)}
+                onMouseLeave={() => setActiveId(null)}
+                onClick={() => {
+                  setActiveId(activeId === target.id ? null : target.id);
+                }}
+              >
+                {/* ping */}
+                <span className="absolute inset-0 rounded-full bg-blue-700 animate-ping [animation-duration:2s] opacity-70" />
+                {/* icon */}
+                <img
+                  src="/image/Target_Logo.png"
+                  alt="Target Logo"
+                  className="relative w-full h-full cursor-pointer transition-transform duration-300 group-hover:scale-120 opacity-60"
+                />
+                {/* tooltip */}
+                <AnimatedTooltip
+                  active={activeId === target.id}
+                  item={target.item}
+                />
+              </div>
+            ))}
           </div>
         </section>
         <section>

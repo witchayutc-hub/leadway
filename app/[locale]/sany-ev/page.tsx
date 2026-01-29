@@ -10,8 +10,13 @@ import {
 import { cutAfterPipe } from "@/helpers/cutText";
 import SpecTable from "@/components/specTable";
 import SpecButton from "@/components/button/specButton";
+import { useLocale } from "next-intl";
+import AnimatedTooltip from "@/components/ui/animated-tooltip";
 
 export default function Page() {
+  const locale = useLocale();
+  const [activeId, setActiveId] = useState<number | null>(null);
+
   const [error, setError] = useState(false);
   const [sanyEv, setSanyEv] = useState<any[]>([]);
 
@@ -99,6 +104,50 @@ export default function Page() {
     fetchConcreteEvTruck();
     fetchMiningTruck();
   }, []);
+
+  const sanyEvHotspot = [
+    {
+      id: 1,
+      className: "left-[42%] top-[37%]",
+      item: {
+        id: 1,
+        title: "เครื่องอัดจารบีอัตโนมัติ",
+        description: "สามารถตั้งเวลาอัดจาระบีได้ ช่วยลดงานให้กับช่างและผู้ขับ",
+        image: "/image/H4_0.jpg",
+      },
+    },
+    {
+      id: 2,
+      className: "left-[58%] top-[38%]",
+      item: {
+        id: 2,
+        title: "ห้องโดยสารกว้างขวาง",
+        description: "สะดวกสบายต่อผู้ขับรถ",
+        image: "/image/H4_1.jpg",
+      },
+    },
+    {
+      id: 3,
+      className: "left-[30%] top-[59%]",
+      item: {
+        id: 3,
+        title: "REAR LEAF SPRING SUSPENSION",
+        description:
+          "แหนบ 18 แผ่น หนา 27 มม./แผ่น รองรับน้ำหนักบรรทุกได้มากยิ่งขึ้น",
+        image: "/image/H4_2.jpg",
+      },
+    },
+    {
+      id: 4,
+      className: "left-[38%] top-[65%]",
+      item: {
+        id: 3,
+        title: "แบตเตอรี่ LITHIUM ION PHOSPHAT L302G01",
+        description: "ความจุ 350 kWh",
+        image: "/image/H4_3.jpg",
+      },
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-white">
@@ -447,14 +496,39 @@ export default function Page() {
           </div>
         </section>
         <section>
-          <div className="relative w-full aspect-video">
-            <Image
-              src="/image/MINING_TRUCKS.png"
-              alt="Banner"
-              fill
-              loading="lazy"
-              className="object-cover"
-            />
+          <div className="relative w-full">
+            <div className="flex items-center justify-center">
+              <img
+                src="/image/MINING_TRUCKS.png"
+                alt="Banner"
+                className=" w-full aspect-video"
+              />
+            </div>
+            {sanyEvHotspot.map((target) => (
+              <div
+                key={target.id}
+                className={`absolute w-[2%] group ${target.className}`}
+                onMouseEnter={() => setActiveId(target.id)}
+                onMouseLeave={() => setActiveId(null)}
+                onClick={() => {
+                  setActiveId(activeId === target.id ? null : target.id);
+                }}
+              >
+                {/* ping */}
+                <span className="absolute inset-0 rounded-full bg-blue-700 animate-ping [animation-duration:2s] opacity-70" />
+                {/* icon */}
+                <img
+                  src="/image/Target_Logo.png"
+                  alt="Target Logo"
+                  className="relative w-full h-full cursor-pointer transition-transform duration-300 group-hover:scale-120 opacity-60"
+                />
+                {/* tooltip */}
+                <AnimatedTooltip
+                  active={activeId === target.id}
+                  item={target.item}
+                />
+              </div>
+            ))}
           </div>
         </section>
         <section>

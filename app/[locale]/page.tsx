@@ -7,6 +7,7 @@ import { formatDate } from "@/helpers/formatDate";
 import { apiMainProducts } from "@/api/getMainProducts";
 import { apiPageBanner } from "@/api/getPageBanner";
 import { useLocale, useTranslations } from "next-intl";
+import { motion } from "motion/react";
 
 export default function Home() {
   const t = useTranslations("Home");
@@ -115,7 +116,7 @@ export default function Home() {
         <section>
           <div className="relative w-full overflow-hidden">
             <div
-              className="flex transition-transform duration-500 ease-in-out"
+              className="flex transition-transform duration-500 ease-in-out max-h-220"
               style={{ transform: `translateX(-${current * 100}%)` }}
             >
               {banners.map((item, index) => (
@@ -123,7 +124,7 @@ export default function Home() {
                   key={item.id ?? index}
                   src={`${process.env.NEXT_PUBLIC_API_URL}${item.attributes.url}`}
                   alt={item.attributes.hash ?? "Banner"}
-                  className="w-full shrink-0"
+                  className="max-w-full object-fill "
                 />
               ))}
             </div>
@@ -164,7 +165,15 @@ export default function Home() {
         </section>
         <section className="pt-6 pb-12">
           <div className="mx-auto max-w-7xl px-4">
-            <Brand />
+            <motion.div
+              initial={{ x: -40, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-200px" }}
+              className="mx-auto max-w-7xl px-4"
+            >
+              <Brand />
+            </motion.div>
           </div>
         </section>
         <section>

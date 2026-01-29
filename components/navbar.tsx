@@ -45,7 +45,7 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="fixed top-0 z-50 w-full shadow-lg bg-white">
+    <header className="fixed top-0 z-40 w-full shadow-lg bg-white">
       <nav className="group max-w-7xl w-full mx-auto flex items-center justify-between px-4 py-3 lg:px-8">
         <Link href="/" className="flex items-center">
           <img
@@ -128,7 +128,7 @@ export default function Navbar() {
             <div className="flex items-center w-full h-30 px-3">
               <div className="w-1/2">
                 <span className="font-semibold text-4xl xl:text-5xl text-white">
-                  สินค้าและบริการ
+                  {t("products_and_services")}
                 </span>
               </div>
               <div className="grid grid-flow-col grid-rows-4 w-full gap-2 px-10 border-l-4 border-white">
@@ -152,7 +152,7 @@ export default function Navbar() {
           </div>
         </div>
         <div
-          className={`absolute top-full left-0 z-50 w-full overflow-hidden bg-[#1E4183] shadow-lg ${openMenu ? "max-h-screen" : "max-h-0"} 
+          className={`absolute top-full left-0 z-40 w-full overflow-hidden bg-[#1E4183] shadow-lg ${openMenu ? "max-h-screen" : "max-h-0"} 
             lg:hidden transition-all duration-700`}
         >
           <div className="py-2">

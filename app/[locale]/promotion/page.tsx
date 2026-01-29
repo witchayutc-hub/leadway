@@ -74,22 +74,24 @@ export default function Page() {
           priority
         />
       </div>
-      <main className="relative z-10">
-        <section className="bg-white">
-          <div className="flex w-full justify-center items-center max-w-7xl mx-auto px-3 py-12">
-            <h1 className="text-3xl sm:text-4xl lg:text-[40px] font-semibold text-[#052465]">
-              {t("promotions")}
-            </h1>
+      <main>
+        <section>
+          <div className="relative z-10 bg-white">
+            <div className="flex w-full justify-center items-center max-w-7xl mx-auto px-3 py-12">
+              <h1 className="text-3xl sm:text-4xl lg:text-[40px] font-semibold text-[#052465]">
+                {t("promotions")}
+              </h1>
+            </div>
           </div>
         </section>
-        <section className="pb-4 bg-white">
-          <div className="mx-auto max-w-7xl px-4">
+        <section className="pb-4 relative z-10 bg-white ">
+          <div className="mx-auto max-w-7xl px-4 ">
             <Brand />
           </div>
         </section>
         <section>
           <div className="w-full max-w-7xl mx-auto py-12">
-            <div className="flex flex-wrap">
+            <div className="flex flex-wrap justify-center">
               {promotions.map((item) => {
                 const image = item.attributes.img?.data?.attributes;
                 return (
@@ -123,15 +125,15 @@ export default function Page() {
                   </div>
                 );
               })}
+              <div className="flex items-center justify-center pt-6 z-10">
+                <MoreButton
+                  onClick={() => setPage((prev) => prev + 1)}
+                  onDisabled={page >= pageCount}
+                />
+              </div>
               <Modal
                 image={selectedImage}
                 onClose={() => setSelectedImage(null)}
-              />
-            </div>
-            <div className="flex justify-center pt-6">
-              <MoreButton
-                onClick={() => setPage((prev) => prev + 1)}
-                onDisabled={page >= pageCount}
               />
             </div>
           </div>

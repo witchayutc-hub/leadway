@@ -7,6 +7,7 @@ import { apiSumitomoByPaginated } from "@/api/getSumitomo";
 import MoreButton from "@/components/button/moreboutton";
 import { apiPaversPluralByPaginated } from "@/api/getPaversPlural";
 import { useLocale, useTranslations } from "next-intl";
+import AnimatedTooltip from "@/components/ui/animated-tooltip";
 
 type SpecButton = {
   id: number;
@@ -20,6 +21,9 @@ export default function Page() {
   const t = useTranslations("Sumitomo");
   const locale = useLocale();
   const itemsPerPage = 6;
+
+  const [activeId, setActiveId] = useState<number | null>(null);
+
   const [sumitomo, setSumitomo] = useState<any[]>([]);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(1);
@@ -125,6 +129,97 @@ export default function Page() {
     return () => clearTimeout(timer);
   }, []);
 
+  const excavators = [
+    {
+      id: 1,
+      className: "left-[55%] top-[25%]",
+      item: {
+        id: 1,
+        title: "จุดเชื่อมต่อที่มีความแข็งแรงสูง",
+        description: "โครงสร้างของบูมและอาร์มมีความแข็งแรงและทนทาน",
+        image: "/image/H1_0.jpg",
+      },
+    },
+    {
+      id: 2,
+      className: "left-[67%] top-[45%]",
+      item: {
+        id: 2,
+        title: "บุ้งกี๋",
+        description:
+          "แผ่นโลหะทนทานหนึ่งชิ้นปกปิดตรงส่วนเชื่อมเพื่อเพิ่มอายุการทนทานของบุ้งกี๋",
+        image: "/image/H1_1.jpg",
+      },
+    },
+    {
+      id: 3,
+      className: "left-[57%] top-[60%]",
+      item: {
+        id: 3,
+        title: "ห้องคนขับนิรภัยออกแบบใหม่",
+        description:
+          "การออกแบบที่เหมาะสมและชิ้นส่วนที่แข็งแรงช่วยเพิ่มความแข็งแรงให้กับห้องคนขับโดยรวม",
+        image: "/image/H1_2.jpg",
+      },
+    },
+    {
+      id: 4,
+      className: "left-[34%] top-[57%]",
+      item: {
+        id: 4,
+        title: "เครื่องยนต์ดีเซล ISUZU 4HK1X",
+        description: "ประสิทธิภาพสูงสุด ประหยัดสูงสุด",
+        image: "/image/H1_3.jpg",
+      },
+    },
+    {
+      id: 5,
+      className: "left-[51%] top-[71%]",
+      item: {
+        id: 5,
+        title: "การ์ดตีนตะขาบ",
+        description: "ช่วยป้องกันการเสียรูปของการเชื่อมต่อกันของตีนตะขาบ",
+        image: "/image/H1_4.jpg",
+      },
+    },
+  ];
+
+  const paverss = [
+    {
+      id: 1,
+      className: "left-[41%] top-[43%]",
+      item: {
+        id: 1,
+        title: "แผงควบคุม",
+        description:
+          "สามารถเคลื่อนย้ายซ้ายขวาได้ตามความต้องการของผู้ควบคุมเครื่องจักร",
+        image: "/image/H2_0.jpg",
+      },
+    },
+    {
+      id: 2,
+      className: "left-[75%] top-[57%]",
+      item: {
+        id: 2,
+        title: "กระบะรับวัสดุ",
+        description:
+          "ออกแบบให้ต่ำลง เพื่อง่ายต่อการเทใส่วัสดุ และพับขอบกระบะซ้ายขวาได้",
+        image: "/image/H2_1.jpg",
+      },
+    },
+    {
+      id: 3,
+      className: "left-[23%] top-[62%]",
+      item: {
+        id: 3,
+        title: "ชุดเตารีดกางพับซ้อน 3 ชั้น",
+        description:
+          "สามารถปรับเปลี่ยนรูปแบบการกางให้เหมาะสมกับความกว้างในการปู ตั้งแต่ 2.3 - 6.0 เมตร",
+        image: "/image/H2_2.jpg",
+      },
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-white">
       <main>
@@ -179,14 +274,40 @@ export default function Page() {
           </div>
         </section>
         <section id="excavators">
-          <div className="py-12">
-            <div className="relative w-full aspect-video">
-              <Image
-                src="/image/Component1.png"
-                alt="Banner"
-                fill
-                className="object-contain"
-              />
+          <div className="w-full max-w-7xl mx-auto py-12">
+            <div className="relative w-full">
+              <div className="flex items-center justify-center">
+                <img
+                  src="/image/Component1.png"
+                  alt="Banner"
+                  className="object-contain aspect-4/3"
+                />
+              </div>
+              {excavators.map((target) => (
+                <div
+                  key={target.id}
+                  className={`absolute w-[2.5%] group ${target.className}`}
+                  onMouseEnter={() => setActiveId(target.id)}
+                  onMouseLeave={() => setActiveId(null)}
+                  onClick={() => {
+                    setActiveId(activeId === target.id ? null : target.id);
+                  }}
+                >
+                  {/* ping */}
+                  <span className="absolute inset-0 rounded-full bg-blue-700 animate-ping [animation-duration:2s] opacity-70" />
+                  {/* icon */}
+                  <img
+                    src="/image/Target_Logo.png"
+                    alt="Target Logo"
+                    className="relative w-full h-full cursor-pointer transition-transform duration-300 group-hover:scale-120 opacity-60"
+                  />
+                  {/* tooltip */}
+                  <AnimatedTooltip
+                    active={activeId === target.id}
+                    item={target.item}
+                  />
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -301,14 +422,40 @@ export default function Page() {
           </div>
         </section>
         <section id="paverss">
-          <div className="py-12">
-            <div className="relative max-w-7xl mx-auto w-full aspect-video">
-              <Image
-                src="/image/main paver-07-2-07.png"
-                alt="Banner"
-                fill
-                className="object-contain"
-              />
+          <div className="w-full max-w-7xl mx-auto py-12">
+            <div className="relative w-full">
+              <div className="flex items-center justify-center">
+                <img
+                  src="/image/main paver-07-2-07.png"
+                  alt="Banner"
+                  className="object-contain aspect-video"
+                />
+              </div>
+              {paverss.map((target) => (
+                <div
+                  key={target.id}
+                  className={`absolute w-[2.5%] group ${target.className}`}
+                  onMouseEnter={() => setActiveId(target.id)}
+                  onMouseLeave={() => setActiveId(null)}
+                  onClick={() => {
+                    setActiveId(activeId === target.id ? null : target.id);
+                  }}
+                >
+                  {/* ping */}
+                  <span className="absolute inset-0 rounded-full bg-blue-700 animate-ping [animation-duration:2s] opacity-70" />
+                  {/* icon */}
+                  <img
+                    src="/image/Target_Logo.png"
+                    alt="Target Logo"
+                    className="relative w-full h-full cursor-pointer transition-transform duration-300 group-hover:scale-120 opacity-60"
+                  />
+                  {/* tooltip */}
+                  <AnimatedTooltip
+                    active={activeId === target.id}
+                    item={target.item}
+                  />
+                </div>
+              ))}
             </div>
           </div>
         </section>
