@@ -12,6 +12,7 @@ import SpecTable from "@/components/specTable";
 import SpecButton from "@/components/button/specButton";
 import { useLocale } from "next-intl";
 import AnimatedTooltip from "@/components/ui/animated-tooltip";
+import { Link } from "@/navigation";
 
 export default function Page() {
   const locale = useLocale();
@@ -170,6 +171,17 @@ export default function Page() {
                 md:grid-cols-4
                 lg:grid-cols-8"
             >
+              <div>
+                <Link href="/required-energy-consumption">
+                  <img
+                    src="/image/ICON_WEB_02.png"
+                    className="w-full object-contain aspect-video"
+                  />
+                  <div className="p-2 text-center text-[#7E7E7D]">
+                    Energy Cost Calculator
+                  </div>
+                </Link>
+              </div>
               {sanyEv.map((item) => (
                 <div key={item.id}>
                   <img

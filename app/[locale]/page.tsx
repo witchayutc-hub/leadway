@@ -94,6 +94,18 @@ export default function Home() {
     fetchBanners();
   }, []);
 
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (paused) return;
+
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev === banners.length - 1 ? 0 : prev + 1));
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [paused, banners.length]);
+
   if (error || productError || bannersError) {
     return (
       <div className="min-h-screen flex justify-center py-10 text-5xl text-red-600">
@@ -114,7 +126,11 @@ export default function Home() {
     <div className="min-h-screen bg-white">
       <main>
         <section>
-          <div className="relative w-full overflow-hidden">
+          <div
+            className="relative w-full overflow-hidden"
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
+          >
             <motion.div
               animate={{ x: `-${current * 100}%` }}
               transition={{ duration: 0.6, ease: "easeInOut" }}

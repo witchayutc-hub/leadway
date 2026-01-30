@@ -1,4 +1,7 @@
+import { useTranslations } from "next-intl";
+
 export default function Bounce() {
+  const t = useTranslations("Component");
   return (
     <div
       className="fixed bottom-4 right-4 z-50 cursor-pointer animate-[bounce_2s_infinite] 
@@ -19,7 +22,7 @@ export default function Bounce() {
           className="absolute mb-2 text-xs font-medium pointer-events-none text-white
             sm:text-sm"
         >
-          ติดต่อ
+          {t("contact_button")}
         </span>
       </div>
     </div>

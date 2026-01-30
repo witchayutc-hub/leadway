@@ -71,3 +71,23 @@ export async function getSlug(endpoint: string) {
 
   return response!.json();
 }
+
+// POST CALCULATE
+export async function postData(endpoint: string, options?: any) {
+  const body = new URLSearchParams(options?.body).toString();
+
+  const response = await fetch(URL + endpoint, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${TOKEN}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body,
+  });
+
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+
+  return response.json();
+}

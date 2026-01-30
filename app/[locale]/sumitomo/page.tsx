@@ -99,6 +99,33 @@ export default function Page() {
     fetchPaversPlural(paversPage);
   }, [page, paversPage]);
 
+  useEffect(() => {
+    const hash = window.location.hash.replace("#", "");
+
+    if (!hash) return;
+
+    const timer = setTimeout(() => {
+      document.getElementById(hash)?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (paused) return;
+
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [paused, slides.length]);
+
   if (error || paversError) {
     return (
       <div className="text-red-600 text-center py-10">
@@ -114,21 +141,6 @@ export default function Page() {
       </div>
     );
   }
-
-  useEffect(() => {
-    const hash = window.location.hash.replace("#", "");
-
-    if (!hash) return;
-
-    const timer = setTimeout(() => {
-      document.getElementById(hash)?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   const excavators = [
     {
@@ -225,7 +237,11 @@ export default function Page() {
     <div className="min-h-screen bg-white">
       <main>
         <section>
-          <div className="relative w-full overflow-hidden">
+          <div
+            className="relative w-full overflow-hidden"
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
+          >
             <motion.div
               animate={{ x: `-${current * 100}%` }}
               transition={{ duration: 0.6, ease: "easeInOut" }}
@@ -240,7 +256,6 @@ export default function Page() {
                 />
               ))}
             </motion.div>
-
             <div className="absolute inset-0 flex items-center justify-between px-3 sm:px-6 lg:px-10 text-white">
               <button
                 onClick={prevSlide}

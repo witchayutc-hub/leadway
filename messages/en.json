@@ -19,7 +19,8 @@
 
   "Component": {
     "more_button": "Read More",
-    "download_button": "Download"
+    "download_button": "Download",
+    "contact_button": "Contact"
   },
 
   "Home": {
@@ -74,6 +75,32 @@
     "robust": "Robust Chassis Structure",
     "performance": "Maximum Performance, Maximum Efficiency",
     "convenience": "Designed for Convenience and Comfort"
+  },
+
+  "Calculation": {
+    "calculator_program": "Calculator Program",
+    "one_way": "One Way",
+    "round_trip": "Round Trip Way",
+    "distance": "Distance",
+    "km": "km",
+    "weight": "Weight",
+    "ton": "ton",
+    "total_weight": "(Total Weight 50.50 / Legal limit 0.50 ton)",
+    "remaining_battery": "Remaining Battery",
+    "recommended_total": "Recommended total",
+    "charging_session": "charging session",
+    "result": "Results",
+    "energy_carbon_footprint": "Energy & Carbon Footprint",
+    "energy_consumption": "Energy Consumption",
+    "carbon_footprint": "Carbon Footprint Reduction",
+    "charging_cost": "Charging Cost",
+    "private": "Private",
+    "mea/pea_on": "MEA/PEA On Peak",
+    "mea/pea_off": "MEA/PEA On Peak",
+    "compare": "Compare Oil and Electricity",
+    "view": "View More",
+    "remark": "Remark: This test result is based on the company's internal testing under specific conditions, which may differ from actual usage. This information is for reference only and does not constitute a guarantee of performance.",
+    "baht": "THB"
   },
 
   "Service": {
