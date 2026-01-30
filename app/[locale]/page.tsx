@@ -115,19 +115,20 @@ export default function Home() {
       <main>
         <section>
           <div className="relative w-full overflow-hidden">
-            <div
-              className="flex transition-transform duration-500 ease-in-out max-h-220"
-              style={{ transform: `translateX(-${current * 100}%)` }}
+            <motion.div
+              animate={{ x: `-${current * 100}%` }}
+              transition={{ duration: 0.6, ease: "easeInOut" }}
+              className="flex max-h-220"
             >
               {banners.map((item, index) => (
                 <img
                   key={item.id ?? index}
                   src={`${process.env.NEXT_PUBLIC_API_URL}${item.attributes.url}`}
                   alt={item.attributes.hash ?? "Banner"}
-                  className="max-w-full object-fill "
+                  className="max-w-full object-fill"
                 />
               ))}
-            </div>
+            </motion.div>
             <div className="absolute inset-0 flex items-center justify-between px-3 sm:px-6 lg:px-10 text-white">
               <button
                 onClick={prevSlide}
@@ -168,8 +169,8 @@ export default function Home() {
             <motion.div
               initial={{ x: -40, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              viewport={{ once: true, margin: "-200px" }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              viewport={{ once: false, margin: "-100px" }}
               className="mx-auto max-w-7xl px-4"
             >
               <Brand />
@@ -178,7 +179,13 @@ export default function Home() {
         </section>
         <section>
           <div className="flex items-center justify-center px-3">
-            <div className="w-full max-w-5xl aspect-video">
+            <motion.div
+              initial={{ y: 40, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              viewport={{ once: false, margin: "-100px" }}
+              className="w-full max-w-5xl aspect-video"
+            >
               <iframe
                 className="w-full h-full"
                 src="https://www.youtube.com/embed/wqP2SVk3uC8?autoplay=1&mute=1&loop=1&playlist=wqP2SVk3uC8"
@@ -186,7 +193,7 @@ export default function Home() {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               ></iframe>
-            </div>
+            </motion.div>
           </div>
         </section>
         <section className="py-12">
@@ -253,7 +260,13 @@ export default function Home() {
               {t("news_and_events")}
             </h2>
           </div>
-          <div className="w-full max-w-7xl mx-auto py-12">
+          <motion.div
+            initial={{ y: 40, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            viewport={{ once: false, margin: "-100px" }}
+            className="w-full max-w-7xl mx-auto py-12"
+          >
             <div className="flex flex-wrap">
               {news.map((item) => {
                 const image = item.attributes.image?.data?.attributes;
@@ -285,7 +298,7 @@ export default function Home() {
                 );
               })}
             </div>
-          </div>
+          </motion.div>
         </section>
       </main>
     </div>

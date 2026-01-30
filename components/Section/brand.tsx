@@ -29,7 +29,7 @@ export default function Brand() {
   ];
 
   return (
-    <div className="flex flex-wrap justify-center items-center gap-3">
+    <div className="flex flex-wrap justify-center items-center gap-5">
       {brands.map((brand) => (
         <div
           key={brand.id}

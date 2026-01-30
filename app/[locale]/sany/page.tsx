@@ -162,7 +162,7 @@ export default function Page() {
     <div className="min-h-screen bg-white">
       <main>
         <section>
-          <div className="relative w-full aspect-video">
+          <div className="relative w-full max-h-220 aspect-video">
             <Image
               src="/image/2.jpg"
               alt="2"

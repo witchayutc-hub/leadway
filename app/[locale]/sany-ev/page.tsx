@@ -153,7 +153,7 @@ export default function Page() {
     <div className="min-h-screen bg-white">
       <main>
         <section>
-          <div className="relative w-full aspect-video">
+          <div className="relative w-full max-h-220 aspect-video">
             <Image
               src="/image/Wallpaper_01.png"
               alt="Wallpaper_01"

@@ -8,6 +8,7 @@ import MoreButton from "@/components/button/moreboutton";
 import { apiPaversPluralByPaginated } from "@/api/getPaversPlural";
 import { useLocale, useTranslations } from "next-intl";
 import AnimatedTooltip from "@/components/ui/animated-tooltip";
+import { motion } from "motion/react";
 
 type SpecButton = {
   id: number;
@@ -225,9 +226,10 @@ export default function Page() {
       <main>
         <section>
           <div className="relative w-full overflow-hidden">
-            <div
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${current * 100}%)` }}
+            <motion.div
+              animate={{ x: `-${current * 100}%` }}
+              transition={{ duration: 0.6, ease: "easeInOut" }}
+              className="flex max-h-220"
             >
               {slides.map((img, index) => (
                 <img
@@ -237,7 +239,8 @@ export default function Page() {
                   className="w-full shrink-0"
                 />
               ))}
-            </div>
+            </motion.div>
+
             <div className="absolute inset-0 flex items-center justify-between px-3 sm:px-6 lg:px-10 text-white">
               <button
                 onClick={prevSlide}
