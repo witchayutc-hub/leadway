@@ -304,7 +304,7 @@ export default function Page() {
               {excavators.map((target) => (
                 <div
                   key={target.id}
-                  className={`absolute w-[2.5%] group ${target.className}`}
+                  className={`absolute w-[3.5%] lg:w-[2.5%] group ${target.className}`}
                   onMouseEnter={() => setActiveId(target.id)}
                   onMouseLeave={() => setActiveId(null)}
                   onClick={() => {
@@ -452,7 +452,7 @@ export default function Page() {
               {paverss.map((target) => (
                 <div
                   key={target.id}
-                  className={`absolute w-[2.5%] group ${target.className}`}
+                  className={`absolute w-[3.5%] lg:w-[2.5%] group ${target.className}`}
                   onMouseEnter={() => setActiveId(target.id)}
                   onMouseLeave={() => setActiveId(null)}
                   onClick={() => {

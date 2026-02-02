@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Kanit } from "next/font/google";
 import "../globals.css";
 import Navbar from "@/components/navbar";
-import Footer from "@/components/footer";
+import Footer from "@/components/footer/footer";
 import Bounce from "@/components/bounce";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";

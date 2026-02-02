@@ -1,5 +1,5 @@
 "use client";
-import { apiCalculate } from "@/api/postCalculate";
+import BarCharts from "@/components/Section/barCharts";
 import { useTranslations } from "next-intl";
 import { use, useEffect, useState } from "react";
 
@@ -12,6 +12,8 @@ export default function Page() {
 
   const percentage = ((rangeValue - min) / (max - min)) * 100;
   console.log(percentage);
+
+  const [showDataCompare, setShowDataCompare] = useState(false);
 
   return (
     <div className="min-h-screen bg-white">
@@ -28,7 +30,7 @@ export default function Page() {
             </div>
           </div>
         </section>
-        <section>
+        <section id="sectionCal">
           <div className="max-w-7xl mx-auto">
             <div className="text-center py-12">
               <div>
@@ -163,7 +165,7 @@ export default function Page() {
             </div>
           </div>
         </section>
-        <section>
+        <section id="sectionResult">
           <div className="bg-gray-100/70">
             <div className="max-w-7xl mx-auto">
               <div className="text-center py-12 px-3">
@@ -188,8 +190,8 @@ export default function Page() {
                         lg:text-base "
                   >
                     <div className="grid grid-cols-12 items-center">
-                      <div className="col-span-2">
-                        <i className="bi bi-lightning-charge-fill text-xl text-[#051C56]"></i>
+                      <div className="col-span-2 pr-2 flex justify-end">
+                        <img src="/image/Energy.png" className="w-2/7" />
                       </div>
                       <div className="col-span-6">
                         <span className=" text-[#051C56] ">
@@ -204,8 +206,8 @@ export default function Page() {
                       </div>
                     </div>
                     <div className="grid grid-cols-12 items-center">
-                      <div className="col-span-2">
-                        <i className="bi bi-leaf"></i>
+                      <div className="col-span-2 pr-2 flex justify-end">
+                        <img src="/image/carbon.png" className="w-2/7" />
                       </div>
                       <div className="col-span-6">
                         <span className=" text-[#051C56] ">
@@ -279,12 +281,88 @@ export default function Page() {
             </div>
             <div className="max-w-7xl mx-auto py-12 px-3">
               <div className="flex items-center justify-center">
-                <div className="flex px-10 py-3 rounded-lg bg-[#6394e5]">
-                  <span className="text-xl text-center text-white">
-                    {t("compare")}
-                  </span>
-                </div>
+                <button
+                  onClick={() => setShowDataCompare(!showDataCompare)}
+                  className="cursor-pointer"
+                >
+                  <div className="flex px-10 py-3 rounded-lg bg-[#6394e5]">
+                    <span className="text-xl text-center text-white">
+                      {t("compare")}
+                    </span>
+                  </div>
+                </button>
               </div>
+              {showDataCompare && (
+                <div>
+                  <div className="grid place-items-center py-12">
+                    <div
+                      className="flex justify-between w-full
+                    sm:w-xl 
+                    lg:w-185"
+                    >
+                      <div />
+                      <div className="grid">
+                        <div className="text-center border-b-5 ml-7 lg:w-lg border-blue-700">
+                          <span className="text-xl font-semibold text-[#051C56] ">
+                            {t("data_to_compare")}
+                          </span>
+                        </div>
+                      </div>
+                      <i
+                        onClick={() => setShowDataCompare(false)}
+                        className="bi bi-x-lg flex items-center cursor-pointer
+                  sm:text-3xl"
+                      ></i>
+                    </div>
+                    <div
+                      className="grid max-w-150 gap-4 py-12 px-10 text-xs bg-[#E5F0FE]
+                        sm:text-sm
+                        lg:text-base lg:max-w-full"
+                    >
+                      <div className="grid grid-cols-12 gap-3 items-center">
+                        <div className="col-span-6">
+                          <span className=" text-[#051C56] ">
+                            {t("fuel_consumption")}
+                          </span>
+                        </div>
+                        <input
+                          type="number"
+                          className="col-span-4 h-12 px-2 text-center bg-white"
+                          placeholder={t("fuel_consumption")}
+                        />
+                        <div className="col-span-2">
+                          <span className=" text-[#051C56] ">{t("km/L")}</span>
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-12 gap-3 items-center">
+                        <div className="col-span-6">
+                          <span className=" text-[#051C56] ">
+                            {t("fuel_price_per_liter")}
+                          </span>
+                        </div>
+                        <input
+                          type="number"
+                          className="col-span-4 h-12 px-2 text-center bg-white"
+                          placeholder={t("fuel_price")}
+                        />
+                        <div className="col-span-2">
+                          <span className=" text-[#051C56] ">{t("baht")}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex items-center justify-center">
+                      <span className="text-xl underline">
+                        ส่วนต่างค่าใช่จ่ายน้ำมัน และชาร์จไฟ
+                      </span>
+                    </div>
+                    <div className="py-6">
+                      <BarCharts />
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
             <div className="max-w-7xl mx-auto 2 px-3">
               <div className="flex items-center justify-center">

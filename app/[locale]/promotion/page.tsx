@@ -77,14 +77,14 @@ export default function Page() {
       <main>
         <section>
           <div className="relative z-10 bg-white">
-            <div className="flex w-full justify-center items-center max-w-7xl mx-auto px-3 py-12">
+            <div className="flex w-full justify-center items-center max-w-7xl mx-auto px-3 py-10">
               <h1 className="text-3xl sm:text-4xl lg:text-[40px] font-semibold text-[#052465]">
                 {t("promotions")}
               </h1>
             </div>
           </div>
         </section>
-        <section className="pb-4 relative z-10 bg-white ">
+        <section className="pb-3 relative z-10 bg-white ">
           <div className="mx-auto max-w-7xl px-4 ">
             <Brand />
           </div>

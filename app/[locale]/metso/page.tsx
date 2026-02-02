@@ -4,6 +4,7 @@ import Modal from "@/components/modal";
 import Image from "next/image";
 import { Link } from "@/navigation";
 import { useState } from "react";
+import { downloadFile } from "@/helpers/download";
 
 export default function Page() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -133,14 +134,19 @@ export default function Page() {
                   <span className="text-3xl text-[#212529]">
                     Technical specifications Nordberg® C Series™ jaw crushers
                   </span>
-                  <Link href="#">
-                    <div className="group">
-                      <img
-                        src="/image/download.png"
-                        className="max-w-40 justify-self-end transition-transform duration-300 ease-out group-hover:-translate-y-1"
-                      />
-                    </div>
-                  </Link>
+                  <div
+                    className="group cursor-pointer"
+                    onClick={async () => {
+                      await downloadFile(
+                        "/pdf/brochure-nordberg-c-series-4226-06-23-en-agg.pdf",
+                      );
+                    }}
+                  >
+                    <img
+                      src="/image/download.png"
+                      className="max-w-40 justify-self-end transition-transform duration-300 ease-out group-hover:-translate-y-1"
+                    />
+                  </div>
                 </div>
                 <div className="cursor-pointer py-4">
                   <img
@@ -189,14 +195,19 @@ export default function Page() {
                   <span className="text-3xl text-[#212529]">
                     Technical specifications Nordberg® GP Series™ cone crushers
                   </span>
-                  <Link href="#">
-                    <div className="group">
-                      <img
-                        src="/image/download.png"
-                        className="max-w-40 justify-self-end transition-transform duration-300 ease-out group-hover:-translate-y-1"
-                      />
-                    </div>
-                  </Link>
+                  <div
+                    className="group"
+                    onClick={async () => {
+                      await downloadFile(
+                        "/pdf/brochure-nordberg-gp-series-4675-05-23-en-agg.pdf",
+                      );
+                    }}
+                  >
+                    <img
+                      src="/image/download.png"
+                      className="max-w-40 justify-self-end transition-transform duration-300 ease-out group-hover:-translate-y-1"
+                    />
+                  </div>
                 </div>
                 <div className="grid cursor-pointer py-4">
                   <img
@@ -239,14 +250,19 @@ export default function Page() {
                   <span className="text-3xl text-[#212529]">
                     Technical specifications Nordberg® HP Series™ cone crushers
                   </span>
-                  <Link href="#">
-                    <div className="group">
-                      <img
-                        src="/image/download.png"
-                        className="max-w-40 justify-self-end transition-transform duration-300 ease-out group-hover:-translate-y-1"
-                      />
-                    </div>
-                  </Link>
+                  <div
+                    className="group"
+                    onClick={async () => {
+                      await downloadFile(
+                        "/pdf/brochure-nordberg-hp-series-4236-05-23-en-agg.pdf",
+                      );
+                    }}
+                  >
+                    <img
+                      src="/image/download.png"
+                      className="max-w-40 justify-self-end transition-transform duration-300 ease-out group-hover:-translate-y-1"
+                    />
+                  </div>
                 </div>
                 <div className="grid cursor-pointer py-4 place-content-start">
                   <img
@@ -321,14 +337,19 @@ export default function Page() {
               <span className="text-3xl text-[#212529]">
                 Key technical specifications
               </span>
-              <Link href="#">
-                <div className="group">
-                  <img
-                    src="/image/download.png"
-                    className="max-w-40 justify-self-end transition-transform duration-300 ease-out group-hover:-translate-y-1"
-                  />
-                </div>
-              </Link>
+              <div
+                className="group"
+                onClick={async () => {
+                  await downloadFile(
+                    "/pdf/brochure-nwrapid-3781-06-23-EN-AGG.pdf",
+                  );
+                }}
+              >
+                <img
+                  src="/image/download.png"
+                  className="max-w-40 justify-self-end transition-transform duration-300 ease-out group-hover:-translate-y-1"
+                />
+              </div>
             </div>
             <div className="grid cursor-pointer py-4">
               <img

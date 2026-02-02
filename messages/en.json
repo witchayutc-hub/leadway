@@ -100,7 +100,12 @@
     "compare": "Compare Oil and Electricity",
     "view": "View More",
     "remark": "Remark: This test result is based on the company's internal testing under specific conditions, which may differ from actual usage. This information is for reference only and does not constitute a guarantee of performance.",
-    "baht": "THB"
+    "baht": "THB",
+    "km/L": "km/L",
+    "data_to_compare": "Enter data to compare fuel usage",
+    "fuel_consumption": "Fuel consumption",
+    "fuel_price": "Fuel price",
+    "fuel_price_per_liter": "Fuel price per liter"
   },
 
   "Service": {

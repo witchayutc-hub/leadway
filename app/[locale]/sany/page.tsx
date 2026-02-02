@@ -184,7 +184,7 @@ export default function Page() {
             {sanys.map((target) => (
               <div
                 key={target.id}
-                className={`absolute w-[2%] group ${target.className}`}
+                className={`absolute w-[3.5%] lg:w-[2%] group ${target.className}`}
                 onMouseEnter={() => setActiveId(target.id)}
                 onMouseLeave={() => setActiveId(null)}
                 onClick={() => {

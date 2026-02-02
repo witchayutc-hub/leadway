@@ -106,6 +106,21 @@ export default function Page() {
     fetchMiningTruck();
   }, []);
 
+  useEffect(() => {
+    const hash = window.location.hash.replace("#", "");
+
+    if (!hash) return;
+
+    const timer = setTimeout(() => {
+      document.getElementById(hash)?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   const sanyEvHotspot = [
     {
       id: 1,
@@ -319,7 +334,7 @@ export default function Page() {
             })}
           </div>
         </section>
-        <section>
+        <section id="CONCRETE_MIXERS_TRUCK">
           <div className="max-w-7xl mx-auto">
             <div className="grid place-content-center text-5xl text-center py-12">
               <span className="">CONCRETE MIXERS TRUCK </span>
@@ -507,7 +522,7 @@ export default function Page() {
             />
           </div>
         </section>
-        <section>
+        <section id="MINING_TRUCK">
           <div className="relative w-full">
             <div className="flex items-center justify-center">
               <img
@@ -519,7 +534,7 @@ export default function Page() {
             {sanyEvHotspot.map((target) => (
               <div
                 key={target.id}
-                className={`absolute w-[2%] group ${target.className}`}
+                className={`absolute w-[3.5%] lg:w-[2%] group ${target.className}`}
                 onMouseEnter={() => setActiveId(target.id)}
                 onMouseLeave={() => setActiveId(null)}
                 onClick={() => {

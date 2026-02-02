@@ -74,7 +74,7 @@ export default function Page() {
       </div>
       <main className="relative z-10">
         <section className="bg-white">
-          <div className="flex justify-center items-center w-full h-30 px-3 pt-12 pb-4 max-w-7xl mx-auto ">
+          <div className="flex items-center justify-center w-full h-30 px-3 max-w-7xl mx-auto ">
             <h1
               className="text-3xl font-semibold text-[#052465] 
             sm:text-4xl
