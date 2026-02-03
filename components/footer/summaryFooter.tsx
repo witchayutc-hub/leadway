@@ -25,7 +25,7 @@ export default function SummaryFooter({ show }: Props) {
               }}
             >
               <div className="flex items-center justify-center min-w-30 min-h-12 rounded-md bg-[#052C65] cursor-pointer">
-                <span className="text-xl text-white">คำนวณ</span>
+                <span className="text-xl text-white">{t("calculation")}</span>
               </div>
             </button>
             <button
@@ -36,7 +36,7 @@ export default function SummaryFooter({ show }: Props) {
               }}
             >
               <div className="flex items-center justify-center min-w-30 min-h-12 rounded-md bg-[#052C65] cursor-pointer">
-                <span className="text-xl text-white">ผลลัพธ์</span>
+                <span className="text-xl text-white">{t("result")}</span>
               </div>
             </button>
           </div>

@@ -46,15 +46,19 @@ export default function Navbar() {
 
   return (
     <header className="fixed top-0 z-40 w-full shadow-lg bg-white">
-      <nav className="group max-w-7xl w-full mx-auto flex items-center justify-between px-4 py-3 lg:px-8">
+      <nav className="group max-w-7xl w-full mx-auto flex items-center justify-between py-3 px-2 ">
         <Link href="/" className="flex items-center">
-          <img
-            src="https://leadway.co.th/assets/Logo.png"
-            alt="Logo"
-            className="h-14 w-auto object-contain"
-          />
+          <div className="flex items-center h-14 ">
+            <img
+              src="https://leadway.co.th/assets/Logo.png"
+              alt="Logo"
+              className="h-10 lg:h-14 w-auto object-contain"
+            />
+          </div>
         </Link>
-        <div className="hidden text-base lg:flex lg:gap-5 xl:gap-x-12">
+        <div
+          className={`hidden text-base lg:flex  ${locale} ${locale === "th" ? "lg:gap-5 " : "lg:gap-3.5"} xl:gap-x-12`}
+        >
           {menu.map((item) => {
             if (item.id === 2) {
               return (

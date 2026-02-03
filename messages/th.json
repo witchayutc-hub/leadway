@@ -20,7 +20,9 @@
   "Component": {
     "more_button": "ดูเพิ่มเติม",
     "download_button": "ดาวน์โหลด",
-    "contact_button": "ติดต่อ"
+    "contact_button": "ติดต่อ",
+    "calculation": "คำนวณ",
+    "result": "ผลลัพธ์"
   },
 
   "Home": {
@@ -97,15 +99,27 @@
     "private": "เอกชน",
     "mea/pea_on": "กฟน/กฟภ On Peak",
     "mea/pea_off": "กฟน/กฟภ On Peak",
+    "on_peak": "ค่าไฟ On Peak",
+    "off_peak": "ค่าไฟ Off Peak",
     "compare": "เปรียบเทียบการใช้น้ำมัน-พลังงานไฟฟ้า",
     "view": "ดูเพิ่มเติม",
     "remark": "หมายเหตุ: ผลการทดสอบนี้เป็นข้อมูลจากการทดสอบภายในของบริษัท ภายใต้เงื่อนไขเฉพาะ ซึ่งอาจแตกต่างจากการใช้งานจริง ข้อมูลนี้จัดทำเพื่อการอ้างอิงเท่านั้น ไม่ถือเป็นการรับประกันผลการใช้งาน",
     "baht": "บาท",
     "km/L": "กม./ลิตร",
+    "round": "รอบ",
     "data_to_compare": "กรอกข้อมูลเพื่อเปรียบเทียบการใช้น้ำมัน",
     "fuel_consumption": "อัตราการใช้น้ำมัน",
     "fuel_price": "ราคาน้ำมัน",
-    "fuel_price_per_liter": "ราคาน้ำมัน ลิตรละ"
+    "fuel_price_per_liter": "ราคาน้ำมัน ลิตรละ",
+    "travel_distance": "ระยะทางในการเดินทาง",
+    "total_weight_result": "น้ำหนักรวม",
+    "charge_count": "จำนวนการชาร์จ",
+    "oil_cost": "ค่าน้ำมัน",
+    "electricity_cost": "ค่าใช้จ่ายไฟฟ้า",
+    "difference_oil_electricity_cost": "ส่วนต่างค่าชาร์จไฟ กับค่าน้ำมัน",
+    "on_peak_electricity": "ค่าไฟฟ้า On Peak",
+    "off_peak_electricity": "ค่าไฟฟ้า Off Peak",
+    "summary_result": "สรุปผลลัพธ์"
   },
 
   "Service": {

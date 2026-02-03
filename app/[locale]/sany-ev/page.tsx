@@ -7,12 +7,13 @@ import {
   apiSanyEv,
   apiSanyMiningTruck,
 } from "@/api/getSany";
-import { cutAfterPipe } from "@/helpers/cutText";
+import { cutAfterPipe, cutBeforePipe } from "@/helpers/cutText";
 import SpecTable from "@/components/specTable";
 import SpecButton from "@/components/button/specButton";
 import { useLocale } from "next-intl";
 import AnimatedTooltip from "@/components/ui/animated-tooltip";
 import { Link } from "@/navigation";
+import { motion } from "motion/react";
 
 export default function Page() {
   const locale = useLocale();
@@ -23,7 +24,7 @@ export default function Page() {
 
   const fetchSanyEv = async () => {
     try {
-      const response = await apiSanyEv();
+      const response = await apiSanyEv(locale);
 
       setSanyEv((prev) => {
         const existingIds = new Set(prev.map((n) => n.id));
@@ -43,7 +44,7 @@ export default function Page() {
 
   const fetchHeavyTruck = async () => {
     try {
-      const response = await apiHeavyTruck();
+      const response = await apiHeavyTruck(locale);
 
       setHeavyTruck((prev) => {
         const existingIds = new Set(prev.map((n) => n.id));
@@ -63,7 +64,7 @@ export default function Page() {
 
   const fetchConcreteEvTruck = async () => {
     try {
-      const response = await apiConcreteEvTruck();
+      const response = await apiConcreteEvTruck(locale);
 
       setConcreteEvTruck((prev) => {
         const existingIds = new Set(prev.map((n) => n.id));
@@ -83,7 +84,7 @@ export default function Page() {
 
   const fetchMiningTruck = async () => {
     try {
-      const response = await apiSanyMiningTruck();
+      const response = await apiSanyMiningTruck(locale);
 
       setMiningTruck((prev) => {
         const existingIds = new Set(prev.map((n) => n.id));
@@ -184,9 +185,10 @@ export default function Page() {
             <div
               className="grid grid-cols-3 gap-4 py-6 w-full
                 md:grid-cols-4
-                lg:grid-cols-8"
+                lg:grid-cols-6
+                xl:grid-cols-10"
             >
-              <div>
+              <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
                 <Link href="/required-energy-consumption">
                   <img
                     src="/image/ICON_WEB_02.png"
@@ -196,49 +198,74 @@ export default function Page() {
                     Energy Cost Calculator
                   </div>
                 </Link>
-              </div>
+              </motion.div>
               {sanyEv.map((item) => (
                 <div key={item.id}>
-                  <img
-                    src={`${process.env.NEXT_PUBLIC_API_URL}${item.attributes.img?.data?.attributes.formats.thumbnail.url}`}
-                    className="w-full object-contain aspect-video"
-                  />
-                  <div className="p-2 text-center text-[#7E7E7D]">
-                    {item.attributes.name}
-                  </div>
+                  <motion.div
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="cursor-pointer"
+                  >
+                    <img
+                      src={`${process.env.NEXT_PUBLIC_API_URL}${item.attributes.img?.data?.attributes.formats.thumbnail.url}`}
+                      className="w-full object-contain aspect-video "
+                    />
+                    <div className="p-2 text-center  text-[#7E7E7D]">
+                      {item.attributes.name}
+                    </div>
+                  </motion.div>
                 </div>
               ))}
               {concreteEvTruck.map((item) => (
                 <div key={item.id}>
-                  <img
-                    src={`${process.env.NEXT_PUBLIC_API_URL}${item.attributes.img?.data?.attributes.formats.thumbnail.url}`}
-                    className="w-full object-contain aspect-video"
-                  />
-                  <div className="p-2 text-center text-[#7E7E7D]">
-                    {item.attributes.name}
-                  </div>
+                  <motion.div
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="cursor-pointer"
+                  >
+                    <img
+                      src={`${process.env.NEXT_PUBLIC_API_URL}${item.attributes.img?.data?.attributes.formats.thumbnail.url}`}
+                      className="w-full object-contain aspect-video cursor-pointer"
+                    />
+                    <div className="p-2 text-center text-[#7E7E7D]">
+                      {item.attributes.name}
+                    </div>
+                  </motion.div>
                 </div>
               ))}
               {heavyTruck.map((item) => (
                 <div key={item.id}>
-                  <img
-                    src={`${process.env.NEXT_PUBLIC_API_URL}${item.attributes.img?.data?.attributes.formats.thumbnail.url}`}
-                    className="w-full object-contain aspect-video"
-                  />
-                  <div className="p-2 text-center text-[#7E7E7D]">
-                    {item.attributes.name}
-                  </div>
+                  <motion.div
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="cursor-pointer"
+                  >
+                    <img
+                      src={`${process.env.NEXT_PUBLIC_API_URL}${item.attributes.img?.data?.attributes.formats.thumbnail.url}`}
+                      className="w-full object-contain aspect-video cursor-pointer"
+                    />
+                    <div className="p-2 text-center text-[#7E7E7D]">
+                      {item.attributes.name}
+                    </div>
+                  </motion.div>
                 </div>
               ))}
               {miningTruck.map((item) => (
                 <div key={item.id}>
-                  <img
-                    src={`${process.env.NEXT_PUBLIC_API_URL}${item.attributes.img?.data?.attributes.formats.thumbnail.url}`}
-                    className="w-full object-contain aspect-video"
-                  />
-                  <div className="p-2 text-center text-[#7E7E7D]">
-                    {item.attributes.name}
-                  </div>
+                  <motion.div
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="cursor-pointer"
+                  >
+                    <img
+                      src={`${process.env.NEXT_PUBLIC_API_URL}${item.attributes.img?.data?.attributes.formats.thumbnail.url}`}
+                      className="w-full object-contain aspect-video cursor-pointer"
+                    />
+
+                    <div className="p-2 text-center text-[#7E7E7D]">
+                      {item.attributes.name}
+                    </div>
+                  </motion.div>
                 </div>
               ))}
             </div>
@@ -261,13 +288,16 @@ export default function Page() {
               return (
                 <div
                   key={item.id}
-                  className={`grid gap-3 px-3 py-6 lg:grid-cols-12 
-                  ${item.id % 2 === 0 ? "lg:flex lg:flex-row-reverse" : ""}`}
+                  className="grid gap-3 px-3 py-6 lg:grid-cols-12"
                 >
                   <div className="col-span-12 lg:col-span-4">
                     <div className="grid">
                       <img
-                        src={`${process.env.NEXT_PUBLIC_API_URL}${image.formats.small.url}`}
+                        src={
+                          image?.formats?.small?.url
+                            ? `${process.env.NEXT_PUBLIC_API_URL}${image.formats.small.url}`
+                            : "/"
+                        }
                         className="w-full h-full object-cover"
                       />
                       <div className="flex justify-center">
@@ -319,9 +349,13 @@ export default function Page() {
                             />
                             <div className="flex justify-center items-center h-12 bg-[#01BD04]">
                               <span className="text-sm sm:text-xl text-ellipsis text-white">
-                                {cutAfterPipe(
-                                  img?.attributes?.alternativeText,
-                                ) ?? ""}
+                                {locale === "th"
+                                  ? (cutAfterPipe(
+                                      img?.attributes?.alternativeText,
+                                    ) ?? "")
+                                  : (cutBeforePipe(
+                                      img?.attributes?.alternativeText,
+                                    ) ?? "")}
                               </span>
                             </div>
                           </div>
@@ -407,9 +441,13 @@ export default function Page() {
                             />
                             <div className="flex justify-center items-center h-12 bg-[#02926B]">
                               <span className="text-sm sm:text-xl text-ellipsis text-white">
-                                {cutAfterPipe(
-                                  img?.attributes?.alternativeText,
-                                ) ?? ""}
+                                {locale === "th"
+                                  ? (cutAfterPipe(
+                                      img?.attributes?.alternativeText,
+                                    ) ?? "")
+                                  : (cutBeforePipe(
+                                      img?.attributes?.alternativeText,
+                                    ) ?? "")}
                               </span>
                             </div>
                           </div>
@@ -497,9 +535,13 @@ export default function Page() {
                             />
                             <div className="flex justify-center items-center h-12 bg-[#0091D2]">
                               <span className="text-sm sm:text-xl text-ellipsis text-white">
-                                {cutAfterPipe(
-                                  img?.attributes?.alternativeText,
-                                ) ?? ""}
+                                {locale === "th"
+                                  ? (cutAfterPipe(
+                                      img?.attributes?.alternativeText,
+                                    ) ?? "")
+                                  : (cutBeforePipe(
+                                      img?.attributes?.alternativeText,
+                                    ) ?? "")}
                               </span>
                             </div>
                           </div>
@@ -633,9 +675,13 @@ export default function Page() {
                             />
                             <div className="flex justify-center items-center h-12 bg-[#808080]">
                               <span className="text-sm sm:text-xl text-ellipsis text-white">
-                                {cutAfterPipe(
-                                  img?.attributes?.alternativeText,
-                                ) ?? ""}
+                                {locale === "th"
+                                  ? (cutAfterPipe(
+                                      img?.attributes?.alternativeText,
+                                    ) ?? "")
+                                  : (cutBeforePipe(
+                                      img?.attributes?.alternativeText,
+                                    ) ?? "")}
                               </span>
                             </div>
                           </div>

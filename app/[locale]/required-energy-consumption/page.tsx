@@ -11,9 +11,9 @@ export default function Page() {
   const max = 500.0;
 
   const percentage = ((rangeValue - min) / (max - min)) * 100;
-  console.log(percentage);
 
   const [showDataCompare, setShowDataCompare] = useState(false);
+  const [showResult, setShowResult] = useState(false);
 
   return (
     <div className="min-h-screen bg-white">
@@ -327,7 +327,8 @@ export default function Page() {
                         </div>
                         <input
                           type="number"
-                          className="col-span-4 h-12 px-2 text-center bg-white"
+                          className="col-span-4 h-12 px-2 text-center bg-white
+                          focus:outline-none focus:ring-2 focus:ring-[#051C56] focus:border-[#051C56]"
                           placeholder={t("fuel_consumption")}
                         />
                         <div className="col-span-2">
@@ -342,7 +343,8 @@ export default function Page() {
                         </div>
                         <input
                           type="number"
-                          className="col-span-4 h-12 px-2 text-center bg-white"
+                          className="col-span-4 h-12 px-2 text-center bg-white 
+                            focus:outline-none focus:ring-2 focus:ring-[#051C56] focus:border-[#051C56]"
                           placeholder={t("fuel_price")}
                         />
                         <div className="col-span-2">
@@ -364,16 +366,135 @@ export default function Page() {
                 </div>
               )}
             </div>
-            <div className="max-w-7xl mx-auto 2 px-3">
-              <div className="flex items-center justify-center">
-                <div className="flex px-10 py-2 gap-2 rounded-xl bg-[#051C56]">
-                  <span className="text-xl text-center text-white">
-                    {t("view")} <i className="bi bi-chevron-double-down"></i>
-                  </span>
+            {!showResult ? (
+              <div className="max-w-7xl mx-auto px-3">
+                <div className="flex items-center justify-center">
+                  <div
+                    onClick={() => setShowResult(!showResult)}
+                    className="flex px-10 py-2 gap-2 rounded-xl bg-[#051C56] cursor-pointer"
+                  >
+                    <span className="text-xl text-center text-white">
+                      {t("view")} <i className="bi bi-chevron-double-down"></i>
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="text-center px-3 py-12">
+            ) : (
+              <div className="px-3 bg-[#F4F4F9]">
+                <div className="flex items-center justify-between py-12 p-3">
+                  <div className="w-6 h-6" />
+                  <span className="font-medium text-2xl text-[#051C56]">
+                    {t("summary_result")}
+                  </span>
+                  <div>
+                    <button
+                      onClick={() => setShowResult(!showResult)}
+                      className=" cursor-pointer"
+                    >
+                      <i className="bi bi-chevron-down text-2xl text-[#051C56]" />
+                    </button>
+                  </div>
+                </div>
+                <div className="max-w-7xl mx-auto">
+                  <table className="w-full ">
+                    <tbody className="text-sm text-black">
+                      <tr>
+                        <td className="p-3">{t("travel_distance")}</td>
+                        <td className="p-3 text-end">225.40</td>
+                        <td className="p-3 w-1 text-end">{t("km")}</td>
+                      </tr>
+                      <tr>
+                        <td className="p-3">{t("total_weight_result")}</td>
+                        <td className="p-3 w-1 text-end">50.50 </td>
+                        <td className="p-3 text-end">{t("ton")}</td>
+                      </tr>
+                      <tr>
+                        <td className="p-3">{t("remaining_battery")}</td>
+                        <td className="p-3 w-1 text-end">50.50 </td>
+                        <td className="p-3 text-end">%</td>
+                      </tr>
+                      <tr>
+                        <td className="p-3">{t("charge_count")}</td>
+                        <td className="p-3 w-1 text-end">50.50 </td>
+                        <td className="p-3 text-end">{t("round")}</td>
+                      </tr>
+                      <tr>
+                        <td className="p-3">{t("energy_consumption")}</td>
+                        <td className="p-3 w-1 text-end">50.50 </td>
+                        <td className="p-3 text-end">kW</td>
+                      </tr>
+                      <tr>
+                        <td className="p-3">{t("carbon_footprint")}</td>
+                        <td className="p-3 w-1 text-end">50.50 </td>
+                        <td className="p-3 text-end">Credits</td>
+                      </tr>
+                      <tr className="border-b-4 border-[#051C56]">
+                        <td
+                          colSpan={3}
+                          className="p-3 pt-6 font-bold text-[#051C56]"
+                        >
+                          {t("oil_cost")}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="p-3"> {t("oil_cost")}</td>
+                        <td className="p-3 w-1 text-end">50.50 </td>
+                        <td className="p-3 text-end">{t("baht")}</td>
+                      </tr>
+                      <tr className="border-b-4 border-[#051C56]">
+                        <td
+                          colSpan={3}
+                          className="p-3 pt-6 font-bold text-[#051C56]"
+                        >
+                          {t("electricity_cost")}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="p-3">• {t("private")} (7.5 บาท/kWh)</td>
+                        <td className="p-3 w-1 text-end">50.50 </td>
+                        <td className="p-3 text-end">{t("baht")}</td>
+                      </tr>
+                      <tr>
+                        <td className="p-3">• {t("on_peak")} (4.52 บาท/kWh)</td>
+                        <td className="p-3 w-1 text-end">50.50 </td>
+                        <td className="p-3 text-end">{t("baht")}</td>
+                      </tr>
+                      <tr>
+                        <td className="p-3">• {t("off_peak")}(2.99 บาท/kWh)</td>
+                        <td className="p-3 w-1 text-end">50.50 </td>
+                        <td className="p-3 text-end">{t("baht")}</td>
+                      </tr>
+                      <tr className="border-b-4 border-[#051C56]">
+                        <td
+                          colSpan={3}
+                          className="p-3 pt-6 font-bold text-[#051C56]"
+                        >
+                          {t("difference_oil_electricity_cost")}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="p-3">• {t("private")}</td>
+                        <td className="p-3 w-1 text-end">50.50 </td>
+                        <td className="p-3 text-end">{t("baht")}</td>
+                      </tr>
+                      <tr>
+                        <td className="p-3">• {t("on_peak_electricity")}</td>
+                        <td className="p-3 w-1 text-end">50.50 </td>
+                        <td className="p-3 text-end">{t("baht")}</td>
+                      </tr>
+                      <tr>
+                        <td className="p-3">• {t("off_peak_electricity")}</td>
+                        <td className="p-3 w-1 text-end">50.50 </td>
+                        <td className="p-3 text-end">{t("baht")}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+            <div
+              className={`text-center px-3 py-12 ${showResult ? "bg-[#F4F4F9]" : ""}`}
+            >
               <span className="text-sm text-red-500">{t("remark")}</span>
             </div>
           </div>

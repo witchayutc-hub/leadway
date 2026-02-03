@@ -1,5 +1,12 @@
-import { BarChart } from "@mui/x-charts/BarChart";
 import Box from "@mui/material/Box";
+import { BarChart } from "@mui/x-charts/BarChart";
+import { useTheme, useMediaQuery } from "@mui/material";
+import { HighlightScope } from "@mui/x-charts/context";
+
+const highlightScope: HighlightScope = {
+  highlight: "series",
+  fade: "global",
+};
 
 const series = [
   {
@@ -20,26 +27,42 @@ const series = [
     data: [null, 40, 60, 90],
     color: "#86EFAC",
   },
-];
+].map((s) => ({ ...s, highlightScope }));
 
 const labels = ["น้ำมัน", "เอกชน", "กฟน/กฟภ On Peak", "กฟน/กฟภ Off Peak"];
 
 export default function BarCharts() {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <Box sx={{ width: "100%", overflow: "auto" }}>
       <BarChart
         layout="horizontal"
         height={300}
+        xAxis={[{ position: "none" }]}
         yAxis={[
           {
             disableLine: true,
             disableTicks: true,
             data: labels,
-            width: 200,
+            width: isMobile ? 95 : 120,
+            position: isMobile ? "right" : "left",
+            tickLabelStyle: {
+              fontSize: isMobile ? 10 : 12,
+            },
           },
         ]}
         series={series}
-        slotProps={{ tooltip: { trigger: "item" } }}
+        slotProps={{
+          tooltip: { trigger: "item" },
+          legend: {
+            position: { horizontal: "center" },
+            sx: {
+              pl: 1.5,
+            },
+          },
+        }}
       />
     </Box>
   );

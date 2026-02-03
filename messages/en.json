@@ -20,7 +20,9 @@
   "Component": {
     "more_button": "Read More",
     "download_button": "Download",
-    "contact_button": "Contact"
+    "contact_button": "Contact",
+    "calculation": "Calculation",
+    "result": "Result"
   },
 
   "Home": {
@@ -97,15 +99,27 @@
     "private": "Private",
     "mea/pea_on": "MEA/PEA On Peak",
     "mea/pea_off": "MEA/PEA On Peak",
+    "on_peak": "On Peak",
+    "off_peak": "Off Peak",
     "compare": "Compare Oil and Electricity",
     "view": "View More",
     "remark": "Remark: This test result is based on the company's internal testing under specific conditions, which may differ from actual usage. This information is for reference only and does not constitute a guarantee of performance.",
     "baht": "THB",
     "km/L": "km/L",
+    "round": "Round",
     "data_to_compare": "Enter data to compare fuel usage",
     "fuel_consumption": "Fuel consumption",
     "fuel_price": "Fuel price",
-    "fuel_price_per_liter": "Fuel price per liter"
+    "fuel_price_per_liter": "Fuel price per liter",
+    "travel_distance": "Travel Distance",
+    "total_weight_result": "Total Weight",
+    "charge_count": "Charge count",
+    "oil_cost": "Oil Cost",
+    "electricity_cost": "Electricity Cost",
+    "difference_oil_electricity_cost": "Difference between Oil and Electricity cost",
+    "on_peak_electricity": "On Peak Electricity",
+    "off_peak_electricity": "Off Peak Electricity",
+    "summary_result": "Summary Result"
   },
 
   "Service": {

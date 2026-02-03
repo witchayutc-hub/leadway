@@ -23,25 +23,25 @@ export const apiHybrid = (page: number, pageSize: number, locale: string) =>
   );
 
 // GET MINEING TRUCK
-export const apiSanyMiningTruck = () =>
+export const apiSanyMiningTruck = (locale: string) =>
   getData(
-    "/api/sanies?sort[0]=number:asc&populate=*&filters[sany_type][uid][$eq]=mining-truck-100",
+    `/api/sanies?sort[0]=number:asc&populate=*&filters[sany_type][uid][$eq]=mining-truck-100&locale=${locale}`,
   );
 
 // GET CONCRETE EV
-export const apiConcreteEvTruck = () =>
+export const apiConcreteEvTruck = (locale: string) =>
   getData(
-    "/api/sanies?sort[0]=number:asc&populate=*&filters[sany_type][uid][$eq]=concrete-mixers-truck-ev",
+    `/api/sanies?sort[0]=number:asc&populate=*&filters[sany_type][uid][$eq]=concrete-mixers-truck-ev&locale=${locale}`,
   );
 
 // GET HEAVY TRUCK
-export const apiHeavyTruck = () =>
+export const apiHeavyTruck = (locale: string) =>
   getData(
-    "/api/sanies?sort[0]=number:asc&populate=*&filters[sany_type][uid][$eq]=heavy-duty-dump-trucks",
+    `/api/sanies?sort[0]=number:asc&populate=*&filters[sany_type][uid][$eq]=heavy-duty-dump-trucks&locale=${locale}`,
   );
 
 // GET SANY EV
-export const apiSanyEv = () =>
+export const apiSanyEv = (locale: string) =>
   getData(
-    "/api/sanies?sort[0]=number:asc&populate=*&filters[sany_type][uid][$eq]=sany-ev",
+    `/api/sanies?sort[0]=number:asc&populate=*&filters[sany_type][uid][$eq]=sany-ev&locale=${locale}`,
   );
