@@ -9,6 +9,7 @@ import { Link } from "@/navigation";
 import { useEffect, useState } from "react";
 import { useLocale } from "next-intl";
 import AnimatedTooltip from "@/components/ui/animated-tooltip";
+import Loading from "@/components/loading";
 
 export default function Page() {
   const locale = useLocale();
@@ -143,19 +144,8 @@ export default function Page() {
       </div>
     );
   }
-  if (
-    !hybrid ||
-    hybrid.length === 0 ||
-    !diesel ||
-    diesel.length === 0 ||
-    !concrete ||
-    concrete.length === 0
-  ) {
-    return (
-      <div className="min-h-screen flex justify-center py-10 text-5xl">
-        Loading...
-      </div>
-    );
+  if (hybrid.length === 0 || diesel.length === 0 || concrete.length === 0) {
+    return <Loading />;
   }
 
   return (

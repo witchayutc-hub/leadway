@@ -9,6 +9,7 @@ import { apiPaversPluralByPaginated } from "@/api/getPaversPlural";
 import { useLocale, useTranslations } from "next-intl";
 import AnimatedTooltip from "@/components/ui/animated-tooltip";
 import { motion } from "motion/react";
+import Loading from "@/components/loading";
 
 type SpecButton = {
   id: number;
@@ -134,12 +135,8 @@ export default function Page() {
     );
   }
 
-  if (!sumitomo && !pavers) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        Loading...
-      </div>
-    );
+  if (sumitomo.length === 0 || pavers.length === 0) {
+    return <Loading />;
   }
 
   const excavators = [

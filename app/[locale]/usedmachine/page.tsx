@@ -9,6 +9,7 @@ import { formatDate } from "@/helpers/formatDate";
 import { getStarCount } from "@/helpers/rateing";
 import { formatPrice } from "@/helpers/price";
 import { useTranslations } from "next-intl";
+import Loading from "@/components/loading";
 
 export default function Page() {
   const t = useTranslations("UsedMachine");
@@ -54,11 +55,7 @@ export default function Page() {
   }
 
   if (!usedMachines || usedMachines.length === 0) {
-    return (
-      <div className="min-h-screen flex justify-center py-10 text-5xl">
-        Loading...
-      </div>
-    );
+    return <Loading />;
   }
 
   return (

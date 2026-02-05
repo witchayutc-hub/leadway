@@ -14,6 +14,7 @@ import { useLocale } from "next-intl";
 import AnimatedTooltip from "@/components/ui/animated-tooltip";
 import { Link } from "@/navigation";
 import { motion } from "motion/react";
+import Loading from "@/components/loading";
 
 export default function Page() {
   const locale = useLocale();
@@ -165,6 +166,22 @@ export default function Page() {
       },
     },
   ];
+
+  if (error) {
+    return (
+      <div className="min-h-screen text-center py-10 text-red-600 ">
+        Failed to load data. Please try again.
+      </div>
+    );
+  }
+  if (
+    sanyEv.length === 0 ||
+    heavyTruck.length === 0 ||
+    concreteEvTruck.length === 0 ||
+    miningTruck.length === 0
+  ) {
+    return <Loading />;
+  }
 
   return (
     <div className="min-h-screen bg-white">

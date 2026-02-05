@@ -116,8 +116,27 @@ export default function Home() {
 
   if (news.length === 0 || products.length === 0 || banners.length === 0) {
     return (
-      <div className="min-h-screen flex justify-center py-10 text-5xl">
-        Loading...
+      <div className="min-h-screen animate-pulse text-gray-200">
+        <div className="flex items-center justify-center w-full aspect-video bg-gray-100 rounded-2xl">
+          <i className="bi bi-images text-8xl" />
+        </div>
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-wrap items-center justify-center gap-5 py-5 ">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div
+                key={i}
+                className="w-1/2 py-12 bg-gray-100
+                 sm:w-1/3
+                 md:w-1/5"
+              >
+                <div className="w-full rounded-md bg-gray-100 animate-pulse" />
+              </div>
+            ))}
+          </div>
+          <div className="flex items-center justify-center w-full h-140 rounded-2xl bg-gray-100 ">
+            <i className="bi bi-images text-6xl" />
+          </div>
+        </div>
       </div>
     );
   }

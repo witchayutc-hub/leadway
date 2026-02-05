@@ -38,13 +38,17 @@ const TestListImg = [
 export default function Page() {
   const t = useTranslations("Calculation");
 
+  const [roundTrip, setRoundTrip] = useState<boolean>(false);
+
   const [login, setLogin] = useState<boolean>(true);
 
-  const [rangeValue, setRangeValue] = useState(200);
+  const [rangeValue, setRangeValue] = useState(100);
+  const [rangeValue2, setRangeValue2] = useState(200);
   const min = 0.0;
   const max = 500.0;
 
   const percentage = ((rangeValue - min) / (max - min)) * 100;
+  const percentage2 = ((rangeValue2 - min) / (max - min)) * 100;
 
   const [showDataCompare, setShowDataCompare] = useState(false);
   const [showResult, setShowResult] = useState(false);
@@ -68,52 +72,56 @@ export default function Page() {
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 mt-20 px-3 gap-3">
               <div className="grid text-xl border-t-4 border-[#051C56] text-[#051C56]">
-                <span>On-Road</span>
-                <Carousel
-                  opts={{ loop: true }}
-                  className="w-full max-w-48 sm:max-w-xs md:max-w-sm"
-                >
-                  <CarouselContent className="-ml-1">
-                    {TestListImg.map((item) => (
-                      <CarouselItem
-                        key={item.id}
-                        className="basis-1/2 pl-1 lg:basis-1/3"
-                      >
-                        <img
-                          src={item.img}
-                          alt={item.id.toString()}
-                          className="w-full"
-                        />
-                      </CarouselItem>
-                    ))}
-                  </CarouselContent>
-                  <CarouselPrevious />
-                  <CarouselNext />
-                </Carousel>
+                <span className="mt-4">On-Road</span>
+                <div className="flex items-center justify-center">
+                  <Carousel
+                    opts={{ loop: true }}
+                    className="w-8/12 sm:w-10/12 lg:w-10/12"
+                  >
+                    <CarouselContent className="-ml-1">
+                      {TestListImg.map((item) => (
+                        <CarouselItem
+                          key={item.id}
+                          className="flex items-center gap-3 basis-1/3"
+                        >
+                          <img
+                            src={item.img}
+                            alt={item.id.toString()}
+                            className="w-full"
+                          />
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+                    <CarouselPrevious />
+                    <CarouselNext />
+                  </Carousel>
+                </div>
               </div>
               <div className="grid text-xl border-t-4 border-[#051C56] text-[#051C56]">
-                <span>Off-Road</span>
-                <Carousel
-                  opts={{ loop: true }}
-                  className="w-full max-w-48 sm:max-w-xs md:max-w-sm"
-                >
-                  <CarouselContent className="-ml-1">
-                    {TestListImg.map((item) => (
-                      <CarouselItem
-                        key={item.id}
-                        className="basis-1/2 pl-1 lg:basis-1/3"
-                      >
-                        <img
-                          src={item.img}
-                          alt={item.id.toString()}
-                          className="w-full"
-                        />
-                      </CarouselItem>
-                    ))}
-                  </CarouselContent>
-                  <CarouselPrevious />
-                  <CarouselNext />
-                </Carousel>
+                <span className="mt-4">Off-Road</span>
+                <div className="flex items-center justify-center">
+                  <Carousel
+                    opts={{ loop: true }}
+                    className="w-8/12 sm:w-10/12 lg:w-10/12"
+                  >
+                    <CarouselContent className="-ml-1">
+                      {TestListImg.map((item) => (
+                        <CarouselItem
+                          key={item.id}
+                          className="flex items-center gap-3 basis-1/3"
+                        >
+                          <img
+                            src={item.img}
+                            alt={item.id.toString()}
+                            className="w-full"
+                          />
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+                    <CarouselPrevious />
+                    <CarouselNext />
+                  </Carousel>
+                </div>
               </div>
             </div>
           </div>
@@ -128,10 +136,18 @@ export default function Page() {
                   </span>
                 </div>
                 <div className="grid grid-cols-2 px-3 py-12">
-                  <div className="flex text-xl justify-center pb-4 border-b-4 border-[#051C56] text-[#051C56]">
+                  <div
+                    onClick={() => setRoundTrip(false)}
+                    className={`flex text-xl justify-center pb-4 border-b-4 cursor-pointer border-[#051C56] text-[#051C56]
+                    ${roundTrip ? "opacity-50" : "transition duration-300 ease-in-out"}`}
+                  >
                     <span> {t("one_way")}</span>
                   </div>
-                  <div className="flex text-xl justify-center border-b-4 border-[#051C56] text-[#051C56]">
+                  <div
+                    onClick={() => setRoundTrip(true)}
+                    className={`flex text-xl justify-center border-b-4 cursor-pointer border-[#051C56] text-[#051C56]
+                            ${roundTrip ? "transition duration-300 ease-in-out" : "opacity-50 "}`}
+                  >
                     <span> {t("round_trip")}</span>
                   </div>
                 </div>
@@ -206,8 +222,13 @@ export default function Page() {
               </div>
             </div>
           </div>
-        </section>
-        <section>
+          {roundTrip && (
+            <div className="flex items-center justify-start max-w-7xl mx-auto">
+              <div className="py-2 px-8 rounded-lg bg-[#052C65]">
+                <span className="text-3xl text-white">ขาไป</span>
+              </div>
+            </div>
+          )}
           <div className="max-w-7xl mx-auto">
             <div className="text-center py-12 px-3">
               <div>
@@ -242,6 +263,123 @@ export default function Page() {
             </div>
           </div>
         </section>
+        {roundTrip && (
+          <section>
+            <div className="max-w-7xl mx-auto">
+              <div className="text-center py-10">
+                <div className="px-3">
+                  <div className="flex text-xl justify-center pb-4 border-b-4 opacity-50 border-[#083e97] text-[#083e97]" />
+                </div>
+                <div className="mt-12">
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-6 text-[#051C56]">
+                    <div className="grid grid-cols-12 items-center px-3 gap-2">
+                      <span className="text-right col-span-3">
+                        {t("distance")}
+                      </span>
+                      <input
+                        type="number"
+                        min={min}
+                        max={max}
+                        value={rangeValue2.toFixed(1)}
+                        step={0.1}
+                        onChange={(e) => setRangeValue2(Number(e.target.value))}
+                        className="mx-auto block w-full max-w-50 h-20 p-3 text-3xl rounded-lg border col-span-6
+                        border-gray-200 text-[#051C56] focus:outline-none focus:ring-2 focus:ring-[#051C56] focus:border-[#051C56]
+                        sm:text-4xl 
+                        xl:text-5xl"
+                      />
+                      <span className="text-left col-span-3">{t("km")}</span>
+                      <div className="h-4"></div>
+                    </div>
+                    <div className="grid">
+                      <div className="grid grid-cols-12 items-center px-3 gap-2">
+                        <span className="text-right col-span-3">
+                          {t("weight")}
+                        </span>
+                        <input
+                          type="number"
+                          className="mx-auto block w-full max-w-50 h-20 p-3 text-5xl rounded-lg border col-span-6
+                         border-gray-200 text-[#051C56] focus:outline-none focus:ring-2 focus:ring-[#051C56] focus:border-[#051C56]"
+                        />
+                        <span className="text-left col-span-3">{t("ton")}</span>
+                        <span className="text-center col-span-12">
+                          {t("total_weight")}
+                        </span>
+                      </div>
+                    </div>
+                    <div>
+                      <div
+                        className="grid gap-2 place-items-center py-6
+                        lg:border-l-2 lg:border-[#051C56]"
+                      >
+                        <div>
+                          <span className="text-xl">
+                            {t("remaining_battery")}
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-center gap-3">
+                          <div>
+                            <span className="text-xl">soc</span>
+                          </div>
+                          <div>
+                            <img
+                              src="/image/battery_71-100_percent.png"
+                              className="w-full max-h-10 object-contain aspect-video"
+                            />
+                          </div>
+                          <div>
+                            <span className="text-4xl">99 %</span>
+                          </div>
+                        </div>
+                        <div>
+                          <span className="">( 350 / 350 kW )</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center justify-start max-w-7xl mx-auto">
+              <div className="py-2 px-8 rounded-lg bg-[#052C65]">
+                <span className="text-3xl text-white">ขากลับ</span>
+              </div>
+            </div>
+            <div className="max-w-7xl mx-auto">
+              <div className="text-center py-12 px-3">
+                <div>
+                  <div>
+                    <div className="w-full relative">
+                      <div
+                        className="absolute top-6 font-medium text-[#051C56] -translate-x-1/2"
+                        style={{ left: `${percentage2}%` }}
+                      >
+                        {rangeValue2}
+                      </div>
+                      <input
+                        type="range"
+                        min={min}
+                        max={max}
+                        step={0.1}
+                        value={rangeValue2.toFixed(1)}
+                        onChange={(e) => setRangeValue2(Number(e.target.value))}
+                        className="w-full accent-[#051C56]"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center justify-center text-[#0f501d]">
+              <div className="flex items-center px-8 py-1 rounded-lg bg-[#def0d3]">
+                <i className="bi bi-check-circle text-2xl" />
+                <div className="ms-3">
+                  ไม่เกินระยะการวิ่ง ไม่จำเป็นต้องชาร์จ
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
         <section>
           <div className="max-w-7xl mx-auto">
             <div className="text-center py-12 px-3">

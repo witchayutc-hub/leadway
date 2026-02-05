@@ -7,6 +7,7 @@ import { apiNewsByPaginated } from "@/api/getNews";
 import { formatDate } from "@/helpers/formatDate";
 import Icon from "@/components/icon";
 import { useLocale, useTranslations } from "next-intl";
+import Loading from "@/components/loading";
 
 export default function Page() {
   const t = useTranslations("News");
@@ -55,8 +56,26 @@ export default function Page() {
 
   if (news.length === 0) {
     return (
-      <div className="min-h-screen flex justify-center py-10 text-5xl">
-        Loading...
+      <div className="min-h-screen animate-pulse">
+        <div className="flex flex-col items-center justify-center w-full min-h-[calc(25vh-80px)]">
+          <div className="h-5 w-45 rounded-full bg-gray-100" />
+        </div>
+        <div className="w-full max-w-7xl mx-auto">
+          <div className="flex flex-wrap justify-center px-3 gap-x-6 gap-y-12">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="space-y-4">
+                <div className="flex items-center justify-center h-50 sm:w-100 w-1/1 bg-gray-100 text-gray-200">
+                  <i className="bi bi-images text-8xl" />
+                </div>
+                <div className="h-4 w-70 rounded-lg bg-gray-100" />
+                <div className="h-3 w-80 rounded-lg bg-gray-100" />
+                <div className="h-3 w-50 rounded-lg bg-gray-100" />
+                <div className="h-3 w-60 rounded-lg bg-gray-100" />
+                <div className="h-3 w-30 rounded-lg bg-gray-100" />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     );
   }
