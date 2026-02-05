@@ -1,8 +1,39 @@
 "use client";
 import BarCharts from "@/components/Section/barCharts";
 import Login from "@/components/Section/login";
+import { motion, AnimatePresence, useIsPresent } from "motion/react";
 import { useTranslations } from "next-intl";
 import { use, useEffect, useState } from "react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+
+const TestListImg = [
+  {
+    id: 1,
+    img: "/image/battery_71-100_percent.png",
+  },
+  {
+    id: 2,
+    img: "/image/carbon.png",
+  },
+  {
+    id: 3,
+    img: "/image/battery_71-100_percent.png",
+  },
+  {
+    id: 4,
+    img: "/image/battery_71-100_percent.png",
+  },
+  {
+    id: 5,
+    img: "/image/battery_71-100_percent.png",
+  },
+];
 
 export default function Page() {
   const t = useTranslations("Calculation");
@@ -36,11 +67,53 @@ export default function Page() {
         <section>
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 mt-20 px-3 gap-3">
-              <div className="flex text-xl border-t-4 border-[#051C56] text-[#051C56]">
+              <div className="grid text-xl border-t-4 border-[#051C56] text-[#051C56]">
                 <span>On-Road</span>
+                <Carousel
+                  opts={{ loop: true }}
+                  className="w-full max-w-48 sm:max-w-xs md:max-w-sm"
+                >
+                  <CarouselContent className="-ml-1">
+                    {TestListImg.map((item) => (
+                      <CarouselItem
+                        key={item.id}
+                        className="basis-1/2 pl-1 lg:basis-1/3"
+                      >
+                        <img
+                          src={item.img}
+                          alt={item.id.toString()}
+                          className="w-full"
+                        />
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  <CarouselPrevious />
+                  <CarouselNext />
+                </Carousel>
               </div>
-              <div className="flex text-xl border-t-4 border-[#051C56] text-[#051C56]">
+              <div className="grid text-xl border-t-4 border-[#051C56] text-[#051C56]">
                 <span>Off-Road</span>
+                <Carousel
+                  opts={{ loop: true }}
+                  className="w-full max-w-48 sm:max-w-xs md:max-w-sm"
+                >
+                  <CarouselContent className="-ml-1">
+                    {TestListImg.map((item) => (
+                      <CarouselItem
+                        key={item.id}
+                        className="basis-1/2 pl-1 lg:basis-1/3"
+                      >
+                        <img
+                          src={item.img}
+                          alt={item.id.toString()}
+                          className="w-full"
+                        />
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  <CarouselPrevious />
+                  <CarouselNext />
+                </Carousel>
               </div>
             </div>
           </div>
