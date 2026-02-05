@@ -62,7 +62,7 @@ export default function Page() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div>
       <div className="fixed inset-0 z-0">
         <Image
           src="/image/bg.png"
@@ -120,7 +120,7 @@ export default function Page() {
                       className="absolute left-1/2 -translate-x-1/2 -translate-y-3.25 grid grid-cols-3 w-9/12 h-6 text-[11px] z-10
                      bg-white text-[#666666] divide-x divide-gray-300"
                     >
-                      <div className="flex items-center justify-center w-full h-full">
+                      <div className="flex items-center justify-center text-center w-full h-full">
                         {formatDate(item.attributes.updatedAt)}
                       </div>
                       <div className="flex items-center justify-center w-full h-full">

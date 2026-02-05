@@ -201,71 +201,79 @@ export default function Page() {
               </motion.div>
               {sanyEv.map((item) => (
                 <div key={item.id}>
-                  <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="cursor-pointer"
-                  >
-                    <img
-                      src={`${process.env.NEXT_PUBLIC_API_URL}${item.attributes.img?.data?.attributes.formats.thumbnail.url}`}
-                      className="w-full object-contain aspect-video "
-                    />
-                    <div className="p-2 text-center  text-[#7E7E7D]">
-                      {item.attributes.name}
-                    </div>
-                  </motion.div>
+                  <Link href={`/sany-ev#${item.attributes.uid}`}>
+                    <motion.div
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      className="cursor-pointer"
+                    >
+                      <img
+                        src={`${process.env.NEXT_PUBLIC_API_URL}${item.attributes.img?.data?.attributes.formats.thumbnail.url}`}
+                        className="w-full object-contain aspect-video "
+                      />
+                      <div className="p-2 text-center  text-[#7E7E7D]">
+                        {item.attributes.name}
+                      </div>
+                    </motion.div>
+                  </Link>
                 </div>
               ))}
               {concreteEvTruck.map((item) => (
                 <div key={item.id}>
-                  <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="cursor-pointer"
-                  >
-                    <img
-                      src={`${process.env.NEXT_PUBLIC_API_URL}${item.attributes.img?.data?.attributes.formats.thumbnail.url}`}
-                      className="w-full object-contain aspect-video cursor-pointer"
-                    />
-                    <div className="p-2 text-center text-[#7E7E7D]">
-                      {item.attributes.name}
-                    </div>
-                  </motion.div>
+                  <Link href={`/sany-ev#${item.attributes.uid}`}>
+                    <motion.div
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      className="cursor-pointer"
+                    >
+                      <img
+                        src={`${process.env.NEXT_PUBLIC_API_URL}${item.attributes.img?.data?.attributes.formats.thumbnail.url}`}
+                        className="w-full object-contain aspect-video cursor-pointer"
+                      />
+                      <div className="p-2 text-center text-[#7E7E7D]">
+                        {item.attributes.name}
+                      </div>
+                    </motion.div>
+                  </Link>
                 </div>
               ))}
               {heavyTruck.map((item) => (
                 <div key={item.id}>
-                  <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="cursor-pointer"
-                  >
-                    <img
-                      src={`${process.env.NEXT_PUBLIC_API_URL}${item.attributes.img?.data?.attributes.formats.thumbnail.url}`}
-                      className="w-full object-contain aspect-video cursor-pointer"
-                    />
-                    <div className="p-2 text-center text-[#7E7E7D]">
-                      {item.attributes.name}
-                    </div>
-                  </motion.div>
+                  <Link href={`/sany-ev#${item.attributes.uid}`}>
+                    <motion.div
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      className="cursor-pointer"
+                    >
+                      <img
+                        src={`${process.env.NEXT_PUBLIC_API_URL}${item.attributes.img?.data?.attributes.formats.thumbnail.url}`}
+                        className="w-full object-contain aspect-video cursor-pointer"
+                      />
+                      <div className="p-2 text-center text-[#7E7E7D]">
+                        {item.attributes.name}
+                      </div>
+                    </motion.div>
+                  </Link>
                 </div>
               ))}
               {miningTruck.map((item) => (
                 <div key={item.id}>
-                  <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="cursor-pointer"
-                  >
-                    <img
-                      src={`${process.env.NEXT_PUBLIC_API_URL}${item.attributes.img?.data?.attributes.formats.thumbnail.url}`}
-                      className="w-full object-contain aspect-video cursor-pointer"
-                    />
+                  <Link href={`/sany-ev#${item.attributes.uid}`}>
+                    <motion.div
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      className="cursor-pointer"
+                    >
+                      <img
+                        src={`${process.env.NEXT_PUBLIC_API_URL}${item.attributes.img?.data?.attributes.formats.thumbnail.url}`}
+                        className="w-full object-contain aspect-video cursor-pointer"
+                      />
 
-                    <div className="p-2 text-center text-[#7E7E7D]">
-                      {item.attributes.name}
-                    </div>
-                  </motion.div>
+                      <div className="p-2 text-center text-[#7E7E7D]">
+                        {item.attributes.name}
+                      </div>
+                    </motion.div>
+                  </Link>
                 </div>
               ))}
             </div>
@@ -287,6 +295,7 @@ export default function Page() {
               const images = item?.attributes?.img_list?.data;
               return (
                 <div
+                  id={item.attributes.uid}
                   key={item.id}
                   className="grid gap-3 px-3 py-6 lg:grid-cols-12"
                 >
@@ -316,7 +325,7 @@ export default function Page() {
                             id: 1,
                             label: item?.attributes?.name ?? "-",
                             variant: "primary",
-                            colorClass: "bg-[#01BD04]",
+                            colorClass: "bg-[#79B721]",
                             href: `${process.env.NEXT_PUBLIC_API_URL}${
                               item?.attributes?.file?.data?.attributes?.url
                             }`,
@@ -325,7 +334,7 @@ export default function Page() {
                             id: 2,
                             label: "ดาวน์โหลด",
                             variant: "outline",
-                            colorClass: "text-[#01BD04]",
+                            colorClass: "text-[#79B721]",
                             download: true,
                             href: `${process.env.NEXT_PUBLIC_API_URL}${
                               item?.attributes?.file?.data?.attributes?.url
@@ -347,7 +356,7 @@ export default function Page() {
                               className="w-full aspect-4/3 object-cover"
                               alt={`เพิ่มเติม ${item.id + 1}`}
                             />
-                            <div className="flex justify-center items-center h-12 bg-[#01BD04]">
+                            <div className="flex justify-center items-center h-12 bg-[#79B721]">
                               <span className="text-sm sm:text-xl text-ellipsis text-white">
                                 {locale === "th"
                                   ? (cutAfterPipe(
@@ -382,6 +391,7 @@ export default function Page() {
               const images = item?.attributes?.img_list?.data;
               return (
                 <div
+                  id={item.attributes.uid}
                   key={item.id}
                   className={`grid gap-3 px-3 py-6 lg:grid-cols-12
                     ${item.id % 2 === 0 ? "lg:flex lg:flex-row-reverse" : ""}`}
@@ -474,6 +484,7 @@ export default function Page() {
               const images = item?.attributes?.img_list?.data;
               return (
                 <div
+                  id={item.attributes.uid}
                   key={item.id}
                   className="grid gap-3 px-3 py-6 lg:grid-cols-12"
                 >
@@ -583,15 +594,12 @@ export default function Page() {
                   setActiveId(activeId === target.id ? null : target.id);
                 }}
               >
-                {/* ping */}
                 <span className="absolute inset-0 rounded-full bg-blue-700 animate-ping [animation-duration:2s] opacity-70" />
-                {/* icon */}
                 <img
                   src="/image/Target_Logo.png"
                   alt="Target Logo"
                   className="relative w-full h-full cursor-pointer transition-transform duration-300 group-hover:scale-120 opacity-60"
                 />
-                {/* tooltip */}
                 <AnimatedTooltip
                   active={activeId === target.id}
                   item={target.item}
@@ -614,6 +622,7 @@ export default function Page() {
               const images = item?.attributes?.img_list?.data;
               return (
                 <div
+                  id={item.attributes.uid}
                   key={item.id}
                   className="grid gap-3 px-3 py-6 lg:grid-cols-12"
                 >

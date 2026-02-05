@@ -50,7 +50,7 @@ export default function Navbar() {
         <Link href="/" className="flex items-center">
           <div className="flex items-center h-14 ">
             <img
-              src="https://leadway.co.th/assets/Logo.png"
+              src="/image/Logo.png"
               alt="Logo"
               className="h-10 lg:h-14 w-auto object-contain"
             />

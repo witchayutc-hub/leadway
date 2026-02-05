@@ -45,37 +45,37 @@ export default function SummaryFooter({ show }: Props) {
       <div className="fixed bottom-0 z-50 w-full bg-[#052C65]">
         <div className="flex mx-auto max-w-7xl items-center justify-center min-h-12 max-h-25 p-3 text-sm text-white">
           <div className="flex gap-x-12">
-            <div className="grid sm:flex text-center gap-2">
+            <div className="grid sm:flex text-center gap-x-2">
               <div>
-                <span>จำนวนการชาร์จ</span>
+                <span>{t("charge_count")}</span>
               </div>
               <div>
                 <span>0</span>
               </div>
               <div>
-                <span>รอบ</span>
+                <span>{t("charging session")}</span>
               </div>
             </div>
-            <div className="grid sm:flex text-center gap-2">
+            <div className="grid sm:flex text-center gap-x-2">
               <div>
-                <span>อัตราการใช้พลังงาน</span>
+                <span>{t("energy_consumption")}</span>
               </div>
               <div>
-                <span>315.01</span>
+                <span>315.20</span>
               </div>
               <div>
                 <span>kW</span>
               </div>
             </div>
-            <div className="grid sm:flex text-center gap-2">
+            <div className="grid sm:flex text-center gap-x-2">
               <div>
-                <span>ค่าไฟเอกชน</span>
+                <span>{t("electricity_cost")}</span>
               </div>
               <div>
                 <span>0</span>
               </div>
               <div>
-                <span>บาท</span>
+                <span>{t("baht")}</span>
               </div>
             </div>
           </div>

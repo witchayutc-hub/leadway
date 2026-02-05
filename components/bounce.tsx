@@ -16,7 +16,7 @@ export default function Bounce() {
   return (
     <div>
       <div
-        className={`fixed ${pathname === "/required-energy-consumption" || pathname === "/en/required-energy-consumption/compare" ? " bottom-25" : "bottom-4"} right-5 z-60 
+        className={`fixed ${pathname === "/required-energy-consumption" || pathname === "/en/required-energy-consumption" ? " bottom-25" : "bottom-4"} right-5 z-60 
           sm:bottom-6 sm:right-6
           lg:bottom-10 lg:right-10`}
       >

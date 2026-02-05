@@ -311,15 +311,12 @@ export default function Page() {
                     setActiveId(activeId === target.id ? null : target.id);
                   }}
                 >
-                  {/* ping */}
                   <span className="absolute inset-0 rounded-full bg-blue-700 animate-ping [animation-duration:2s] opacity-70" />
-                  {/* icon */}
                   <img
                     src="/image/Target_Logo.png"
                     alt="Target Logo"
                     className="relative w-full h-full cursor-pointer transition-transform duration-300 group-hover:scale-120 opacity-60"
                   />
-                  {/* tooltip */}
                   <AnimatedTooltip
                     active={activeId === target.id}
                     item={target.item}
@@ -459,15 +456,12 @@ export default function Page() {
                     setActiveId(activeId === target.id ? null : target.id);
                   }}
                 >
-                  {/* ping */}
                   <span className="absolute inset-0 rounded-full bg-blue-700 animate-ping [animation-duration:2s] opacity-70" />
-                  {/* icon */}
                   <img
                     src="/image/Target_Logo.png"
                     alt="Target Logo"
                     className="relative w-full h-full cursor-pointer transition-transform duration-300 group-hover:scale-120 opacity-60"
                   />
-                  {/* tooltip */}
                   <AnimatedTooltip
                     active={activeId === target.id}
                     item={target.item}

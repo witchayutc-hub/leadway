@@ -1,10 +1,13 @@
 "use client";
 import BarCharts from "@/components/Section/barCharts";
+import Login from "@/components/Section/login";
 import { useTranslations } from "next-intl";
 import { use, useEffect, useState } from "react";
 
 export default function Page() {
   const t = useTranslations("Calculation");
+
+  const [login, setLogin] = useState<boolean>(true);
 
   const [rangeValue, setRangeValue] = useState(200);
   const min = 0.0;
@@ -15,9 +18,21 @@ export default function Page() {
   const [showDataCompare, setShowDataCompare] = useState(false);
   const [showResult, setShowResult] = useState(false);
 
+  useEffect(() => {
+    document.body.style.overflow = login ? "hidden" : "auto";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [login]);
+
   return (
     <div className="min-h-screen bg-white">
       <main>
+        {login && (
+          <section>
+            <Login onClose={() => setLogin(false)} />
+          </section>
+        )}
         <section>
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 mt-20 px-3 gap-3">
@@ -87,7 +102,7 @@ export default function Page() {
                   </div>
                   <div>
                     <div
-                      className="grid gap-2 place-items-center py-6 
+                      className="grid gap-2 place-items-center py-6
                         lg:border-l-2 lg:border-[#051C56]"
                     >
                       <div>
@@ -355,8 +370,8 @@ export default function Page() {
                   </div>
                   <div>
                     <div className="flex items-center justify-center">
-                      <span className="text-xl underline">
-                        ส่วนต่างค่าใช่จ่ายน้ำมัน และชาร์จไฟ
+                      <span className="text-xl underline text-[#051C56]">
+                        {t("oil_vs_electricity")}
                       </span>
                     </div>
                     <div className="py-6">
@@ -374,7 +389,7 @@ export default function Page() {
                     className="flex px-10 py-2 gap-2 rounded-xl bg-[#051C56] cursor-pointer"
                   >
                     <span className="text-xl text-center text-white">
-                      {t("view")} <i className="bi bi-chevron-double-down"></i>
+                      {t("view")} <i className="bi bi-chevron-double-down" />
                     </span>
                   </div>
                 </div>
@@ -382,14 +397,14 @@ export default function Page() {
             ) : (
               <div className="px-3 bg-[#F4F4F9]">
                 <div className="flex items-center justify-between py-12 p-3">
-                  <div className="w-6 h-6" />
+                  <div className="w-1/20" />
                   <span className="font-medium text-2xl text-[#051C56]">
                     {t("summary_result")}
                   </span>
-                  <div>
+                  <div className="flex w-1/20">
                     <button
                       onClick={() => setShowResult(!showResult)}
-                      className=" cursor-pointer"
+                      className="cursor-pointer "
                     >
                       <i className="bi bi-chevron-down text-2xl text-[#051C56]" />
                     </button>

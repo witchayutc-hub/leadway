@@ -90,8 +90,8 @@ export default function Page() {
           </div>
         </section>
         <section>
-          <div className="w-full max-w-7xl mx-auto py-12">
-            <div className="flex flex-wrap justify-center">
+          <div className="w-full max-w-7xl mx-auto">
+            <div className="flex flex-wrap">
               {promotions.map((item) => {
                 const image = item.attributes.img?.data?.attributes;
                 return (
@@ -125,7 +125,13 @@ export default function Page() {
                   </div>
                 );
               })}
-              <div className="flex items-center justify-center pt-6 z-10">
+            </div>
+          </div>
+        </section>
+        <section>
+          <div className="w-full max-w-7xl mx-auto">
+            <div className="flex justify-center">
+              <div className="flex py-10 z-10">
                 <MoreButton
                   onClick={() => setPage((prev) => prev + 1)}
                   onDisabled={page >= pageCount}

@@ -27,7 +27,7 @@ export default function Modal({
         {image && (
           <img
             src={image}
-            className="w-auto h-auto  object-cover rounded-lg shadow-xl"
+            className="w-auto h-auto object-cover rounded-lg shadow-xl"
           />
         )}
       </div>

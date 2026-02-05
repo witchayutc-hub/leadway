@@ -62,7 +62,7 @@ export default function Page() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div>
       <div className="fixed inset-0 z-0">
         <Image
           src="/image/bg.png"

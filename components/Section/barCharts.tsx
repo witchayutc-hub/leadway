@@ -1,12 +1,6 @@
 import Box from "@mui/material/Box";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { useTheme, useMediaQuery } from "@mui/material";
-import { HighlightScope } from "@mui/x-charts/context";
-
-const highlightScope: HighlightScope = {
-  highlight: "series",
-  fade: "global",
-};
 
 const series = [
   {
@@ -27,7 +21,7 @@ const series = [
     data: [null, 40, 60, 90],
     color: "#86EFAC",
   },
-].map((s) => ({ ...s, highlightScope }));
+];
 
 const labels = ["น้ำมัน", "เอกชน", "กฟน/กฟภ On Peak", "กฟน/กฟภ Off Peak"];
 

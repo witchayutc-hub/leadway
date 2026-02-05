@@ -22,7 +22,28 @@
     "download_button": "ดาวน์โหลด",
     "contact_button": "ติดต่อ",
     "calculation": "คำนวณ",
-    "result": "ผลลัพธ์"
+    "result": "ผลลัพธ์",
+    "charge_count": "จำนวนการชาร์จ",
+    "charging session": "รอบ",
+    "energy_consumption": "อัตราการใช้พลังงาน",
+    "electricity_cost": "ค่าไฟเอกชน",
+    "baht": "บาท"
+  },
+
+  "Login": {
+    "information": "กรุณากรอกข้อมูลผู้ใช้งาน",
+    "name": "ชื่อ - นามสกุล",
+    "input_name": "กรอกขื่อและนามสกุล",
+    "phone": "เบอร์โทรศัพท์",
+    "input_phone": "กรอกเบอร์โทรศัพท์",
+    "email": "E-mail",
+    "input_email": "กรอกอีเมลแอดเดรส",
+    "back": "ย้อนกลับ",
+    "get_started": "เริ่มต้นใช้งาน",
+    "name_error": "กรุณากรอกขื่อและนามสกุล",
+    "phone_error": "กรุณากรอกเบอร์โทรศัพท์",
+    "email_error": "กรุณากรอกอีเมลแอดเดรส",
+    "invalid": "รูปแบบไม่ถูกต้อง"
   },
 
   "Home": {
@@ -119,7 +140,8 @@
     "difference_oil_electricity_cost": "ส่วนต่างค่าชาร์จไฟ กับค่าน้ำมัน",
     "on_peak_electricity": "ค่าไฟฟ้า On Peak",
     "off_peak_electricity": "ค่าไฟฟ้า Off Peak",
-    "summary_result": "สรุปผลลัพธ์"
+    "summary_result": "สรุปผลลัพธ์",
+    "oil_vs_electricity": "ส่วนต่างค่าใช่จ่ายน้ำมัน และชาร์จไฟ"
   },
 
   "Service": {

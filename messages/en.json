@@ -22,7 +22,28 @@
     "download_button": "Download",
     "contact_button": "Contact",
     "calculation": "Calculation",
-    "result": "Result"
+    "result": "Result",
+    "charge_count": "Charge count",
+    "charging session": "charging session",
+    "energy_consumption": "Energy Consumption",
+    "electricity_cost": "Private Electricity Cost",
+    "baht": "THB"
+  },
+
+  "Login": {
+    "information": "Please enter your information",
+    "name": "Firstname - Lastname",
+    "input_name": "Enter your first and last name",
+    "phone": "Telephone number",
+    "input_phone": "Enter your telephone number",
+    "email": "E-mail",
+    "input_email": "Enter your E-mail address",
+    "back": "Back",
+    "get_started": "Get Started",
+    "name_error": "Please enter your first and last name",
+    "phone_error": "Please enter your telephone number",
+    "email_error": "Please enter your E-mail address",
+    "invalid": "Incorrect format"
   },
 
   "Home": {
@@ -119,7 +140,8 @@
     "difference_oil_electricity_cost": "Difference between Oil and Electricity cost",
     "on_peak_electricity": "On Peak Electricity",
     "off_peak_electricity": "Off Peak Electricity",
-    "summary_result": "Summary Result"
+    "summary_result": "Summary Result",
+    "oil_vs_electricity": "Oil vs Electricity Cost"
   },
 
   "Service": {
