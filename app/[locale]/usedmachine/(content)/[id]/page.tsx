@@ -57,7 +57,50 @@ export default function Page() {
   }
 
   if (!data || data.length === 0) {
-    return <Loading />;
+    return (
+      <div className="min-h-screen animate-pulse">
+        <div className="flex items-center justify-center w-full min-h-[calc(25vh-80px)] rounded-2xl">
+          <div className="h-5 w-45 rounded-full bg-gray-100" />
+        </div>
+        <div className="max-w-7xl mx-auto px-3">
+          <div className="grid lg:grid-cols-12 gap-6">
+            <div className="grid lg:col-span-8 aspect-16/14">
+              <div className="flex flex-col gap-2 ">
+                <div className="flex items-center justify-center w-full h-full bg-gray-100 ">
+                  <i className="bi bi-images text-8xl text-gray-200" />
+                </div>
+                <div className="flex w-8/12 space-x-2">
+                  {Array.from({ length: 6 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="w-full h-full aspect-square bg-gray-100"
+                    ></div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="grid lg:col-span-4">
+              <div>
+                <div className="h-6 w-3/5 rounded-lg bg-gray-100" />
+              </div>
+              <div className="block my-12 space-y-8">
+                {Array.from({ length: 8 }).map((_, i) => (
+                  <div key={i}>
+                    <div className="flex justify-between">
+                      <div className="h-4 w-full rounded-lg bg-gray-100" />
+                    </div>
+                  </div>
+                ))}
+                <div className="block space-y-2">
+                  <div className="h-4 w-3/5 rounded-lg bg-gray-100" />
+                  <div className="h-4 w-2/7 rounded-lg bg-gray-100" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (

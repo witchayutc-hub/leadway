@@ -362,7 +362,7 @@ export default function Page() {
                     </div>
                   </div>
                   <div className="col-span-12 lg:col-span-8">
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid sm:grid-cols-2 gap-3">
                       {images?.map((img: any, imgIndex: any) => {
                         const imageUrl = img?.attributes?.formats?.small?.url;
                         if (!imageUrl) return null;
@@ -455,7 +455,7 @@ export default function Page() {
                     </div>
                   </div>
                   <div className="col-span-12 lg:col-span-8">
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid sm:grid-cols-2 gap-3">
                       {images?.map((img: any, imgIndex: any) => {
                         const imageUrl = img?.attributes?.formats?.small?.url;
                         if (!imageUrl) return null;
@@ -550,7 +550,7 @@ export default function Page() {
                     </div>
                   </div>
                   <div className="col-span-12 lg:col-span-8">
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid sm:grid-cols-2 gap-3">
                       {images?.map((img: any, imgIndex: any) => {
                         const imageUrl = img?.attributes?.url;
                         if (!imageUrl) return null;
@@ -688,7 +688,7 @@ export default function Page() {
                     </div>
                   </div>
                   <div className="col-span-12 lg:col-span-8">
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid sm:grid-cols-2 gap-3">
                       {images?.map((img: any, imgIndex: any) => {
                         const imageUrl = img?.attributes?.url;
                         if (!imageUrl) return null;

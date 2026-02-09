@@ -6,7 +6,6 @@ import { apiNewsBySlug } from "@/api/getNews";
 import MarkDown from "@/components/markdown";
 import Image from "next/image";
 import { useLocale } from "next-intl";
-import Loading from "@/components/loading";
 
 export default function Page() {
   const locale = useLocale();
@@ -41,7 +40,66 @@ export default function Page() {
     );
   }
 
-  if (!data || data.length === 0) return <Loading />;
+  if (!data || data.length === 0)
+    return (
+      <div className="min-h-screen animate-pulse">
+        <div
+          className="flex flex-col w-full items-start max-w-7xl mx-auto gap-8 px-3 pt-12
+              md:flex-row"
+        >
+          <div className="w-full md:w-1/2 min-w-0">
+            <div className="w-full h-full aspect-video bg-gray-100"></div>
+          </div>
+          <div className="w-full md:w-1/2 min-w-0">
+            <div className="w-full h-full ">
+              <div className="flex flex-col gap-2">
+                <div className="h-4 w-7/10 mb-4 rounded-lg bg-gray-100" />
+                <div className="h-2 w-full rounded-lg bg-gray-100" />
+                <div className="h-2 w-full rounded-lg bg-gray-100" />
+                <div className="h-2 w-4/10 rounded-lg bg-gray-100" />
+              </div>
+              <div className="flex flex-col gap-2 py-6">
+                <div className="h-4 w-9/10 mb-4 rounded-lg bg-gray-100" />
+                <div className="h-2 w-full rounded-lg bg-gray-100" />
+                <div className="h-2 w-full rounded-lg bg-gray-100" />
+                <div className="h-2 w-4/10 rounded-lg bg-gray-100" />
+                <div className="h-2 w-9/10 rounded-lg bg-gray-100" />
+                <div className="h-2 w-7/10 rounded-lg bg-gray-100" />
+                <div className="h-2 w-4/10 rounded-lg bg-gray-100" />
+              </div>
+              <div className="flex flex-col gap-2 py-6">
+                <div className="h-4 w-7/10 mb-4 rounded-lg bg-gray-100" />
+                <div className="h-2 w-full rounded-lg bg-gray-100" />
+                <div className="h-2 w-9/10 rounded-lg bg-gray-100" />
+                <div className="h-2 w-7/10 rounded-lg bg-gray-100" />
+                <div className="h-2 w-4/10 rounded-lg bg-gray-100" />
+              </div>
+              <div className="flex flex-col gap-2 py-6">
+                <div className="h-4 w-9/10 mb-4 rounded-lg bg-gray-100" />
+                <div className="h-2 w-full rounded-lg bg-gray-100" />
+                <div className="h-2 w-9/10 rounded-lg bg-gray-100" />
+                <div className="h-2 w-6/10 rounded-lg bg-gray-100" />
+                <div className="h-2 w-9/10 rounded-lg bg-gray-100" />
+                <div className="h-4 w-4/10 rounded-lg bg-gray-100" />
+                <div className="h-2 w-3/10 rounded-lg bg-gray-100" />
+                <div className="h-2 w-3/10 rounded-lg bg-gray-100" />
+                <div className="h-2 w-3/10 rounded-lg bg-gray-100" />
+                <div className="h-2 w-3/10 rounded-lg bg-gray-100" />
+              </div>
+              <div className="flex flex-col gap-2 py-6">
+                <div className="h-4 w-fullmb-4 rounded-lg bg-gray-100" />
+                <div className="h-2 w-full rounded-lg bg-gray-100" />
+                <div className="h-2 w-full rounded-lg bg-gray-100" />
+                <div className="h-2 w-full rounded-lg bg-gray-100" />
+                <div className="h-2 w-7/10 rounded-lg bg-gray-100" />
+                <div className="h-2 w-8/10 rounded-lg bg-gray-100" />
+                <div className="h-2 w-4/10 rounded-lg bg-gray-100" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
 
   if (locale === "en")
     return (

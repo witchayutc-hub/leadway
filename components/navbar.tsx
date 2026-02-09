@@ -46,9 +46,9 @@ export default function Navbar() {
 
   return (
     <header className="fixed top-0 z-40 w-full shadow-lg bg-white">
-      <nav className="group max-w-7xl w-full mx-auto flex items-center justify-between py-3 px-2 ">
+      <nav className="group max-w-7xl w-full mx-auto flex items-center justify-between py-3 px-2">
         <Link href="/" className="flex items-center">
-          <div className="flex items-center h-14 ">
+          <div className="flex items-center h-14">
             <img
               src="/image/Logo.png"
               alt="Logo"
@@ -57,7 +57,7 @@ export default function Navbar() {
           </div>
         </Link>
         <div
-          className={`hidden text-base lg:flex  ${locale} ${locale === "th" ? "lg:gap-5 " : "lg:gap-3.5"} xl:gap-x-12`}
+          className={`hidden text-base lg:flex  ${locale} ${locale === "th" ? "lg:gap-x-7 xl:gap-x-16" : "lg:gap-3.5 xl:gap-x-13"}`}
         >
           {menu.map((item) => {
             if (item.id === 2) {
@@ -65,7 +65,7 @@ export default function Navbar() {
                 <button
                   key={item.id}
                   onClick={() => setOpenProductMenu(!openProductMenu)}
-                  className="font-semibold cursor-pointer text-[#7e7e7d] group-hover:text-black hover:text-[#ffab00]"
+                  className="font-medium cursor-pointer text-[#7e7e7d] group-hover:text-black hover:text-[#ffab00]"
                 >
                   {item.title}
                   <span
@@ -83,14 +83,14 @@ export default function Navbar() {
                 <div key={item.id} className="flex gap-1 text-[#7e7e7d]">
                   <button
                     onClick={() => changeLanguage("th")}
-                    className={`font-semibold group-hover:text-black ${locale === "th" ? "text-[#ffab00]" : ""} hover:text-[#ffab00] cursor-pointer`}
+                    className={`font-medium group-hover:text-black ${locale === "th" ? "text-[#ffab00]" : ""} hover:text-[#ffab00] cursor-pointer`}
                   >
                     TH
                   </button>
                   <span>|</span>
                   <button
                     onClick={() => changeLanguage("en")}
-                    className={`font-semibold group-hover:text-black ${locale === "en" ? "text-[#ffab00]" : ""} hover:text-[#ffab00] cursor-pointer`}
+                    className={`font-medium group-hover:text-black ${locale === "en" ? "text-[#ffab00]" : ""} hover:text-[#ffab00] cursor-pointer`}
                   >
                     EN
                   </button>
@@ -102,7 +102,7 @@ export default function Navbar() {
                 key={item.id}
                 href={item.href}
                 onClick={() => setOpenProductMenu(false)}
-                className="font-semibold text-[#7e7e7d] group-hover:text-black hover:text-[#ffab00]"
+                className="font-medium text-[#7e7e7d] group-hover:text-black hover:text-[#ffab00]"
               >
                 {item.id === 6 ? (
                   <div className="flex gap-1 items-center">

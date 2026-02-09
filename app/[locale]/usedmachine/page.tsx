@@ -55,9 +55,48 @@ export default function Page() {
   }
 
   if (!usedMachines || usedMachines.length === 0) {
-    return <Loading />;
+    return (
+      <div className="min-h-screen animate-pulse">
+        <div className="flex items-center justify-center w-full min-h-[calc(25vh-80px)] rounded-2xl">
+          <div className="h-5 w-45 rounded-full bg-gray-100" />
+        </div>
+        <div className="max-w-7xl mx-auto px-3">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 py-4 gap-6">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i}>
+                <div className="grid w-full">
+                  <div className="w-full h-full aspect-16/17 bg-gray-100">
+                    <div className="flex flex-col w-full h-full">
+                      <div className="flex items-center justify-center w-full h-full bg-gray-200 ">
+                        <i className="bi bi-images text-8xl text-gray-300" />
+                      </div>
+                      <div className="flex flex-col gap-2 py-6 px-3">
+                        <div className="h-4 w-7/10 mb-4 rounded-lg bg-gray-200" />
+                        <div className="h-2 w-full rounded-lg bg-gray-200" />
+                        <div className="h-2 w-full rounded-lg bg-gray-200" />
+                        <div className="h-2 w-full rounded-lg bg-gray-200" />
+                        <div className="h-2 w-full rounded-lg bg-gray-200" />
+                        <div className="h-2 w-fullrounded-lg bg-gray-200" />
+                        <div className="h-2 w-7/10 rounded-lg bg-gray-100" />
+                        <div className="flex items-center justify-between">
+                          <div className="h-2 w-3/10 rounded-lg bg-gray-200" />
+                          <div>
+                            {Array.from({ length: 5 }).map((_, i) => (
+                              <Icon key={i} name="star" fill="#E5E7EB" />
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
   }
-
   return (
     <div>
       <div className="fixed inset-0 z-0">

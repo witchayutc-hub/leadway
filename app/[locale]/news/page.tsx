@@ -57,21 +57,32 @@ export default function Page() {
   if (news.length === 0) {
     return (
       <div className="min-h-screen animate-pulse">
-        <div className="flex flex-col items-center justify-center w-full min-h-[calc(25vh-80px)]">
+        <div className="flex items-center justify-center w-full min-h-[calc(25vh-80px)] rounded-2xl">
           <div className="h-5 w-45 rounded-full bg-gray-100" />
         </div>
-        <div className="w-full max-w-7xl mx-auto">
-          <div className="flex flex-wrap justify-center px-3 gap-x-6 gap-y-12">
+        <div className="max-w-7xl mx-auto px-3">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 py-4 gap-6">
             {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="space-y-4">
-                <div className="flex items-center justify-center h-50 sm:w-100 w-1/1 bg-gray-100 text-gray-200">
-                  <i className="bi bi-images text-8xl" />
+              <div key={i}>
+                <div className="grid w-full">
+                  <div className="w-full h-full aspect-16/17 bg-gray-100">
+                    <div className="flex flex-col w-full h-full">
+                      <div className="flex items-center justify-center w-full h-1/2 bg-gray-200 ">
+                        <i className="bi bi-images text-8xl text-gray-300" />
+                      </div>
+                      <div className="flex flex-col gap-2 py-6 px-3">
+                        <div className="h-4 w-full mb-4 rounded-lg bg-gray-200" />
+                        <div className="h-2 w-full rounded-lg bg-gray-200" />
+                        <div className="h-2 w-9/10 rounded-lg bg-gray-200" />
+                        <div className="h-2 w-full rounded-lg bg-gray-200" />
+                        <div className="h-2 w-8/10 rounded-lg bg-gray-200" />
+                        <div className="h-2 w-9/10 rounded-lg bg-gray-200" />
+                        <div className="h-2 w-7/10 rounded-lg bg-gray-200" />
+                        <div className="h-2 w-3/10 rounded-lg bg-gray-200" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="h-4 w-70 rounded-lg bg-gray-100" />
-                <div className="h-3 w-80 rounded-lg bg-gray-100" />
-                <div className="h-3 w-50 rounded-lg bg-gray-100" />
-                <div className="h-3 w-60 rounded-lg bg-gray-100" />
-                <div className="h-3 w-30 rounded-lg bg-gray-100" />
               </div>
             ))}
           </div>

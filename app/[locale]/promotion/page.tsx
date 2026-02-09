@@ -58,23 +58,32 @@ export default function Page() {
   if (promotions.length === 0) {
     return (
       <div className="min-h-screen animate-pulse">
-        <div className="flex flex-col items-center justify-center w-full min-h-[calc(35vh-80px)] rounded-2xl">
-          <div className="h-5 w-45 my-5 rounded-full bg-gray-100" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 mt-6 gap-8">
+        <div className="flex items-center justify-center w-full min-h-[calc(25vh-80px)] rounded-2xl">
+          <div className="h-5 w-45 rounded-full bg-gray-100" />
+        </div>
+        <div className="max-w-5xl mx-auto px-3">
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-5">
             {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="h-30 w-60 mb-4 bg-gray-100" />
+              <div
+                key={i}
+                className="flex flex-wrap w-full place-content-center"
+              >
+                <div className="w-60 md:w-full max-h-25 aspect-video bg-gray-100" />
+              </div>
             ))}
           </div>
         </div>
-        <div className="w-full max-w-7xl mx-auto py-12">
-          <div className="flex flex-wrap justify-center px-3 gap-x-6 gap-y-12">
+        <div className="max-w-7xl mx-auto px-3">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 py-4 gap-2">
             {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="space-y-4">
-                <div className="flex items-center justify-center h-125 sm:w-100 w-1/1 bg-gray-100 text-gray-200">
-                  <i className="bi bi-images text-8xl" />
+              <div key={i} className="mt-12">
+                <div className="grid w-full place-items-center">
+                  <div className="w-full h-full aspect-3/4 bg-gray-100" />
                 </div>
-                <div className="h-4 w-70 rounded-lg bg-gray-100" />
-                <div className="h-4 w-50 rounded-lg bg-gray-100" />
+                <div className="grid gap-2 py-2">
+                  <div className="h-4 w-70 rounded-lg bg-gray-100" />
+                  <div className="h-4 w-50 rounded-lg bg-gray-100" />
+                </div>
               </div>
             ))}
           </div>

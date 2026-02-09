@@ -3,11 +3,27 @@
 import Modal from "@/components/modal";
 import Image from "next/image";
 import { Link } from "@/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { downloadFile } from "@/helpers/download";
 
 export default function Page() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  useEffect(() => {
+    const hash = window.location.hash.replace("#", "");
+
+    if (!hash) return;
+
+    const timer = setTimeout(() => {
+      document.getElementById(hash)?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="min-h-screen bg-white">
       <main>
@@ -75,7 +91,7 @@ export default function Page() {
                     />
                   </div>
                 </Link>
-                <Link href="/metso#nordberg_c_Series">
+                <Link href="/metso#nordberg_c_Series" scroll={false}>
                   <div className="group ">
                     <img
                       src="/image/Group 738.png"

@@ -117,24 +117,43 @@ export default function Home() {
   if (news.length === 0 || products.length === 0 || banners.length === 0) {
     return (
       <div className="min-h-screen animate-pulse text-gray-200">
-        <div className="flex items-center justify-center w-full aspect-video bg-gray-100 rounded-2xl">
+        <div className="flex items-center justify-center w-full h-full aspect-video bg-gray-100 rounded-2xl">
           <i className="bi bi-images text-8xl" />
         </div>
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-wrap items-center justify-center gap-5 py-5 ">
+        <div className="max-w-5xl mx-auto px-3">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 py-5 gap-5">
             {Array.from({ length: 4 }).map((_, i) => (
-              <div
-                key={i}
-                className="w-1/2 py-12 bg-gray-100
-                 sm:w-1/3
-                 md:w-1/5"
-              >
-                <div className="w-full rounded-md bg-gray-100 animate-pulse" />
+              <div key={i} className="grid w-full place-items-center">
+                <div className="w-3/5 sm:w-full h-25 bg-gray-100" />
               </div>
             ))}
           </div>
-          <div className="flex items-center justify-center w-full h-140 rounded-2xl bg-gray-100 ">
+          <div className="flex items-center justify-center w-full h-full aspect-video rounded-2xl bg-gray-100 ">
             <i className="bi bi-images text-6xl" />
+          </div>
+        </div>
+        <div className="max-w-7xl mx-auto px-3">
+          <div className="flex items-center justify-center py-12">
+            <div className="h-4 w-70 rounded-lg bg-gray-100" />
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 py-4 gap-2">
+            {Array.from({ length: 10 }).map((_, i) => (
+              <div key={i} className="grid w-full place-items-center">
+                <div className="w-full h-full aspect-square bg-gray-100" />
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="max-w-7xl mx-auto px-3">
+          <div className="flex items-center justify-center py-12">
+            <div className="h-4 w-70 rounded-lg bg-gray-100" />
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 py-4 gap-2">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="grid w-full place-items-center">
+                <div className="w-full h-full aspect-12/10 bg-gray-100" />
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -153,14 +172,14 @@ export default function Home() {
             <motion.div
               animate={{ x: `-${current * 100}%` }}
               transition={{ duration: 0.6, ease: "easeInOut" }}
-              className="flex max-h-220"
+              className="flex "
             >
               {banners.map((item, index) => (
                 <img
                   key={item.id ?? index}
                   src={`${process.env.NEXT_PUBLIC_API_URL}${item.attributes.url}`}
                   alt={item.attributes.hash ?? "Banner"}
-                  className="max-w-full object-fill"
+                  className="max-w-full object-cover"
                 />
               ))}
             </motion.div>

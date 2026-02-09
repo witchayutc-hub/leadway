@@ -14,7 +14,7 @@ const locales = ["th", "en"];
 const kanit = Kanit({
   subsets: ["latin"],
   variable: "--font-geist-sans",
-  weight: ["500", "400"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
