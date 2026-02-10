@@ -36,11 +36,11 @@ export default function AnimatedTooltip({
               md:h-52"
           />
           <div className="p-4 text-start sm:p-5 md:p-6">
-            <span className="block text-base sm:text-lg md:text-xl font-semibold text-gray-900">
+            <span className="block text-base sm:text-lg md:text-xl text-gray-900">
               {item.title}
             </span>
 
-            <p className="mt-2 text-sm sm:text-base leading-relaxed text-gray-600 ">
+            <p className="whitespace-pre-line text-sm sm:text-base leading-relaxed text-gray-600">
               {item.description}
             </p>
           </div>

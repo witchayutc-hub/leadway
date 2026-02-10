@@ -46,7 +46,7 @@ export default function Bounce() {
                     name="phone"
                     size={42}
                     fill="#FFAB00"
-                    className="mt-3"
+                    className="mt-1.5"
                   />
                 </div>
               </Link>
@@ -80,7 +80,7 @@ export default function Bounce() {
             className="w-full h-full"
           />
           <span
-            className="absolute mb-2 text-xs font-medium pointer-events-none text-white
+            className="absolute mr-1 mb-2 text-xs font-medium pointer-events-none text-white
             sm:text-sm"
           >
             {t("contact_button")}

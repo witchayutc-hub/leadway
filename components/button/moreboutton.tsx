@@ -11,7 +11,7 @@ export default function MoreButton({ onClick, onDisabled }: MoreButtonProps) {
   return (
     <button
       className={`flex items-center justify-center h-11 px-10 rounded-full shadow-xl/20 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50
-      text-white bg-[#0048A1] hover:bg-[#0b5dc1] ${onDisabled ? "hidden" : ""}`}
+      text-white bg-[#0048A1] hover:bg-[#0b5dc1] hover:-translate-y-1 duration-300 ease-out ${onDisabled ? "hidden" : ""}`}
       disabled={onDisabled}
       onClick={onClick}
     >

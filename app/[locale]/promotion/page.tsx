@@ -7,6 +7,7 @@ import { apiPromotionsByPaginated } from "@/api/getPromotion";
 import { Link } from "@/navigation";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
+import { motion } from "motion/react";
 
 export default function Page() {
   const locale = useLocale();
@@ -113,9 +114,16 @@ export default function Page() {
             </div>
           </div>
         </section>
-        <section className="pb-3 relative z-10 bg-white ">
+        <section className="pb-3 relative z-10 bg-white">
           <div className="mx-auto max-w-7xl px-4 ">
-            <Brand />
+            <motion.div
+              initial={{ x: -40, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              className="mx-auto max-w-7xl px-4"
+            >
+              <Brand />
+            </motion.div>
           </div>
         </section>
         <section>

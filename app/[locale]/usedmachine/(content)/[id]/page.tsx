@@ -63,8 +63,8 @@ export default function Page() {
           <div className="h-5 w-45 rounded-full bg-gray-100" />
         </div>
         <div className="max-w-7xl mx-auto px-3">
-          <div className="grid lg:grid-cols-12 gap-6">
-            <div className="grid lg:col-span-8 aspect-16/14">
+          <div className="grid md:grid-cols-12 gap-6">
+            <div className="grid md:col-span-8 aspect-16/14">
               <div className="flex flex-col gap-2 ">
                 <div className="flex items-center justify-center w-full h-full bg-gray-100 ">
                   <i className="bi bi-images text-8xl text-gray-200" />
@@ -79,9 +79,9 @@ export default function Page() {
                 </div>
               </div>
             </div>
-            <div className="grid lg:col-span-4">
+            <div className="grid md:col-span-4">
               <div>
-                <div className="h-6 w-3/5 rounded-lg bg-gray-100" />
+                <div className="h-6 w-2/5 rounded-lg bg-gray-100" />
               </div>
               <div className="block my-12 space-y-8">
                 {Array.from({ length: 8 }).map((_, i) => (

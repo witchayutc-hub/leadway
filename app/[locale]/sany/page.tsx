@@ -109,7 +109,7 @@ export default function Page() {
       className: "left-[37%] top-[33%]",
       item: {
         id: 1,
-        title: "en ห้องโดยสารกว้างขวาง",
+        title: "ห้องโดยสารกว้างขวาง",
         description: "อุปกรณ์อำนวยความสะดวกครบครัน",
         image: "/image/H3_0.jpg",
       },
@@ -119,7 +119,7 @@ export default function Page() {
       className: "left-[58%] top-[39%]",
       item: {
         id: 2,
-        title: "en ถังน้ำใหม่ ใหญ่กว่าเดิม",
+        title: "ถังน้ำใหม่ ใหญ่กว่าเดิม",
         description:
           "ถังน้ำอลูมิเนียมอัลลอย ปลอดสนิม เบาขึ้น จุมากถึง 600 ลิตร",
         image: "/image/H3_1.jpg",
@@ -130,7 +130,7 @@ export default function Page() {
       className: "left-[69%] top-[36%]",
       item: {
         id: 3,
-        title: "en ไร้การเกาะติดของคราบปูนภายในโม่",
+        title: "ไร้การเกาะติดของคราบปูนภายในโม่",
         description: "ท่อพ่นล้าง 4 จุด พร้อมพอร์ตระบายน้ำ",
         image: "/image/H3_2.jpg",
       },
@@ -152,13 +152,13 @@ export default function Page() {
     <div className="min-h-screen bg-white">
       <main>
         <section>
-          <div className="relative w-full max-h-220 aspect-video">
+          <div className="relative w-full aspect-video">
             <Image
               src="/image/2.jpg"
               alt="2"
               fill
               loading="lazy"
-              className="object-cover"
+              className="w-full h-full object-cover"
             />
           </div>
         </section>
@@ -181,7 +181,7 @@ export default function Page() {
                   setActiveId(activeId === target.id ? null : target.id);
                 }}
               >
-                <span className="absolute inset-0 rounded-full bg-blue-700 animate-ping [animation-duration:2s] opacity-70" />
+                <span className="absolute inset-0 rounded-full bg-blue-700 animate-ping animation-duration-[2s] opacity-70" />
                 <img
                   src="/image/Target_Logo.png"
                   alt="Target Logo"
@@ -239,7 +239,7 @@ export default function Page() {
                             variant: "primary",
                             colorClass: "bg-[#A1272D]",
                             href: `${process.env.NEXT_PUBLIC_API_URL}${
-                              item?.attributes?.file?.data?.attributes?.url
+                              item?.attributes?.file?.data?.[0]?.attributes?.url
                             }`,
                           },
                           {
@@ -249,7 +249,7 @@ export default function Page() {
                             colorClass: "text-[#A1272D]",
                             download: true,
                             href: `${process.env.NEXT_PUBLIC_API_URL}${
-                              item?.attributes?.file?.data?.attributes?.url
+                              item?.attributes?.file?.data?.[0]?.attributes?.url
                             }`,
                           },
                         ]}
@@ -406,7 +406,7 @@ export default function Page() {
                             variant: "primary",
                             colorClass: "bg-[#A1272D]",
                             href: `${process.env.NEXT_PUBLIC_API_URL}${
-                              item?.attributes?.file?.data?.attributes?.url
+                              item?.attributes?.file?.data?.[0]?.attributes?.url
                             }`,
                           },
                           {
@@ -416,7 +416,7 @@ export default function Page() {
                             colorClass: "text-[#A1272D]",
                             download: true,
                             href: `${process.env.NEXT_PUBLIC_API_URL}${
-                              item?.attributes?.file?.data?.attributes?.url
+                              item?.attributes?.file?.data?.[0]?.attributes?.url
                             }`,
                           },
                         ]}
@@ -467,7 +467,7 @@ export default function Page() {
                             variant: "primary",
                             colorClass: "bg-[#A1272D]",
                             href: `${process.env.NEXT_PUBLIC_API_URL}${
-                              item?.attributes?.file?.data?.attributes?.url
+                              item?.attributes?.file?.data?.[0]?.attributes?.url
                             }`,
                           },
                           {
@@ -477,7 +477,7 @@ export default function Page() {
                             colorClass: "text-[#A1272D]",
                             download: true,
                             href: `${process.env.NEXT_PUBLIC_API_URL}${
-                              item?.attributes?.file?.data?.attributes?.url
+                              item?.attributes?.file?.data?.[0]?.attributes?.url
                             }`,
                           },
                         ]}

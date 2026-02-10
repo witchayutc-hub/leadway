@@ -75,8 +75,6 @@ export default function Page() {
                         <div className="h-2 w-full rounded-lg bg-gray-200" />
                         <div className="h-2 w-full rounded-lg bg-gray-200" />
                         <div className="h-2 w-full rounded-lg bg-gray-200" />
-                        <div className="h-2 w-full rounded-lg bg-gray-200" />
-                        <div className="h-2 w-fullrounded-lg bg-gray-200" />
                         <div className="h-2 w-7/10 rounded-lg bg-gray-100" />
                         <div className="flex items-center justify-between">
                           <div className="h-2 w-3/10 rounded-lg bg-gray-200" />

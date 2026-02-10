@@ -307,9 +307,15 @@ export default function Page() {
         </section>
         <section>
           <div className="max-w-7xl mx-auto">
-            {sanyEv.map((item) => {
+            {sanyEv.map((item, index) => {
               const image = item.attributes.img?.data?.attributes;
               const images = item?.attributes?.img_list?.data;
+              const colorsTheme = [
+                "[#01BD04]",
+                "[#79B721]",
+                "[#02926B]",
+                "[#0091D2]",
+              ];
               return (
                 <div
                   id={item.attributes.uid}
@@ -326,6 +332,11 @@ export default function Page() {
                         }
                         className="w-full h-full object-cover"
                       />
+                      <span
+                        className={`text-3xl p-2 font-semibold text-${colorsTheme[index % colorsTheme.length]}`}
+                      >
+                        4 ล้อ จัมโบ้
+                      </span>
                       <div className="flex justify-center">
                         <SpecTable
                           specs={Object.entries(
@@ -342,19 +353,19 @@ export default function Page() {
                             id: 1,
                             label: item?.attributes?.name ?? "-",
                             variant: "primary",
-                            colorClass: "bg-[#79B721]",
+                            colorClass: `bg-${colorsTheme[index % colorsTheme.length]}`,
                             href: `${process.env.NEXT_PUBLIC_API_URL}${
-                              item?.attributes?.file?.data?.attributes?.url
+                              item?.attributes?.file?.data?.[0]?.attributes?.url
                             }`,
                           },
                           {
                             id: 2,
                             label: "ดาวน์โหลด",
                             variant: "outline",
-                            colorClass: "text-[#79B721]",
+                            colorClass: `text-${colorsTheme[index % colorsTheme.length]}`,
                             download: true,
                             href: `${process.env.NEXT_PUBLIC_API_URL}${
-                              item?.attributes?.file?.data?.attributes?.url
+                              item?.attributes?.file?.data?.[0]?.attributes?.url
                             }`,
                           },
                         ]}
@@ -373,7 +384,9 @@ export default function Page() {
                               className="w-full aspect-4/3 object-cover"
                               alt={`เพิ่มเติม ${item.id + 1}`}
                             />
-                            <div className="flex justify-center items-center h-12 bg-[#79B721]">
+                            <div
+                              className={`flex justify-center items-center h-12 bg-${colorsTheme[index % colorsTheme.length]}`}
+                            >
                               <span className="text-sm sm:text-xl text-ellipsis text-white">
                                 {locale === "th"
                                   ? (cutAfterPipe(
@@ -388,6 +401,18 @@ export default function Page() {
                         );
                       })}
                     </div>
+                  </div>
+                  <div className="grid items-center">
+                    <span className="whitespace-nowrap text-2xl text-end font-bold">
+                      รูปแบบ :
+                    </span>
+                  </div>
+                  <div className="grid col-span-10">
+                    <img
+                      src={`https://leadway.co.th/sany-ev/assets/Website/FR601-150_Footer.png`}
+                      className="object-contain"
+                      alt={``}
+                    />
                   </div>
                 </div>
               );
@@ -437,7 +462,7 @@ export default function Page() {
                             variant: "primary",
                             colorClass: "bg-[#02926B]",
                             href: `${process.env.NEXT_PUBLIC_API_URL}${
-                              item?.attributes?.file?.data?.attributes?.url
+                              item?.attributes?.file?.data?.[0]?.attributes?.url
                             }`,
                           },
                           {
@@ -447,7 +472,7 @@ export default function Page() {
                             colorClass: "text-[#02926B]",
                             download: true,
                             href: `${process.env.NEXT_PUBLIC_API_URL}${
-                              item?.attributes?.file?.data?.attributes?.url
+                              item?.attributes?.file?.data?.[0]?.attributes?.url
                             }`,
                           },
                         ]}
@@ -532,7 +557,7 @@ export default function Page() {
                             variant: "primary",
                             colorClass: "bg-[#0091D2]",
                             href: `${process.env.NEXT_PUBLIC_API_URL}${
-                              item?.attributes?.file?.data?.attributes?.url
+                              item?.attributes?.file?.data?.[0]?.attributes?.url
                             }`,
                           },
                           {
@@ -542,7 +567,7 @@ export default function Page() {
                             colorClass: "text-[#0091D2]",
                             download: true,
                             href: `${process.env.NEXT_PUBLIC_API_URL}${
-                              item?.attributes?.file?.data?.attributes?.url
+                              item?.attributes?.file?.data?.[0]?.attributes?.url
                             }`,
                           },
                         ]}
@@ -611,7 +636,7 @@ export default function Page() {
                   setActiveId(activeId === target.id ? null : target.id);
                 }}
               >
-                <span className="absolute inset-0 rounded-full bg-blue-700 animate-ping [animation-duration:2s] opacity-70" />
+                <span className="absolute inset-0 rounded-full bg-blue-700 animate-ping animation-duration-[2s] opacity-70" />
                 <img
                   src="/image/Target_Logo.png"
                   alt="Target Logo"
@@ -670,7 +695,7 @@ export default function Page() {
                             variant: "primary",
                             colorClass: "bg-[#808080]",
                             href: `${process.env.NEXT_PUBLIC_API_URL}${
-                              item?.attributes?.file?.data?.attributes?.url
+                              item?.attributes?.file?.data?.[0]?.attributes?.url
                             }`,
                           },
                           {
@@ -680,7 +705,7 @@ export default function Page() {
                             colorClass: "text-[#808080]",
                             download: true,
                             href: `${process.env.NEXT_PUBLIC_API_URL}${
-                              item?.attributes?.file?.data?.attributes?.url
+                              item?.attributes?.file?.data?.[0]?.attributes?.url
                             }`,
                           },
                         ]}
