@@ -335,7 +335,7 @@ export default function Page() {
                       <span
                         className={`text-3xl p-2 font-semibold text-${colorsTheme[index % colorsTheme.length]}`}
                       >
-                        4 ล้อ จัมโบ้
+                        {item.attributes.captions}
                       </span>
                       <div className="flex justify-center">
                         <SpecTable
@@ -347,29 +347,32 @@ export default function Page() {
                           }))}
                         />
                       </div>
-                      <SpecButton
-                        buttons={[
-                          {
-                            id: 1,
-                            label: item?.attributes?.name ?? "-",
-                            variant: "primary",
-                            colorClass: `bg-${colorsTheme[index % colorsTheme.length]}`,
-                            href: `${process.env.NEXT_PUBLIC_API_URL}${
-                              item?.attributes?.file?.data?.[0]?.attributes?.url
-                            }`,
-                          },
-                          {
-                            id: 2,
-                            label: "ดาวน์โหลด",
-                            variant: "outline",
-                            colorClass: `text-${colorsTheme[index % colorsTheme.length]}`,
-                            download: true,
-                            href: `${process.env.NEXT_PUBLIC_API_URL}${
-                              item?.attributes?.file?.data?.[0]?.attributes?.url
-                            }`,
-                          },
-                        ]}
-                      />
+                      {item?.attributes?.file?.data?.map((file: any) => (
+                        <SpecButton
+                          key={file.id}
+                          buttons={[
+                            {
+                              id: 1,
+                              label: item?.attributes?.name ?? "-",
+                              variant: "primary",
+                              colorClass: `bg-${colorsTheme[index % colorsTheme.length]}`,
+                              href: `${process.env.NEXT_PUBLIC_API_URL}${
+                                file?.attributes?.url || ""
+                              }`,
+                            },
+                            {
+                              id: 2,
+                              label: "ดาวน์โหลด",
+                              variant: "outline",
+                              colorClass: `text-${colorsTheme[index % colorsTheme.length]}`,
+                              download: true,
+                              href: `${process.env.NEXT_PUBLIC_API_URL}${
+                                file?.attributes?.url || ""
+                              }`,
+                            },
+                          ]}
+                        />
+                      ))}
                     </div>
                   </div>
                   <div className="col-span-12 lg:col-span-8">
@@ -409,9 +412,9 @@ export default function Page() {
                   </div>
                   <div className="grid col-span-10">
                     <img
-                      src={`https://leadway.co.th/sany-ev/assets/Website/FR601-150_Footer.png`}
-                      className="object-contain"
-                      alt={``}
+                      src={`${process.env.NEXT_PUBLIC_API_URL}${item.attributes.model?.data?.attributes?.url}`}
+                      className="max-h-12 object-cover "
+                      alt={`${item.id}`}
                     />
                   </div>
                 </div>

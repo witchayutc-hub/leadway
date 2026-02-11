@@ -11,6 +11,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import NumberInput from "@/components/input/numberInput";
+import NumberInput2digit from "@/components/input/numberInpur2digit";
 
 const TestListImg = [
   {
@@ -42,13 +44,15 @@ export default function Page() {
 
   const [login, setLogin] = useState<boolean>(true);
 
-  const [rangeValue, setRangeValue] = useState(100);
-  const [rangeValue2, setRangeValue2] = useState(200);
+  const [rangeValue, setRangeValue] = useState(100.0);
+  const [weightValue, setWeightValue] = useState(0.0);
+  const [rangeValue2, setRangeValue2] = useState(200.0);
+  const [weightValue2, setWeightValue2] = useState(0.0);
   const min = 0.0;
   const max = 500.0;
 
-  const percentage = ((rangeValue - min) / (max - min)) * 100;
-  const percentage2 = ((rangeValue2 - min) / (max - min)) * 100;
+  const percenTage = ((rangeValue - min) / (max - min)) * 100;
+  const percenTage2 = ((rangeValue2 - min) / (max - min)) * 100;
 
   const [showDataCompare, setShowDataCompare] = useState(false);
   const [showResult, setShowResult] = useState(false);
@@ -153,38 +157,36 @@ export default function Page() {
                 </div>
               </div>
               <div>
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-6 text-[#051C56]">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 text-[#051C56]">
                   <div className="grid grid-cols-12 items-center px-3 gap-2">
                     <span className="text-right col-span-3">
                       {t("distance")}
                     </span>
-                    <input
-                      type="number"
-                      min={min}
-                      max={max}
-                      value={rangeValue.toFixed(1)}
-                      step={0.1}
-                      onChange={(e) => setRangeValue(Number(e.target.value))}
-                      className="mx-auto block w-full max-w-50 h-20 p-3 text-3xl rounded-lg border col-span-6
-                        border-gray-200 text-[#051C56] focus:outline-none focus:ring-2 focus:ring-[#051C56] focus:border-[#051C56]
-                        sm:text-4xl 
-                        xl:text-5xl"
-                    />
+                    <div className="col-span-6">
+                      <NumberInput
+                        value={rangeValue}
+                        onChange={setRangeValue}
+                      />
+                    </div>
                     <span className="text-left col-span-3">{t("km")}</span>
-                    <div className="h-4"></div>
+                    <div className="h-10"></div>
                   </div>
                   <div className="grid">
                     <div className="grid grid-cols-12 items-center px-3 gap-2">
                       <span className="text-right col-span-3">
                         {t("weight")}
                       </span>
-                      <input
-                        type="number"
-                        className="mx-auto block w-full max-w-50 h-20 p-3 text-5xl rounded-lg border col-span-6
-                         border-gray-200 text-[#051C56] focus:outline-none focus:ring-2 focus:ring-[#051C56] focus:border-[#051C56]"
-                      />
+                      <div className="col-span-6">
+                        <NumberInput2digit
+                          min={0}
+                          max={999}
+                          value={weightValue}
+                          onChange={setWeightValue}
+                        />
+                      </div>
                       <span className="text-left col-span-3">{t("ton")}</span>
-                      <span className="text-center col-span-12">
+
+                      <span className="text-center col-span-12 mt-4">
                         {t("total_weight")}
                       </span>
                     </div>
@@ -236,16 +238,16 @@ export default function Page() {
                   <div className="w-full relative">
                     <div
                       className="absolute top-6 font-medium text-[#051C56] -translate-x-1/2"
-                      style={{ left: `${percentage}%` }}
+                      style={{ left: `${percenTage}%` }}
                     >
                       {rangeValue}
                     </div>
                     <input
                       type="range"
-                      min={min}
-                      max={max}
+                      min={0}
+                      max={500}
                       step={0.1}
-                      value={rangeValue.toFixed(1)}
+                      value={rangeValue}
                       onChange={(e) => setRangeValue(Number(e.target.value))}
                       className="w-full accent-[#051C56]"
                     />
@@ -271,38 +273,35 @@ export default function Page() {
                   <div className="flex text-xl justify-center pb-4 border-b-4 opacity-50 border-[#083e97] text-[#083e97]" />
                 </div>
                 <div className="mt-12">
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-6 text-[#051C56]">
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 text-[#051C56]">
                     <div className="grid grid-cols-12 items-center px-3 gap-2">
                       <span className="text-right col-span-3">
                         {t("distance")}
                       </span>
-                      <input
-                        type="number"
-                        min={min}
-                        max={max}
-                        value={rangeValue2.toFixed(1)}
-                        step={0.1}
-                        onChange={(e) => setRangeValue2(Number(e.target.value))}
-                        className="mx-auto block w-full max-w-50 h-20 p-3 text-3xl rounded-lg border col-span-6
-                        border-gray-200 text-[#051C56] focus:outline-none focus:ring-2 focus:ring-[#051C56] focus:border-[#051C56]
-                        sm:text-4xl 
-                        xl:text-5xl"
-                      />
+                      <div className="col-span-6">
+                        <NumberInput
+                          value={rangeValue2}
+                          onChange={setRangeValue2}
+                        />
+                      </div>
                       <span className="text-left col-span-3">{t("km")}</span>
-                      <div className="h-4"></div>
+                      <div className="h-10"></div>
                     </div>
                     <div className="grid">
                       <div className="grid grid-cols-12 items-center px-3 gap-2">
                         <span className="text-right col-span-3">
                           {t("weight")}
                         </span>
-                        <input
-                          type="number"
-                          className="mx-auto block w-full max-w-50 h-20 p-3 text-5xl rounded-lg border col-span-6
-                         border-gray-200 text-[#051C56] focus:outline-none focus:ring-2 focus:ring-[#051C56] focus:border-[#051C56]"
-                        />
+                        <div className="col-span-6">
+                          <NumberInput2digit
+                            min={0}
+                            max={999}
+                            value={weightValue2}
+                            onChange={setWeightValue2}
+                          />
+                        </div>
                         <span className="text-left col-span-3">{t("ton")}</span>
-                        <span className="text-center col-span-12">
+                        <span className="text-center col-span-12 mt-4">
                           {t("total_weight")}
                         </span>
                       </div>
@@ -352,7 +351,7 @@ export default function Page() {
                     <div className="w-full relative">
                       <div
                         className="absolute top-6 font-medium text-[#051C56] -translate-x-1/2"
-                        style={{ left: `${percentage2}%` }}
+                        style={{ left: `${percenTage2}%` }}
                       >
                         {rangeValue2}
                       </div>
@@ -361,7 +360,7 @@ export default function Page() {
                         min={min}
                         max={max}
                         step={0.1}
-                        value={rangeValue2.toFixed(1)}
+                        value={rangeValue2}
                         onChange={(e) => setRangeValue2(Number(e.target.value))}
                         className="w-full accent-[#051C56]"
                       />

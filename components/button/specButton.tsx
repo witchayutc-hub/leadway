@@ -14,7 +14,7 @@ type SpecButton = {
 export default function SpecButtons({ buttons }: { buttons: SpecButton[] }) {
   const t = useTranslations("Component");
   return (
-    <div className="flex flex-wrap justify-center py-4 gap-4">
+    <div className="flex flex-wrap justify-center pt-4 gap-4">
       {buttons.map((button) => (
         <div key={button.id} className="group">
           {button.download ? (

@@ -308,7 +308,7 @@ export default function Page() {
                     setActiveId(activeId === target.id ? null : target.id);
                   }}
                 >
-                  <span className="absolute inset-0 rounded-full bg-blue-700 animate-ping [animation-duration:2s] opacity-70" />
+                  <span className="absolute inset-0 rounded-full bg-blue-700 animate-ping animation-duration-[2s] opacity-70" />
                   <img
                     src="/image/Target_Logo.png"
                     alt="Target Logo"
@@ -453,7 +453,7 @@ export default function Page() {
                     setActiveId(activeId === target.id ? null : target.id);
                   }}
                 >
-                  <span className="absolute inset-0 rounded-full bg-blue-700 animate-ping [animation-duration:2s] opacity-70" />
+                  <span className="absolute inset-0 rounded-full bg-blue-700 animate-ping animation-duration-[2s] opacity-70" />
                   <img
                     src="/image/Target_Logo.png"
                     alt="Target Logo"
