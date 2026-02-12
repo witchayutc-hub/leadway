@@ -1,9 +1,11 @@
+"use client";
 import React, { useState, useEffect } from "react";
 
 type NumberInputProps = {
   value: number;
   min?: number;
   max?: number;
+  step?: number;
   onChange: (value: number) => void;
 };
 
@@ -11,24 +13,25 @@ export default function NumberInput({
   value,
   min = 0,
   max = 500,
+  step = 0.1,
   onChange,
 }: NumberInputProps) {
-  const [displayValue, setDisplayValue] = useState(value.toFixed(1));
+  const [display, setDisplay] = useState(value.toFixed(1));
   const [error, setError] = useState(false);
   const [errorDicimal, setErrorDecimal] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
   useEffect(() => {
-    const currentNumber = parseFloat(displayValue);
-    if (currentNumber !== value) {
-      setDisplayValue(value.toFixed(1));
+    if (!isFocused) {
+      setDisplay(value.toFixed(1));
     }
-  }, [value]);
+  }, [value, isFocused]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let input = e.target.value;
+    const input = e.target.value;
 
     if (input === "") {
-      setDisplayValue("");
+      setDisplay("");
       return;
     }
 
@@ -38,28 +41,37 @@ export default function NumberInput({
     }
 
     const number = parseFloat(input);
-    if (number > max) {
+
+    if (!isNaN(number) && number > max) {
       setError(true);
       return;
     }
 
-    setDisplayValue(input);
+    setError(false);
+    setErrorDecimal(false);
+    setDisplay(input);
 
-    if (!isNaN(number)) {
+    if (!isNaN(number) && number !== value) {
       onChange(number);
     }
-    setError(false);
   };
 
   const handleBlur = () => {
+    setIsFocused(false);
     setError(false);
     setErrorDecimal(false);
-    let number = parseFloat(displayValue);
+
+    let number = parseFloat(display);
     if (isNaN(number)) number = min;
 
     const clamped = Math.min(max, Math.max(min, number));
-    setDisplayValue(clamped.toFixed(1));
-    onChange(clamped);
+    const formatted = Number(clamped.toFixed(1));
+
+    setDisplay(formatted.toFixed(1));
+
+    if (formatted !== value) {
+      onChange(formatted);
+    }
   };
 
   return (
@@ -67,20 +79,20 @@ export default function NumberInput({
       <input
         type="number"
         inputMode="decimal"
-        step="0.1"
-        value={displayValue}
+        value={display}
+        step={step}
         onChange={handleChange}
+        onFocus={() => setIsFocused(true)}
         onBlur={handleBlur}
-        className="mx-auto block w-full max-w-50 h-20 p-3 text-5xl rounded-lg border border-gray-200 text-[#051C56] focus:outline-none focus:ring-2 focus:ring-[#051C56] focus:border-[#051C56]"
+        className="mx-auto block w-full max-w-50 h-20 p-2 text-5xl rounded-lg border border-gray-200 text-[#051C56] focus:outline-none focus:ring-2 focus:ring-[#051C56] focus:border-[#051C56]"
       />
-
       <span
         className={`block mt-1 text-sm text-red-500 text-center h-px ${
           error || errorDicimal ? "visible" : "invisible"
         }`}
       >
         {error
-          ? `Please enter a number between ${min} and ${max}.`
+          ? `Number must not exceed ${max}`
           : `Enter 1 decimal place number.`}
       </span>
     </div>

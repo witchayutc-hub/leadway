@@ -2,7 +2,7 @@
 import BarCharts from "@/components/Section/barCharts";
 import Login from "@/components/Section/login";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -16,8 +16,18 @@ import { apiRequiredEnergyTruck } from "@/api/getCalculate";
 
 type DataTruckSelected = {
   id: number;
+  distance: number;
   attributes: {
     battery_capacity: number;
+    payload: number;
+    usage_type: string;
+    img: {
+      data: {
+        attributes: {
+          url: string;
+        };
+      };
+    };
   };
 };
 
@@ -31,7 +41,6 @@ export default function Page() {
   const [selectedTruck, setSelectedTruck] = useState(0);
   const [dataTruckSelected, setDataTruckSelected] =
     useState<DataTruckSelected>();
-  console.log(dataTruckSelected);
   const getDataTruck = (selectedTruck: number) => {
     const data = requiredEnergyTruck.find(
       (item: any) => item.id === selectedTruck,
@@ -40,15 +49,18 @@ export default function Page() {
     setDataTruckSelected(data);
   };
 
-  const [rangeValue, setRangeValue] = useState(100.0);
   const [weightValue, setWeightValue] = useState(0.0);
-  const [rangeValue2, setRangeValue2] = useState(200.0);
   const [weightValue2, setWeightValue2] = useState(0.0);
+
   const min = 0.0;
   const max = 500.0;
+  const [rangeValue, setRangeValue] = useState(0.0);
+  const [rangeValue2, setRangeValue2] = useState(0.0);
 
   const percenTage = ((rangeValue - min) / (max - min)) * 100;
-  const percenTage2 = ((rangeValue2 - min) / (max - min)) * 100;
+  const percenTage2 = 100 - ((rangeValue2 - min) / (max - min)) * 100;
+
+  const totalDistance = (rangeValue + rangeValue2).toFixed(2);
 
   const [showDataCompare, setShowDataCompare] = useState(false);
   const [showResult, setShowResult] = useState(false);
@@ -66,6 +78,10 @@ export default function Page() {
       setError(true);
     }
   };
+
+  useEffect(() => {
+    setWeightValue(dataTruckSelected?.attributes?.payload ?? 0.0);
+  }, [dataTruckSelected]);
 
   useEffect(() => {
     fetchRequiredEnergyTruck();
@@ -86,6 +102,69 @@ export default function Page() {
       </div>
     );
   }
+
+  const containerRef1 = useRef<HTMLDivElement>(null);
+  const containerRef2 = useRef<HTMLDivElement>(null);
+
+  const handleDrag1 = (clientX: number) => {
+    if (!containerRef1.current) return;
+
+    const rect = containerRef1.current.getBoundingClientRect();
+    const offsetX = clientX - rect.left;
+
+    const percentage = offsetX / rect.width;
+    const clamped = Math.min(1, Math.max(0, percentage));
+
+    const newValue = clamped * 500;
+    const formatted = Number(newValue.toFixed(1));
+
+    setRangeValue((prev) => (prev === formatted ? prev : formatted));
+  };
+
+  const handleDrag2 = (clientX: number) => {
+    if (!containerRef2.current) return;
+
+    const rect = containerRef2.current.getBoundingClientRect();
+
+    const offsetX = clientX - rect.left;
+    const raw = offsetX / rect.width;
+
+    const reversed = 1 - raw;
+    const clamped = Math.min(1, Math.max(0, reversed));
+
+    const newValue = clamped * (max - min) + min;
+    const formatted = Number(newValue.toFixed(1));
+
+    setRangeValue2((prev) => (prev === formatted ? prev : formatted));
+  };
+
+  const handleMouseDown1 = () => {
+    const handleMove = (e: MouseEvent) => {
+      handleDrag1(e.clientX);
+    };
+
+    const handleUp = () => {
+      window.removeEventListener("mousemove", handleMove);
+      window.removeEventListener("mouseup", handleUp);
+    };
+
+    window.addEventListener("mousemove", handleMove);
+    window.addEventListener("mouseup", handleUp);
+  };
+
+  const handleMouseDown2 = () => {
+    const handleMove = (e: MouseEvent) => {
+      handleDrag2(e.clientX);
+    };
+
+    const handleUp = () => {
+      window.removeEventListener("mousemove", handleMove);
+      window.removeEventListener("mouseup", handleUp);
+    };
+
+    window.addEventListener("mousemove", handleMove);
+    window.addEventListener("mouseup", handleUp);
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -191,27 +270,29 @@ export default function Page() {
           <div className="max-w-7xl mx-auto">
             <div className="text-center py-12">
               <div>
-                <div>
+                <div className="pb-12">
                   <span className="text-2xl font-semibold text-[#052C65]">
                     {t("calculator_program")}
                   </span>
                 </div>
-                <div className="grid grid-cols-2 px-3 py-12">
-                  <div
-                    onClick={() => setRoundTrip(false)}
-                    className={`flex text-xl justify-center pb-4 border-b-4 cursor-pointer border-[#083E97] text-[#052C65]
+                {dataTruckSelected?.attributes?.usage_type === "On road" && (
+                  <div className="grid grid-cols-2 px-3 pb-12">
+                    <div
+                      onClick={() => setRoundTrip(false)}
+                      className={`flex text-xl justify-center pb-4 border-b-4 cursor-pointer border-[#083E97] text-[#052C65]
                     ${roundTrip ? "opacity-50" : "transition duration-300 ease-in-out"}`}
-                  >
-                    <span> {t("one_way")}</span>
-                  </div>
-                  <div
-                    onClick={() => setRoundTrip(true)}
-                    className={`flex text-xl justify-center border-b-4 cursor-pointer border-[#083E97] text-[#052C65]
+                    >
+                      <span> {t("one_way")}</span>
+                    </div>
+                    <div
+                      onClick={() => setRoundTrip(true)}
+                      className={`flex text-xl justify-center border-b-4 cursor-pointer border-[#083E97] text-[#052C65]
                             ${roundTrip ? "transition duration-300 ease-in-out" : "opacity-50 "}`}
-                  >
-                    <span> {t("round_trip")}</span>
+                    >
+                      <span> {t("round_trip")}</span>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
               <div>
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 text-[#051C56]">
@@ -222,15 +303,17 @@ export default function Page() {
                     <div className="col-span-6">
                       <NumberInput
                         value={rangeValue}
+                        min={0}
+                        max={500}
                         onChange={setRangeValue}
                       />
                     </div>
                     <span className="text-left col-span-3">{t("km")}</span>
-                    <div className="h-10"></div>
+                    <div className="lg:h-10"></div>
                   </div>
                   <div className="grid">
                     <div className="grid grid-cols-12 items-center px-3 gap-2">
-                      <span className="text-right col-span-3">
+                      <span className="text-right col-span-3 lg:col-span-4">
                         {t("weight")}
                       </span>
                       <div className="col-span-6">
@@ -241,8 +324,9 @@ export default function Page() {
                           onChange={setWeightValue}
                         />
                       </div>
-                      <span className="text-left col-span-3">{t("ton")}</span>
-
+                      <span className="text-left col-span-3 lg:col-span-2">
+                        {t("ton")}
+                      </span>
                       <span className="text-center col-span-12 mt-4">
                         {t("total_weight")}
                       </span>
@@ -250,11 +334,11 @@ export default function Page() {
                   </div>
                   <div>
                     <div
-                      className="grid gap-2 place-items-center py-6
+                      className="grid gap-2 place-items-center pb-6
                         lg:border-l-2 lg:border-[#051C56]"
                     >
                       <div>
-                        <span className="text-xl">
+                        <span className="text-2xl">
                           {t("remaining_battery")}
                         </span>
                       </div>
@@ -272,11 +356,11 @@ export default function Page() {
                           <span className="text-4xl">99 %</span>
                         </div>
                       </div>
-                      <div>
-                        350 /
-                        {dataTruckSelected?.attributes?.battery_capacity ?? 0}
-                        kW
-                      </div>
+                      <span className="whitespace-pre-line">
+                        ( 350 /{" "}
+                        {dataTruckSelected?.attributes?.battery_capacity ?? 0}{" "}
+                        kW )
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -293,22 +377,35 @@ export default function Page() {
           <div className="max-w-7xl mx-auto">
             <div className="text-center py-12 px-3">
               <div>
-                <div>
-                  <div className="w-full relative">
+                <div
+                  ref={containerRef1}
+                  className="relative w-7/10 h-32 mt-10 mx-auto
+                      lg:w-8/10 "
+                >
+                  <div
+                    onMouseDown={handleMouseDown1}
+                    onTouchStart={(e) => handleDrag1(e.touches[0].clientX)}
+                    className="absolute flex flex-col items-center -translate-x-1/2 translate-y-1/4 top-0 z-20 select-none cursor-grab w-20 h:20 
+                      sm:w-40 sm:h-40 sm:-translate-y-1/7
+                      lg:w-55 lg:h-55 lg:-translate-y-1/3"
+                    style={{ left: `${percenTage}%` }}
+                  >
+                    <img
+                      src={`${process.env.NEXT_PUBLIC_API_URL}${dataTruckSelected?.attributes?.img?.data?.attributes?.url}`}
+                      alt="truck"
+                      className="scale-x-[-1] object-contain pointer-events-none"
+                    />
                     <div
-                      className="absolute top-6 font-medium text-[#051C56] -translate-x-1/2"
-                      style={{ left: `${percenTage}%` }}
+                      className="mt-8 py-1 px-2 rounded text-sm font-bold whitespace-nowrap bg-[#0B5DC1] text-white
+                        sm:text-xl sm:px-4"
                     >
-                      {rangeValue}
+                      {rangeValue.toFixed(1)} {t("km")}
                     </div>
-                    <input
-                      type="range"
-                      min={0}
-                      max={500}
-                      step={0.1}
-                      value={rangeValue}
-                      onChange={(e) => setRangeValue(Number(e.target.value))}
-                      className="w-full accent-[#051C56]"
+                  </div>
+                  <div className="absolute bottom-4 left-0 w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-[#051C56]"
+                      style={{ width: `${percenTage}%` }}
                     />
                   </div>
                 </div>
@@ -340,6 +437,8 @@ export default function Page() {
                       <div className="col-span-6">
                         <NumberInput
                           value={rangeValue2}
+                          min={0}
+                          max={500}
                           onChange={setRangeValue2}
                         />
                       </div>
@@ -367,7 +466,7 @@ export default function Page() {
                     </div>
                     <div>
                       <div
-                        className="grid gap-2 place-items-center py-6
+                        className="grid gap-2 place-items-center pb-6
                         lg:border-l-2 lg:border-[#051C56]"
                       >
                         <div>
@@ -389,11 +488,11 @@ export default function Page() {
                             <span className="text-4xl">99 %</span>
                           </div>
                         </div>
-                        <div>
-                          350 /
-                          {dataTruckSelected?.attributes?.battery_capacity ?? 0}
-                          kW
-                        </div>
+                        <span className="whitespace-pre-line">
+                          ( 350 /{" "}
+                          {dataTruckSelected?.attributes?.battery_capacity ?? 0}{" "}
+                          kW )
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -408,22 +507,35 @@ export default function Page() {
             <div className="max-w-7xl mx-auto">
               <div className="text-center py-12 px-3">
                 <div>
-                  <div>
-                    <div className="w-full relative">
+                  <div
+                    ref={containerRef2}
+                    className="relative w-7/10 h-32 mt-10 mx-auto 
+                      lg:w-8/10 "
+                  >
+                    <div
+                      onMouseDown={handleMouseDown2}
+                      onTouchStart={(e) => handleDrag2(e.touches[0].clientX)}
+                      className="absolute flex flex-col items-center -translate-x-1/2 translate-y-1/4 top-0 z-20 select-none cursor-grab w-20 h:20
+                        sm:w-40 sm:h-40 sm:-translate-y-1/7
+                        lg:w-55 lg:h-55 lg:-translate-y-1/3"
+                      style={{ left: `${percenTage2}%` }}
+                    >
+                      <img
+                        src={`${process.env.NEXT_PUBLIC_API_URL}${dataTruckSelected?.attributes?.img?.data?.attributes?.url}`}
+                        alt="truck"
+                        className="object-contain pointer-events-none"
+                      />
                       <div
-                        className="absolute top-6 font-medium text-[#051C56] -translate-x-1/2"
-                        style={{ left: `${percenTage2}%` }}
+                        className="mt-8 py-1 px-2 rounded text-sm font-bold whitespace-nowrap bg-[#0B5DC1] text-white
+                          sm:text-xl sm:px-4"
                       >
-                        {rangeValue2}
+                        {rangeValue2.toFixed(1)} {t("km")}
                       </div>
-                      <input
-                        type="range"
-                        min={min}
-                        max={max}
-                        step={0.1}
-                        value={rangeValue2}
-                        onChange={(e) => setRangeValue2(Number(e.target.value))}
-                        className="w-full accent-[#051C56]"
+                    </div>
+                    <div className="absolute bottom-4 left-0 w-full h-1.5 bg-[#051C56] rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-gray-200"
+                        style={{ width: `${percenTage2}%` }}
                       />
                     </div>
                   </div>
@@ -634,7 +746,7 @@ export default function Page() {
                           placeholder={t("fuel_price")}
                         />
                         <div className="col-span-2">
-                          <span className=" text-[#051C56] ">{t("baht")}</span>
+                          <span className=" text-[#051C56]">{t("baht")}</span>
                         </div>
                       </div>
                     </div>
@@ -686,7 +798,7 @@ export default function Page() {
                     <tbody className="text-sm text-black">
                       <tr>
                         <td className="p-3">{t("travel_distance")}</td>
-                        <td className="p-3 text-end">225.40</td>
+                        <td className="p-3 text-end">{totalDistance}</td>
                         <td className="p-3 w-1 text-end">{t("km")}</td>
                       </tr>
                       <tr>
