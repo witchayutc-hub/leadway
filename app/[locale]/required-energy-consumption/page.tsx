@@ -1,9 +1,8 @@
 "use client";
 import BarCharts from "@/components/Section/barCharts";
 import Login from "@/components/Section/login";
-import { motion, AnimatePresence, useIsPresent } from "motion/react";
 import { useTranslations } from "next-intl";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -13,29 +12,14 @@ import {
 } from "@/components/ui/carousel";
 import NumberInput from "@/components/input/numberInput";
 import NumberInput2digit from "@/components/input/numberInpur2digit";
+import { apiRequiredEnergyTruck } from "@/api/getCalculate";
 
-const TestListImg = [
-  {
-    id: 1,
-    img: "/image/battery_71-100_percent.png",
-  },
-  {
-    id: 2,
-    img: "/image/carbon.png",
-  },
-  {
-    id: 3,
-    img: "/image/battery_71-100_percent.png",
-  },
-  {
-    id: 4,
-    img: "/image/battery_71-100_percent.png",
-  },
-  {
-    id: 5,
-    img: "/image/battery_71-100_percent.png",
-  },
-];
+type DataTruckSelected = {
+  id: number;
+  attributes: {
+    battery_capacity: number;
+  };
+};
 
 export default function Page() {
   const t = useTranslations("Calculation");
@@ -43,6 +27,18 @@ export default function Page() {
   const [roundTrip, setRoundTrip] = useState<boolean>(false);
 
   const [login, setLogin] = useState<boolean>(true);
+
+  const [selectedTruck, setSelectedTruck] = useState(0);
+  const [dataTruckSelected, setDataTruckSelected] =
+    useState<DataTruckSelected>();
+  console.log(dataTruckSelected);
+  const getDataTruck = (selectedTruck: number) => {
+    const data = requiredEnergyTruck.find(
+      (item: any) => item.id === selectedTruck,
+    );
+
+    setDataTruckSelected(data);
+  };
 
   const [rangeValue, setRangeValue] = useState(100.0);
   const [weightValue, setWeightValue] = useState(0.0);
@@ -57,12 +53,39 @@ export default function Page() {
   const [showDataCompare, setShowDataCompare] = useState(false);
   const [showResult, setShowResult] = useState(false);
 
+  const [requiredEnergyTruck, setRequiredEnergyTruck] = useState<any[]>([]);
+  const [error, setError] = useState(false);
+
+  const fetchRequiredEnergyTruck = async () => {
+    try {
+      const response = await apiRequiredEnergyTruck();
+      setRequiredEnergyTruck(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Failed", error);
+      setError(true);
+    }
+  };
+
+  useEffect(() => {
+    fetchRequiredEnergyTruck();
+    getDataTruck(selectedTruck);
+  }, [selectedTruck]);
+
   useEffect(() => {
     document.body.style.overflow = login ? "hidden" : "auto";
     return () => {
       document.body.style.overflow = "auto";
     };
   }, [login]);
+
+  if (error) {
+    return (
+      <div className="min-h-screen text-center py-10 text-red-600 ">
+        Failed to load data. Please try again.
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -74,53 +97,87 @@ export default function Page() {
         )}
         <section>
           <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 mt-20 px-3 gap-3">
-              <div className="grid text-xl border-t-4 border-[#051C56] text-[#051C56]">
-                <span className="mt-4">On-Road</span>
-                <div className="flex items-center justify-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 mt-20 px-3 gap-x-3 gap-y-12">
+              <div className="grid text-[#052C65]">
+                <div
+                  className={`${selectedTruck <= 5 ? "opacity-100" : "opacity-50"}`}
+                >
+                  <div className="flex mb-4 border-t-4 border-[#083E97]" />
+                  <span className="text-xl">On-Road</span>
+                </div>
+                <div className="flex items-center justify-center pt-6">
                   <Carousel
                     opts={{ loop: true }}
                     className="w-8/12 sm:w-10/12 lg:w-10/12"
                   >
                     <CarouselContent className="-ml-1">
-                      {TestListImg.map((item) => (
-                        <CarouselItem
-                          key={item.id}
-                          className="flex items-center gap-3 basis-1/3"
-                        >
-                          <img
-                            src={item.img}
-                            alt={item.id.toString()}
-                            className="w-full"
-                          />
-                        </CarouselItem>
-                      ))}
+                      {requiredEnergyTruck
+                        .filter(
+                          (item) => item.attributes.usage_type === "On road",
+                        )
+                        .map((item) => (
+                          <CarouselItem
+                            key={item.id}
+                            className={`flex items-center gap-3 basis-1/2 sm:basis-[35%] ${selectedTruck === item.id ? "opacity-100" : "opacity-50"}`}
+                          >
+                            <div
+                              className="grid cursor-pointer"
+                              onClick={() => setSelectedTruck(item.id)}
+                            >
+                              <img
+                                src={`${process.env.NEXT_PUBLIC_API_URL}${item.attributes.img_slider.data.attributes.url}`}
+                                alt={item.attributes.model}
+                                className="aspect-video w-fill h-full object-contain px-2"
+                              />
+                              <span className="text-sm sm:text-base text-center h-12">
+                                {item.attributes.model}
+                              </span>
+                            </div>
+                          </CarouselItem>
+                        ))}
                     </CarouselContent>
                     <CarouselPrevious />
                     <CarouselNext />
                   </Carousel>
                 </div>
               </div>
-              <div className="grid text-xl border-t-4 border-[#051C56] text-[#051C56]">
-                <span className="mt-4">Off-Road</span>
-                <div className="flex items-center justify-center">
+              <div className="grid text-[#052C65]">
+                <div
+                  className={`${selectedTruck > 5 ? "opacity-100" : "opacity-50"}`}
+                >
+                  <div className="flex mb-4 border-t-4 border-[#083E97]" />
+                  <span className="text-xl">Off-Road</span>
+                </div>
+                <div className="flex items-center justify-center pt-6">
                   <Carousel
                     opts={{ loop: true }}
                     className="w-8/12 sm:w-10/12 lg:w-10/12"
                   >
                     <CarouselContent className="-ml-1">
-                      {TestListImg.map((item) => (
-                        <CarouselItem
-                          key={item.id}
-                          className="flex items-center gap-3 basis-1/3"
-                        >
-                          <img
-                            src={item.img}
-                            alt={item.id.toString()}
-                            className="w-full"
-                          />
-                        </CarouselItem>
-                      ))}
+                      {requiredEnergyTruck
+                        .filter(
+                          (item) => item.attributes.usage_type !== "On road",
+                        )
+                        .map((item) => (
+                          <CarouselItem
+                            key={item.id}
+                            className={`flex items-center gap-3 basis-1/2 sm:basis-[35%] ${selectedTruck === item.id ? "" : "opacity-50"}`}
+                          >
+                            <div
+                              className="grid cursor-pointer"
+                              onClick={() => setSelectedTruck(item.id)}
+                            >
+                              <img
+                                src={`${process.env.NEXT_PUBLIC_API_URL}${item.attributes.img_slider.data.attributes.url}`}
+                                alt={item.attributes.model}
+                                className="aspect-video w-fill h-full object-contain px-2"
+                              />
+                              <span className="text-sm sm:text-base text-center h-12">
+                                {item.attributes.model}
+                              </span>
+                            </div>
+                          </CarouselItem>
+                        ))}
                     </CarouselContent>
                     <CarouselPrevious />
                     <CarouselNext />
@@ -135,21 +192,21 @@ export default function Page() {
             <div className="text-center py-12">
               <div>
                 <div>
-                  <span className="text-2xl font-semibold text-[#051C56]">
+                  <span className="text-2xl font-semibold text-[#052C65]">
                     {t("calculator_program")}
                   </span>
                 </div>
                 <div className="grid grid-cols-2 px-3 py-12">
                   <div
                     onClick={() => setRoundTrip(false)}
-                    className={`flex text-xl justify-center pb-4 border-b-4 cursor-pointer border-[#051C56] text-[#051C56]
+                    className={`flex text-xl justify-center pb-4 border-b-4 cursor-pointer border-[#083E97] text-[#052C65]
                     ${roundTrip ? "opacity-50" : "transition duration-300 ease-in-out"}`}
                   >
                     <span> {t("one_way")}</span>
                   </div>
                   <div
                     onClick={() => setRoundTrip(true)}
-                    className={`flex text-xl justify-center border-b-4 cursor-pointer border-[#051C56] text-[#051C56]
+                    className={`flex text-xl justify-center border-b-4 cursor-pointer border-[#083E97] text-[#052C65]
                             ${roundTrip ? "transition duration-300 ease-in-out" : "opacity-50 "}`}
                   >
                     <span> {t("round_trip")}</span>
@@ -216,7 +273,9 @@ export default function Page() {
                         </div>
                       </div>
                       <div>
-                        <span className="">( 350 / 350 kW )</span>
+                        350 /
+                        {dataTruckSelected?.attributes?.battery_capacity ?? 0}
+                        kW
                       </div>
                     </div>
                   </div>
@@ -331,7 +390,9 @@ export default function Page() {
                           </div>
                         </div>
                         <div>
-                          <span className="">( 350 / 350 kW )</span>
+                          350 /
+                          {dataTruckSelected?.attributes?.battery_capacity ?? 0}
+                          kW
                         </div>
                       </div>
                     </div>

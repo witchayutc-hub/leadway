@@ -310,12 +310,7 @@ export default function Page() {
             {sanyEv.map((item, index) => {
               const image = item.attributes.img?.data?.attributes;
               const images = item?.attributes?.img_list?.data;
-              const colorsTheme = [
-                "[#01BD04]",
-                "[#79B721]",
-                "[#02926B]",
-                "[#0091D2]",
-              ];
+              const colorsTheme = ["#01BD04", "#78B721", "#02926B", "#0091D2"];
               return (
                 <div
                   id={item.attributes.uid}
@@ -333,7 +328,7 @@ export default function Page() {
                         className="w-full h-full object-cover"
                       />
                       <span
-                        className={`text-3xl p-2 font-semibold text-${colorsTheme[index % colorsTheme.length]}`}
+                        className={`text-3xl p-2 font-semibold text-[${colorsTheme[index % colorsTheme.length]}]`}
                       >
                         {item.attributes.captions}
                       </span>
@@ -355,7 +350,7 @@ export default function Page() {
                               id: 1,
                               label: item?.attributes?.name ?? "-",
                               variant: "primary",
-                              colorClass: `bg-${colorsTheme[index % colorsTheme.length]}`,
+                              colorClass: `bg-[${colorsTheme[index % colorsTheme.length]}]`,
                               href: `${process.env.NEXT_PUBLIC_API_URL}${
                                 file?.attributes?.url || ""
                               }`,
@@ -364,7 +359,7 @@ export default function Page() {
                               id: 2,
                               label: "ดาวน์โหลด",
                               variant: "outline",
-                              colorClass: `text-${colorsTheme[index % colorsTheme.length]}`,
+                              colorClass: `text-[${colorsTheme[index % colorsTheme.length]}]`,
                               download: true,
                               href: `${process.env.NEXT_PUBLIC_API_URL}${
                                 file?.attributes?.url || ""
@@ -388,7 +383,7 @@ export default function Page() {
                               alt={`เพิ่มเติม ${item.id + 1}`}
                             />
                             <div
-                              className={`flex justify-center items-center h-12 bg-${colorsTheme[index % colorsTheme.length]}`}
+                              className={`flex justify-center items-center h-12 bg-[${colorsTheme[index % colorsTheme.length]}]`}
                             >
                               <span className="text-sm sm:text-xl text-ellipsis text-white">
                                 {locale === "th"
