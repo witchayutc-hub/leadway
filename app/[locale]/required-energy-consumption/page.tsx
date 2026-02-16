@@ -13,14 +13,24 @@ import {
 import NumberInput from "@/components/input/numberInput";
 import NumberInput2digit from "@/components/input/numberInpur2digit";
 import { apiRequiredEnergyTruck } from "@/api/getCalculate";
+import { Calculate } from "@/components/calculate/calculate";
+import NumberInputFuel from "@/components/input/numberInputFuel";
 
 type DataTruckSelected = {
   id: number;
+  battery_capacity: number;
   distance: number;
   attributes: {
     battery_capacity: number;
     payload: number;
+    truck_weight: number;
+    trailer_weight: number;
     usage_type: string;
+    formula: {
+      id: number;
+      intercept: number;
+      slope: number;
+    };
     img: {
       data: {
         attributes: {
@@ -33,14 +43,12 @@ type DataTruckSelected = {
 
 export default function Page() {
   const t = useTranslations("Calculation");
-
-  const [roundTrip, setRoundTrip] = useState<boolean>(false);
-
   const [login, setLogin] = useState<boolean>(true);
 
   const [selectedTruck, setSelectedTruck] = useState(0);
   const [dataTruckSelected, setDataTruckSelected] =
     useState<DataTruckSelected>();
+  console.log(dataTruckSelected);
   const getDataTruck = (selectedTruck: number) => {
     const data = requiredEnergyTruck.find(
       (item: any) => item.id === selectedTruck,
@@ -52,21 +60,39 @@ export default function Page() {
   const [weightValue, setWeightValue] = useState(0.0);
   const [weightValue2, setWeightValue2] = useState(0.0);
 
-  const min = 0.0;
-  const max = 500.0;
-  const [rangeValue, setRangeValue] = useState(0.0);
-  const [rangeValue2, setRangeValue2] = useState(0.0);
-
-  const percenTage = ((rangeValue - min) / (max - min)) * 100;
-  const percenTage2 = 100 - ((rangeValue2 - min) / (max - min)) * 100;
-
-  const totalDistance = (rangeValue + rangeValue2).toFixed(2);
-
   const [showDataCompare, setShowDataCompare] = useState(false);
   const [showResult, setShowResult] = useState(false);
 
   const [requiredEnergyTruck, setRequiredEnergyTruck] = useState<any[]>([]);
   const [error, setError] = useState(false);
+
+  /////////////////////////////////////////////////////////////////////////////  Condition //////////////////////////////////////////////////////////////////////////////////
+  const [hovered, setHovered] = useState(false);
+  // OnRoad // Round Trip === True is Open Round Trip | ไป-กลับ
+  const [roundTrip, setRoundTrip] = useState<boolean>(false);
+
+  const totalWeightGo = Calculate.weightTruck(
+    weightValue ?? 0.0,
+    dataTruckSelected?.attributes?.truck_weight ?? 0.0,
+    dataTruckSelected?.attributes?.trailer_weight ?? 0.0,
+  );
+
+  const totalWeightBack = Calculate.weightTruck(
+    weightValue2 ?? 0.0,
+    dataTruckSelected?.attributes?.truck_weight ?? 0.0,
+    dataTruckSelected?.attributes?.trailer_weight ?? 0.0,
+  );
+
+  const totalWeightByLaw = Calculate.weightTruck(
+    dataTruckSelected?.attributes?.payload ?? 0.0,
+    dataTruckSelected?.attributes?.truck_weight ?? 0.0,
+    dataTruckSelected?.attributes?.trailer_weight ?? 0.0,
+  );
+
+  const overWeightGo = totalWeightGo > totalWeightByLaw;
+  const overWeightBack = totalWeightBack > totalWeightByLaw;
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   const fetchRequiredEnergyTruck = async () => {
     try {
@@ -118,7 +144,7 @@ export default function Page() {
     const newValue = clamped * 500;
     const formatted = Number(newValue.toFixed(1));
 
-    setRangeValue((prev) => (prev === formatted ? prev : formatted));
+    setDistraneGo((prev) => (prev === formatted ? prev : formatted));
   };
 
   const handleDrag2 = (clientX: number) => {
@@ -135,7 +161,7 @@ export default function Page() {
     const newValue = clamped * (max - min) + min;
     const formatted = Number(newValue.toFixed(1));
 
-    setRangeValue2((prev) => (prev === formatted ? prev : formatted));
+    setDistraneBack((prev) => (prev === formatted ? prev : formatted));
   };
 
   const handleMouseDown1 = () => {
@@ -166,6 +192,71 @@ export default function Page() {
     window.addEventListener("mouseup", handleUp);
   };
 
+  /////////////////////////////////////////////////////////////////////////////  Calculate //////////////////////////////////////////////////////////////////////////////////
+
+  const min = 0.0;
+  const max = 500.0;
+  const [distraneGo, setDistraneGo] = useState(0.0);
+  const [distraneBack, setDistraneBack] = useState(0.0);
+
+  const percenTageGo = ((distraneGo - min) / (max - min)) * 100;
+  const percenTageBack = 100 - ((distraneBack - min) / (max - min)) * 100;
+
+  const totalDistance = Calculate.totalDistance(
+    distraneGo,
+    roundTrip === true ? distraneBack : 0.0,
+  );
+  const totalWeight = Calculate.totalWeight(
+    totalWeightGo,
+    roundTrip === true ? totalWeightBack : 0.0,
+  );
+
+  const ConsumptionOnRoad = Calculate.consumptionOnRoad(
+    dataTruckSelected?.attributes?.formula?.slope || 0.0,
+    Number(totalWeightGo),
+    dataTruckSelected?.attributes?.formula?.intercept || 0.0,
+  );
+
+  // พลังงานและคาร์บอนฟุตพริ้นท์
+  const EnergyConsumptionRate = Calculate.energyConsumptionRate(
+    ConsumptionOnRoad,
+    distraneGo,
+  );
+
+  const CarbonFootprintReduction =
+    Calculate.carbonFootprintReduction(distraneGo);
+
+  // แบตเตอรี่
+  const percenRemainingBattery = Calculate.persenRemainingBattery(
+    dataTruckSelected?.attributes?.battery_capacity || 0,
+    EnergyConsumptionRate,
+  );
+
+  const remainingBatterykW = Calculate.remainingBatterykW(
+    dataTruckSelected?.attributes?.battery_capacity || 0,
+    percenRemainingBattery,
+  );
+
+  // ค่าชาร์จไฟ
+  const PrivateCost = Calculate.privateCost(EnergyConsumptionRate);
+  const MEA_PEA_On_Peak = Calculate.onPeakCost(EnergyConsumptionRate);
+  const MEA_PEA_Off_Peak = Calculate.offPeakCost(EnergyConsumptionRate);
+
+  // ค่าน้ํามัน
+  const [fuelConsumption, setFuelConsumption] = useState(0.0);
+  const [fuelPricePerLiter, setFuelPricePerLiter] = useState(0.0);
+
+  const OilCost =
+    Calculate.OilCost(fuelConsumption, fuelPricePerLiter, distraneGo) || 0.0;
+
+  const DifferencePrivate = Calculate.differencePrivate(OilCost, PrivateCost);
+  const DifferencePrivateOnPeakElectricity =
+    Calculate.differencePrivateOnPeakElectricity(OilCost, MEA_PEA_On_Peak);
+  const DifferencePrivateOffPeakElectricity =
+    Calculate.differencePrivateOffPeakElectricity(OilCost, MEA_PEA_Off_Peak);
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   return (
     <div className="min-h-screen bg-white">
       <main>
@@ -179,7 +270,7 @@ export default function Page() {
             <div className="grid grid-cols-1 lg:grid-cols-2 mt-20 px-3 gap-x-3 gap-y-12">
               <div className="grid text-[#052C65]">
                 <div
-                  className={`${selectedTruck <= 5 ? "opacity-100" : "opacity-50"}`}
+                  className={`${dataTruckSelected?.attributes?.usage_type === "On road" ? "opacity-100" : "opacity-50"}`}
                 >
                   <div className="flex mb-4 border-t-4 border-[#083E97]" />
                   <span className="text-xl">On-Road</span>
@@ -268,7 +359,7 @@ export default function Page() {
         </section>
         <section id="sectionCal">
           <div className="max-w-7xl mx-auto">
-            <div className="text-center py-12">
+            <div className="text-center pt-12 lg:py-12">
               <div>
                 <div className="pb-12">
                   <span className="text-2xl font-semibold text-[#052C65]">
@@ -302,16 +393,20 @@ export default function Page() {
                     </span>
                     <div className="col-span-6">
                       <NumberInput
-                        value={rangeValue}
+                        value={distraneGo}
                         min={0}
                         max={500}
-                        onChange={setRangeValue}
+                        onChange={setDistraneGo}
                       />
                     </div>
                     <span className="text-left col-span-3">{t("km")}</span>
                     <div className="lg:h-10"></div>
                   </div>
-                  <div className="grid">
+                  <div
+                    className={`grid ${
+                      overWeightGo ? "text-red-500" : "text-[#051C56]"
+                    }`}
+                  >
                     <div className="grid grid-cols-12 items-center px-3 gap-2">
                       <span className="text-right col-span-3 lg:col-span-4">
                         {t("weight")}
@@ -328,17 +423,20 @@ export default function Page() {
                         {t("ton")}
                       </span>
                       <span className="text-center col-span-12 mt-4">
-                        {t("total_weight")}
+                        ( {t("total_weight")} {totalWeightGo.toFixed(2)} /{" "}
+                        {t("weight_by_law")} {totalWeightByLaw.toFixed(2)} )
                       </span>
                     </div>
                   </div>
-                  <div>
+                  <div
+                    className={`${Number(percenRemainingBattery.toFixed(0)) >= 11 ? "text-[#052C65]" : "text-red-500"}`}
+                  >
                     <div
-                      className="grid gap-2 place-items-center pb-6
+                      className="grid gap-2 place-items-center
                         lg:border-l-2 lg:border-[#051C56]"
                     >
                       <div>
-                        <span className="text-2xl">
+                        <span className="text-xl">
                           {t("remaining_battery")}
                         </span>
                       </div>
@@ -347,20 +445,73 @@ export default function Page() {
                           <span className="text-xl">soc</span>
                         </div>
                         <div>
-                          <img
-                            src="/image/battery_71-100_percent.png"
-                            className="w-full max-h-10 object-contain aspect-video"
-                          />
+                          {Number(percenRemainingBattery.toFixed(0)) >= 71 ? (
+                            <img
+                              src="/image/battery_71-100_percent.png"
+                              className="w-full max-h-10 object-contain aspect-video"
+                            />
+                          ) : Number(percenRemainingBattery.toFixed(0)) >=
+                            51 ? (
+                            <img
+                              src="/image/battery_51-70_percent.png"
+                              className="w-full max-h-10 object-contain aspect-video"
+                            />
+                          ) : Number(percenRemainingBattery.toFixed(0)) >=
+                            31 ? (
+                            <img
+                              src="/image/battery_31-50_percent.png"
+                              className="w-full max-h-10 object-contain aspect-video"
+                            />
+                          ) : Number(percenRemainingBattery.toFixed(0)) >=
+                            11 ? (
+                            <img
+                              src="/image/battery_10-30_percent.png"
+                              className="w-full max-h-10 object-contain aspect-video"
+                            />
+                          ) : Number(percenRemainingBattery.toFixed(0)) >= 1 ? (
+                            <img
+                              src="/image/battery_1-10_percent.png"
+                              className="w-full max-h-10 object-contain aspect-video"
+                            />
+                          ) : (
+                            <img
+                              src="/image/battery_empty.png"
+                              className="w-full max-h-10 object-contain aspect-video"
+                            />
+                          )}
                         </div>
-                        <div>
-                          <span className="text-4xl">99 %</span>
+                        <div className="flex items-center w-20 gap-2">
+                          <span className="text-2xl sm:text-4xl font-bold">
+                            {percenRemainingBattery.toFixed(0)}
+                          </span>
+                          <span className="text-sm">%</span>
+                          {Number(percenRemainingBattery.toFixed(0)) <= 11 && (
+                            <i
+                              className="bi bi-exclamation-triangle text-3xl cursor-pointer"
+                              onMouseEnter={() => setHovered(true)}
+                              onMouseLeave={() => setHovered(false)}
+                            />
+                          )}
                         </div>
                       </div>
-                      <span className="whitespace-pre-line">
-                        ( 350 /{" "}
-                        {dataTruckSelected?.attributes?.battery_capacity ?? 0}{" "}
-                        kW )
-                      </span>
+                      <div
+                        className={`flex items-center justify-center ${hovered ? "bg-red-200" : ""}`}
+                      >
+                        {hovered ? (
+                          <div className="flex items-center justify-center w-full h-10 px-2 ">
+                            <span className="whitespace-pre-line text-sm text-red-500">
+                              {t("battery_remain")}
+                            </span>
+                          </div>
+                        ) : (
+                          <span className="whitespace-pre-line h-10">
+                            ( {remainingBatterykW.toFixed(0)} /{" "}
+                            {dataTruckSelected?.attributes?.battery_capacity ??
+                              0}{" "}
+                            kW )
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -375,7 +526,7 @@ export default function Page() {
             </div>
           )}
           <div className="max-w-7xl mx-auto">
-            <div className="text-center py-12 px-3">
+            <div className="text-center pb-12 lg:py-12 px-3">
               <div>
                 <div
                   ref={containerRef1}
@@ -388,7 +539,7 @@ export default function Page() {
                     className="absolute flex flex-col items-center -translate-x-1/2 translate-y-1/4 top-0 z-20 select-none cursor-grab w-20 h:20 
                       sm:w-40 sm:h-40 sm:-translate-y-1/7
                       lg:w-55 lg:h-55 lg:-translate-y-1/3"
-                    style={{ left: `${percenTage}%` }}
+                    style={{ left: `${percenTageGo}%` }}
                   >
                     <img
                       src={`${process.env.NEXT_PUBLIC_API_URL}${dataTruckSelected?.attributes?.img?.data?.attributes?.url}`}
@@ -399,13 +550,13 @@ export default function Page() {
                       className="mt-8 py-1 px-2 rounded text-sm font-bold whitespace-nowrap bg-[#0B5DC1] text-white
                         sm:text-xl sm:px-4"
                     >
-                      {rangeValue.toFixed(1)} {t("km")}
+                      {distraneGo.toFixed(1)} {t("km")}
                     </div>
                   </div>
                   <div className="absolute bottom-4 left-0 w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
                     <div
                       className="h-full bg-[#051C56]"
-                      style={{ width: `${percenTage}%` }}
+                      style={{ width: `${percenTageGo}%` }}
                     />
                   </div>
                 </div>
@@ -436,16 +587,20 @@ export default function Page() {
                       </span>
                       <div className="col-span-6">
                         <NumberInput
-                          value={rangeValue2}
+                          value={distraneBack}
                           min={0}
                           max={500}
-                          onChange={setRangeValue2}
+                          onChange={setDistraneBack}
                         />
                       </div>
                       <span className="text-left col-span-3">{t("km")}</span>
                       <div className="h-10"></div>
                     </div>
-                    <div className="grid">
+                    <div
+                      className={`grid ${
+                        overWeightBack ? "text-red-500" : "text-[#051C56]"
+                      }`}
+                    >
                       <div className="grid grid-cols-12 items-center px-3 gap-2">
                         <span className="text-right col-span-3">
                           {t("weight")}
@@ -460,7 +615,8 @@ export default function Page() {
                         </div>
                         <span className="text-left col-span-3">{t("ton")}</span>
                         <span className="text-center col-span-12 mt-4">
-                          {t("total_weight")}
+                          ( {t("total_weight")} {totalWeightBack} /{" "}
+                          {t("weight_by_law")} {totalWeightByLaw} )
                         </span>
                       </div>
                     </div>
@@ -518,7 +674,7 @@ export default function Page() {
                       className="absolute flex flex-col items-center -translate-x-1/2 translate-y-1/4 top-0 z-20 select-none cursor-grab w-20 h:20
                         sm:w-40 sm:h-40 sm:-translate-y-1/7
                         lg:w-55 lg:h-55 lg:-translate-y-1/3"
-                      style={{ left: `${percenTage2}%` }}
+                      style={{ left: `${percenTageBack}%` }}
                     >
                       <img
                         src={`${process.env.NEXT_PUBLIC_API_URL}${dataTruckSelected?.attributes?.img?.data?.attributes?.url}`}
@@ -529,13 +685,13 @@ export default function Page() {
                         className="mt-8 py-1 px-2 rounded text-sm font-bold whitespace-nowrap bg-[#0B5DC1] text-white
                           sm:text-xl sm:px-4"
                       >
-                        {rangeValue2.toFixed(1)} {t("km")}
+                        {distraneBack.toFixed(1)} {t("km")}
                       </div>
                     </div>
                     <div className="absolute bottom-4 left-0 w-full h-1.5 bg-[#051C56] rounded-full overflow-hidden">
                       <div
                         className="h-full bg-gray-200"
-                        style={{ width: `${percenTage2}%` }}
+                        style={{ width: `${percenTageBack}%` }}
                       />
                     </div>
                   </div>
@@ -597,7 +753,9 @@ export default function Page() {
                         </span>
                       </div>
                       <div className="col-span-2">
-                        <span className=" text-[#051C56] ">698.78</span>
+                        <span className=" text-[#051C56] ">
+                          {EnergyConsumptionRate.toFixed(2)}
+                        </span>
                       </div>
                       <div className="col-span-2">
                         <span className=" text-[#051C56] ">kWh</span>
@@ -613,7 +771,9 @@ export default function Page() {
                         </span>
                       </div>
                       <div className="col-span-2">
-                        <span className=" text-[#051C56] ">150.00</span>
+                        <span className=" text-[#051C56] ">
+                          {CarbonFootprintReduction.toFixed(2)}
+                        </span>
                       </div>
                       <div className="col-span-2">
                         <span className=" text-[#051C56] ">Credits</span>
@@ -641,7 +801,9 @@ export default function Page() {
                         </span>
                       </div>
                       <div className="col-span-2">
-                        <span className=" text-[#051C56] ">5,240.81</span>
+                        <span className=" text-[#051C56] ">
+                          {PrivateCost.toFixed(2)}
+                        </span>
                       </div>
                       <div className="col-span-2">
                         <span className=" text-[#051C56] ">{t("baht")}</span>
@@ -654,7 +816,9 @@ export default function Page() {
                         </span>
                       </div>
                       <div className="col-span-2">
-                        <span className=" text-[#051C56] ">150.00</span>
+                        <span className=" text-[#051C56] ">
+                          {MEA_PEA_On_Peak.toFixed(2)}
+                        </span>
                       </div>
                       <div className="col-span-2">
                         <span className=" text-[#051C56] ">{t("baht")}</span>
@@ -667,7 +831,9 @@ export default function Page() {
                         </span>
                       </div>
                       <div className="col-span-2">
-                        <span className=" text-[#051C56] ">150.00</span>
+                        <span className=" text-[#051C56] ">
+                          {MEA_PEA_Off_Peak.toFixed(2)}
+                        </span>
                       </div>
                       <div className="col-span-2">
                         <span className=" text-[#051C56] ">{t("baht")}</span>
@@ -713,7 +879,7 @@ export default function Page() {
                       ></i>
                     </div>
                     <div
-                      className="grid max-w-150 gap-4 py-12 px-10 text-xs bg-[#E5F0FE]
+                      className="grid max-w-150 gap-8 py-12 px-10 text-xs bg-[#E5F0FE]
                         sm:text-sm
                         lg:text-base lg:max-w-full"
                     >
@@ -723,11 +889,11 @@ export default function Page() {
                             {t("fuel_consumption")}
                           </span>
                         </div>
-                        <input
-                          type="number"
-                          className="col-span-4 h-12 px-2 text-center bg-white
-                          focus:outline-none focus:ring-2 focus:ring-[#051C56] focus:border-[#051C56]"
-                          placeholder={t("fuel_consumption")}
+                        <NumberInputFuel
+                          value={fuelConsumption}
+                          min={0}
+                          max={999}
+                          onChange={setFuelConsumption}
                         />
                         <div className="col-span-2">
                           <span className=" text-[#051C56] ">{t("km/L")}</span>
@@ -739,11 +905,11 @@ export default function Page() {
                             {t("fuel_price_per_liter")}
                           </span>
                         </div>
-                        <input
-                          type="number"
-                          className="col-span-4 h-12 px-2 text-center bg-white 
-                            focus:outline-none focus:ring-2 focus:ring-[#051C56] focus:border-[#051C56]"
-                          placeholder={t("fuel_price")}
+                        <NumberInputFuel
+                          value={fuelPricePerLiter}
+                          min={0}
+                          max={999}
+                          onChange={setFuelPricePerLiter}
                         />
                         <div className="col-span-2">
                           <span className=" text-[#051C56]">{t("baht")}</span>
@@ -798,17 +964,23 @@ export default function Page() {
                     <tbody className="text-sm text-black">
                       <tr>
                         <td className="p-3">{t("travel_distance")}</td>
-                        <td className="p-3 text-end">{totalDistance}</td>
+                        <td className="p-3 text-end">
+                          {totalDistance.toFixed(2)}
+                        </td>
                         <td className="p-3 w-1 text-end">{t("km")}</td>
                       </tr>
                       <tr>
                         <td className="p-3">{t("total_weight_result")}</td>
-                        <td className="p-3 w-1 text-end">50.50 </td>
+                        <td className="p-3 w-1 text-end">
+                          {totalWeight.toFixed(2)}{" "}
+                        </td>
                         <td className="p-3 text-end">{t("ton")}</td>
                       </tr>
                       <tr>
                         <td className="p-3">{t("remaining_battery")}</td>
-                        <td className="p-3 w-1 text-end">50.50 </td>
+                        <td className="p-3 w-1 text-end">
+                          {percenRemainingBattery.toFixed(0)}
+                        </td>
                         <td className="p-3 text-end">%</td>
                       </tr>
                       <tr>
@@ -818,12 +990,16 @@ export default function Page() {
                       </tr>
                       <tr>
                         <td className="p-3">{t("energy_consumption")}</td>
-                        <td className="p-3 w-1 text-end">50.50 </td>
+                        <td className="p-3 w-1 text-end">
+                          {EnergyConsumptionRate.toFixed(2)}
+                        </td>
                         <td className="p-3 text-end">kW</td>
                       </tr>
                       <tr>
                         <td className="p-3">{t("carbon_footprint")}</td>
-                        <td className="p-3 w-1 text-end">50.50 </td>
+                        <td className="p-3 w-1 text-end">
+                          {CarbonFootprintReduction.toFixed(2)}{" "}
+                        </td>
                         <td className="p-3 text-end">Credits</td>
                       </tr>
                       <tr className="border-b-4 border-[#051C56]">
@@ -836,7 +1012,9 @@ export default function Page() {
                       </tr>
                       <tr>
                         <td className="p-3"> {t("oil_cost")}</td>
-                        <td className="p-3 w-1 text-end">50.50 </td>
+                        <td className="p-3 w-1 text-end">
+                          {OilCost.toFixed(2)}{" "}
+                        </td>
                         <td className="p-3 text-end">{t("baht")}</td>
                       </tr>
                       <tr className="border-b-4 border-[#051C56]">
@@ -849,17 +1027,23 @@ export default function Page() {
                       </tr>
                       <tr>
                         <td className="p-3">• {t("private")} (7.5 บาท/kWh)</td>
-                        <td className="p-3 w-1 text-end">50.50 </td>
+                        <td className="p-3 w-1 text-end">
+                          {PrivateCost.toFixed(2)}
+                        </td>
                         <td className="p-3 text-end">{t("baht")}</td>
                       </tr>
                       <tr>
                         <td className="p-3">• {t("on_peak")} (4.52 บาท/kWh)</td>
-                        <td className="p-3 w-1 text-end">50.50 </td>
+                        <td className="p-3 w-1 text-end">
+                          {MEA_PEA_On_Peak.toFixed(2)}
+                        </td>
                         <td className="p-3 text-end">{t("baht")}</td>
                       </tr>
                       <tr>
                         <td className="p-3">• {t("off_peak")}(2.99 บาท/kWh)</td>
-                        <td className="p-3 w-1 text-end">50.50 </td>
+                        <td className="p-3 w-1 text-end">
+                          {MEA_PEA_Off_Peak.toFixed(2)}
+                        </td>
                         <td className="p-3 text-end">{t("baht")}</td>
                       </tr>
                       <tr className="border-b-4 border-[#051C56]">
@@ -872,17 +1056,23 @@ export default function Page() {
                       </tr>
                       <tr>
                         <td className="p-3">• {t("private")}</td>
-                        <td className="p-3 w-1 text-end">50.50 </td>
+                        <td className="p-3 w-1 text-end">
+                          {DifferencePrivate.toFixed(2)}
+                        </td>
                         <td className="p-3 text-end">{t("baht")}</td>
                       </tr>
                       <tr>
                         <td className="p-3">• {t("on_peak_electricity")}</td>
-                        <td className="p-3 w-1 text-end">50.50 </td>
+                        <td className="p-3 w-1 text-end">
+                          {DifferencePrivateOnPeakElectricity.toFixed(2)}
+                        </td>
                         <td className="p-3 text-end">{t("baht")}</td>
                       </tr>
                       <tr>
                         <td className="p-3">• {t("off_peak_electricity")}</td>
-                        <td className="p-3 w-1 text-end">50.50 </td>
+                        <td className="p-3 w-1 text-end">
+                          {DifferencePrivateOffPeakElectricity.toFixed(2)}
+                        </td>
                         <td className="p-3 text-end">{t("baht")}</td>
                       </tr>
                     </tbody>

@@ -106,9 +106,10 @@
     "round_trip": "Round Trip Way",
     "distance": "Distance",
     "km": "km",
-    "weight": "Weight",
+    "weight": "Net weight",
     "ton": "ton",
-    "total_weight": "(Total Weight 50.50 / Legal limit 0.50 ton)",
+    "total_weight": "Total Weight",
+    "weight_by_law": "Legal limit",
     "remaining_battery": "Remaining Battery",
     "recommended_total": "Recommended total",
     "charging_session": "charging session",
@@ -141,7 +142,8 @@
     "on_peak_electricity": "On Peak Electricity",
     "off_peak_electricity": "Off Peak Electricity",
     "summary_result": "Summary Result",
-    "oil_vs_electricity": "Oil vs Electricity Cost"
+    "oil_vs_electricity": "Oil vs Electricity Cost",
+    "battery_remain": "Battery is below the recommended level (10%)"
   },
 
   "Service": {

@@ -108,7 +108,8 @@
     "km": "กม.",
     "weight": "น้ำหนักสินค้า",
     "ton": "ตัน",
-    "total_weight": "(น้ำหนักรวม 50.50 / น้ำหนักกฎหมายกำหนด 50.50 ตัน)",
+    "total_weight": "น้ำหนักรวม",
+    "weight_by_law": "น้ำหนักกฎหมายกำหนด",
     "remaining_battery": "ปริมาณแบตเตอรี่คงเหลือ",
     "recommended_total": "แนะนำชาร์จรวม",
     "charging_session": "รอบ",
@@ -141,7 +142,8 @@
     "on_peak_electricity": "ค่าไฟฟ้า On Peak",
     "off_peak_electricity": "ค่าไฟฟ้า Off Peak",
     "summary_result": "สรุปผลลัพธ์",
-    "oil_vs_electricity": "ส่วนต่างค่าใช่จ่ายน้ำมัน และชาร์จไฟ"
+    "oil_vs_electricity": "ส่วนต่างค่าใช่จ่ายน้ำมัน และชาร์จไฟ",
+    "battery_remain": "แบคเตอรี่คงเหลือน้อยกว่าค่าแนะนํา (10%)"
   },
 
   "Service": {

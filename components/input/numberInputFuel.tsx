@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 import React, { useState, useEffect } from "react";
 
 type NumberInputProps = {
@@ -9,13 +10,14 @@ type NumberInputProps = {
   onChange: (value: number) => void;
 };
 
-export default function NumberInput2digit({
+export default function NumberInputFuel({
   value,
   min = 0,
   max = 500,
   step = 0.01,
   onChange,
 }: NumberInputProps) {
+  const t = useTranslations("Calculation");
   const [display, setDisplay] = useState(value.toFixed(1));
   const [error, setError] = useState(false);
   const [errorDicimal, setErrorDecimal] = useState(false);
@@ -75,7 +77,7 @@ export default function NumberInput2digit({
   };
 
   return (
-    <div>
+    <div className="col-span-4 h-12">
       <input
         type="number"
         inputMode="decimal"
@@ -84,7 +86,8 @@ export default function NumberInput2digit({
         onChange={handleChange}
         onFocus={() => setIsFocused(true)}
         onBlur={handleBlur}
-        className="mx-auto block w-full max-w-50 h-20 p-2 text-5xl rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#051C56] focus:border-[#051C56]"
+        className="h-full w-full text-center bg-white focus:outline-none focus:ring-2 focus:ring-[#051C56] focus:border-[#051C56]"
+        placeholder={t("fuel_consumption")}
       />
       <span
         className={`block mt-1 text-sm text-red-500 text-center h-px whitespace-nowrap ${
