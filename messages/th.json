@@ -143,7 +143,7 @@
     "off_peak_electricity": "ค่าไฟฟ้า Off Peak",
     "summary_result": "สรุปผลลัพธ์",
     "oil_vs_electricity": "ส่วนต่างค่าใช่จ่ายน้ำมัน และชาร์จไฟ",
-    "battery_remain": "แบคเตอรี่คงเหลือน้อยกว่าค่าแนะนํา (10%)"
+    "battery_remain": "แบตเตอรี่คงเหลือน้อยกว่าค่าแนะนํา (10%)"
   },
 
   "Service": {

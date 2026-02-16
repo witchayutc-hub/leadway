@@ -1,16 +1,12 @@
 export const Calculate = {
+  // total
+  total(go: number, back: number) {
+    return Number(go + back);
+  },
+
   // Weight
   weightTruck(payload: number, truck_weight: number, trailer_weight: number) {
     return payload + truck_weight + trailer_weight;
-  },
-
-  totalWeight(go: number, back: number) {
-    return Number(go + back);
-  },
-
-  // Distance
-  totalDistance(go: number, back: number) {
-    return Number(go + back);
   },
 
   // Consumption

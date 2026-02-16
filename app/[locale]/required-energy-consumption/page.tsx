@@ -15,6 +15,7 @@ import NumberInput2digit from "@/components/input/numberInpur2digit";
 import { apiRequiredEnergyTruck } from "@/api/getCalculate";
 import { Calculate } from "@/components/calculate/calculate";
 import NumberInputFuel from "@/components/input/numberInputFuel";
+import { formatPrice2Digit } from "@/helpers/price2Digit";
 
 type DataTruckSelected = {
   id: number;
@@ -57,8 +58,8 @@ export default function Page() {
     setDataTruckSelected(data);
   };
 
-  const [weightValue, setWeightValue] = useState(0.0);
-  const [weightValue2, setWeightValue2] = useState(0.0);
+  const [weightGo, setWeightGo] = useState(0.0);
+  const [weightBack, setWeightBack] = useState(0.0);
 
   const [showDataCompare, setShowDataCompare] = useState(false);
   const [showResult, setShowResult] = useState(false);
@@ -67,30 +68,15 @@ export default function Page() {
   const [error, setError] = useState(false);
 
   /////////////////////////////////////////////////////////////////////////////  Condition //////////////////////////////////////////////////////////////////////////////////
-  const [hovered, setHovered] = useState(false);
+
+  const [hoveredGo, setHoveredGo] = useState(false);
+  const [hoveredBack, setHoveredBack] = useState(false);
+
   // OnRoad // Round Trip === True is Open Round Trip | ไป-กลับ
   const [roundTrip, setRoundTrip] = useState<boolean>(false);
 
-  const totalWeightGo = Calculate.weightTruck(
-    weightValue ?? 0.0,
-    dataTruckSelected?.attributes?.truck_weight ?? 0.0,
-    dataTruckSelected?.attributes?.trailer_weight ?? 0.0,
-  );
-
-  const totalWeightBack = Calculate.weightTruck(
-    weightValue2 ?? 0.0,
-    dataTruckSelected?.attributes?.truck_weight ?? 0.0,
-    dataTruckSelected?.attributes?.trailer_weight ?? 0.0,
-  );
-
-  const totalWeightByLaw = Calculate.weightTruck(
-    dataTruckSelected?.attributes?.payload ?? 0.0,
-    dataTruckSelected?.attributes?.truck_weight ?? 0.0,
-    dataTruckSelected?.attributes?.trailer_weight ?? 0.0,
-  );
-
-  const overWeightGo = totalWeightGo > totalWeightByLaw;
-  const overWeightBack = totalWeightBack > totalWeightByLaw;
+  // Battery Full
+  const [batteryFull, setBatteryFull] = useState(true);
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -106,7 +92,7 @@ export default function Page() {
   };
 
   useEffect(() => {
-    setWeightValue(dataTruckSelected?.attributes?.payload ?? 0.0);
+    setWeightGo(dataTruckSelected?.attributes?.payload ?? 0.0);
   }, [dataTruckSelected]);
 
   useEffect(() => {
@@ -192,8 +178,14 @@ export default function Page() {
     window.addEventListener("mouseup", handleUp);
   };
 
-  /////////////////////////////////////////////////////////////////////////////  Calculate //////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////  Calculate //////////////////////////////////////////////////////////////////////////////////////
 
+  // Truck Selected Data
+  const slope = dataTruckSelected?.attributes?.formula?.slope;
+  const intercept = dataTruckSelected?.attributes?.formula?.intercept;
+  const batteryCapacity = dataTruckSelected?.attributes?.battery_capacity;
+
+  // Distance
   const min = 0.0;
   const max = 500.0;
   const [distraneGo, setDistraneGo] = useState(0.0);
@@ -202,45 +194,117 @@ export default function Page() {
   const percenTageGo = ((distraneGo - min) / (max - min)) * 100;
   const percenTageBack = 100 - ((distraneBack - min) / (max - min)) * 100;
 
-  const totalDistance = Calculate.totalDistance(
+  const TotalDistance = Calculate.total(
     distraneGo,
     roundTrip === true ? distraneBack : 0.0,
   );
-  const totalWeight = Calculate.totalWeight(
+
+  // Weight
+  const totalWeightGo = Calculate.weightTruck(
+    weightGo ?? 0.0,
+    dataTruckSelected?.attributes?.truck_weight ?? 0.0,
+    dataTruckSelected?.attributes?.trailer_weight ?? 0.0,
+  );
+
+  const totalWeightBack = Calculate.weightTruck(
+    weightBack ?? 0.0,
+    dataTruckSelected?.attributes?.truck_weight ?? 0.0,
+    dataTruckSelected?.attributes?.trailer_weight ?? 0.0,
+  );
+
+  const totalWeightByLaw = Calculate.weightTruck(
+    dataTruckSelected?.attributes?.payload ?? 0.0,
+    dataTruckSelected?.attributes?.truck_weight ?? 0.0,
+    dataTruckSelected?.attributes?.trailer_weight ?? 0.0,
+  );
+
+  const overWeightGo = totalWeightGo > totalWeightByLaw;
+  const overWeightBack = totalWeightBack > totalWeightByLaw;
+
+  const TotalWeight = Calculate.total(
     totalWeightGo,
     roundTrip === true ? totalWeightBack : 0.0,
   );
 
-  const ConsumptionOnRoad = Calculate.consumptionOnRoad(
-    dataTruckSelected?.attributes?.formula?.slope || 0.0,
+  // ConsumptionOnRoad || การใช้พลังงาน
+
+  const ConsumptionOnRoadGo = Calculate.consumptionOnRoad(
+    slope ?? 0.0,
     Number(totalWeightGo),
-    dataTruckSelected?.attributes?.formula?.intercept || 0.0,
+    intercept ?? 0.0,
   );
 
-  // พลังงานและคาร์บอนฟุตพริ้นท์
-  const EnergyConsumptionRate = Calculate.energyConsumptionRate(
-    ConsumptionOnRoad,
+  const ConsumptionOnRoadBack = Calculate.consumptionOnRoad(
+    slope ?? 0.0,
+    Number(totalWeightBack),
+    intercept ?? 0.0,
+  );
+
+  // EnergyConsumptionRate || อัตราการใช้พลังงาน
+  const EnergyConsumptionRateGo = Calculate.energyConsumptionRate(
+    ConsumptionOnRoadGo,
     distraneGo,
   );
 
-  const CarbonFootprintReduction =
-    Calculate.carbonFootprintReduction(distraneGo);
-
-  // แบตเตอรี่
-  const percenRemainingBattery = Calculate.persenRemainingBattery(
-    dataTruckSelected?.attributes?.battery_capacity || 0,
-    EnergyConsumptionRate,
+  const EnergyConsumptionRateBack = Calculate.energyConsumptionRate(
+    ConsumptionOnRoadBack,
+    distraneBack,
   );
 
-  const remainingBatterykW = Calculate.remainingBatterykW(
-    dataTruckSelected?.attributes?.battery_capacity || 0,
-    percenRemainingBattery,
+  const EnergyConsumptionRateTotal = Calculate.total(
+    EnergyConsumptionRateGo,
+    roundTrip ? EnergyConsumptionRateBack : 0,
+  );
+
+  // CarbonFootprintReduction || การลดอัตราคาร์บอน
+
+  const CarbonFootprintReductionGo =
+    Calculate.carbonFootprintReduction(distraneGo);
+
+  const CarbonFootprintReductionBack =
+    Calculate.carbonFootprintReduction(distraneBack);
+
+  const TotalCarbonFootprintReduction = Calculate.total(
+    CarbonFootprintReductionGo,
+    roundTrip ? CarbonFootprintReductionBack : 0,
+  );
+
+  //  percenRemainingBattery || เปอร์เซนแบตเตอรี่
+  const PercenRemainingBatteryGo = Calculate.persenRemainingBattery(
+    batteryCapacity ?? 0,
+    EnergyConsumptionRateGo,
+  );
+
+  const PercenRemainingBatteryBack = Calculate.persenRemainingBattery(
+    batteryCapacity ?? 0,
+    EnergyConsumptionRateBack,
+  );
+
+  const RemainingBatteryGo = Calculate.remainingBatterykW(
+    batteryCapacity ?? 0,
+    PercenRemainingBatteryGo,
+  );
+
+  const RemainingBatteryBack = Calculate.remainingBatterykW(
+    batteryCapacity ?? 0,
+    PercenRemainingBatteryBack,
   );
 
   // ค่าชาร์จไฟ
-  const PrivateCost = Calculate.privateCost(EnergyConsumptionRate);
-  const MEA_PEA_On_Peak = Calculate.onPeakCost(EnergyConsumptionRate);
-  const MEA_PEA_Off_Peak = Calculate.offPeakCost(EnergyConsumptionRate);
+  const PrivateGoCost = Calculate.privateCost(EnergyConsumptionRateGo);
+  const PrivateBackCost = Calculate.privateCost(EnergyConsumptionRateBack);
+  const TotalPrivateCost = Calculate.total(
+    PrivateGoCost,
+    roundTrip ? PrivateBackCost : 0,
+  );
+
+  const OnPeakGo = Calculate.onPeakCost(EnergyConsumptionRateGo);
+  const OnPeakBack = Calculate.onPeakCost(EnergyConsumptionRateBack);
+  const TotalOnPeak = Calculate.total(OnPeakGo, roundTrip ? OnPeakBack : 0);
+
+  const OffPeakGo = Calculate.offPeakCost(EnergyConsumptionRateGo);
+  const OffPeakBack = Calculate.offPeakCost(EnergyConsumptionRateBack);
+  const TotalOffPeak = Calculate.total(OffPeakGo, roundTrip ? OffPeakBack : 0);
 
   // ค่าน้ํามัน
   const [fuelConsumption, setFuelConsumption] = useState(0.0);
@@ -249,11 +313,37 @@ export default function Page() {
   const OilCost =
     Calculate.OilCost(fuelConsumption, fuelPricePerLiter, distraneGo) || 0.0;
 
-  const DifferencePrivate = Calculate.differencePrivate(OilCost, PrivateCost);
-  const DifferencePrivateOnPeakElectricity =
-    Calculate.differencePrivateOnPeakElectricity(OilCost, MEA_PEA_On_Peak);
-  const DifferencePrivateOffPeakElectricity =
-    Calculate.differencePrivateOffPeakElectricity(OilCost, MEA_PEA_Off_Peak);
+  // Difference Oil and Electricity cost || ส่วนต่างค่าชาร์จไฟ กับค่าน้ำมัน
+  const DifferencePrivateGo = Calculate.differencePrivate(
+    OilCost,
+    PrivateGoCost,
+  );
+  const DifferencePrivateBack = Calculate.differencePrivate(
+    OilCost,
+    PrivateBackCost,
+  );
+  const TotalDifferencePrivate = Calculate.total(
+    DifferencePrivateGo,
+    roundTrip ? DifferencePrivateBack : 0,
+  );
+
+  const DifferencePrivateOnPeakElectricityGo =
+    Calculate.differencePrivateOnPeakElectricity(OilCost, OnPeakGo);
+  const DifferencePrivateOnPeakElectricityBack =
+    Calculate.differencePrivateOnPeakElectricity(OilCost, OnPeakBack);
+  const TotalDifferencePrivateOnPeakElectricity = Calculate.total(
+    DifferencePrivateOnPeakElectricityGo,
+    roundTrip ? DifferencePrivateOnPeakElectricityBack : 0,
+  );
+
+  const DifferencePrivateOffPeakElectricityGo =
+    Calculate.differencePrivateOffPeakElectricity(OilCost, OffPeakGo);
+  const DifferencePrivateOffPeakElectricityBack =
+    Calculate.differencePrivateOffPeakElectricity(OilCost, OffPeakBack);
+  const TotalDifferencePrivateOffPeakElectricity = Calculate.total(
+    DifferencePrivateOffPeakElectricityGo,
+    roundTrip ? DifferencePrivateOffPeakElectricityBack : 0,
+  );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -415,24 +505,25 @@ export default function Page() {
                         <NumberInput2digit
                           min={0}
                           max={999}
-                          value={weightValue}
-                          onChange={setWeightValue}
+                          value={weightGo}
+                          onChange={setWeightGo}
                         />
                       </div>
                       <span className="text-left col-span-3 lg:col-span-2">
                         {t("ton")}
                       </span>
                       <span className="text-center col-span-12 mt-4">
-                        ( {t("total_weight")} {totalWeightGo.toFixed(2)} /{" "}
-                        {t("weight_by_law")} {totalWeightByLaw.toFixed(2)} )
+                        ( {t("total_weight")} {formatPrice2Digit(totalWeightGo)}{" "}
+                        / {t("weight_by_law")}{" "}
+                        {formatPrice2Digit(totalWeightByLaw)} )
                       </span>
                     </div>
                   </div>
                   <div
-                    className={`${Number(percenRemainingBattery.toFixed(0)) >= 11 ? "text-[#052C65]" : "text-red-500"}`}
+                    className={`${Number(PercenRemainingBatteryGo.toFixed(0)) >= 11 ? "text-[#052C65]" : "text-red-500"}`}
                   >
                     <div
-                      className="grid gap-2 place-items-center
+                      className="grid gap-2 place-items-center pb-3 lg:pb-0
                         lg:border-l-2 lg:border-[#051C56]"
                     >
                       <div>
@@ -445,30 +536,31 @@ export default function Page() {
                           <span className="text-xl">soc</span>
                         </div>
                         <div>
-                          {Number(percenRemainingBattery.toFixed(0)) >= 71 ? (
+                          {Number(PercenRemainingBatteryGo.toFixed(0)) >= 71 ? (
                             <img
                               src="/image/battery_71-100_percent.png"
                               className="w-full max-h-10 object-contain aspect-video"
                             />
-                          ) : Number(percenRemainingBattery.toFixed(0)) >=
+                          ) : Number(PercenRemainingBatteryGo.toFixed(0)) >=
                             51 ? (
                             <img
                               src="/image/battery_51-70_percent.png"
                               className="w-full max-h-10 object-contain aspect-video"
                             />
-                          ) : Number(percenRemainingBattery.toFixed(0)) >=
+                          ) : Number(PercenRemainingBatteryGo.toFixed(0)) >=
                             31 ? (
                             <img
                               src="/image/battery_31-50_percent.png"
                               className="w-full max-h-10 object-contain aspect-video"
                             />
-                          ) : Number(percenRemainingBattery.toFixed(0)) >=
+                          ) : Number(PercenRemainingBatteryGo.toFixed(0)) >=
                             11 ? (
                             <img
                               src="/image/battery_10-30_percent.png"
                               className="w-full max-h-10 object-contain aspect-video"
                             />
-                          ) : Number(percenRemainingBattery.toFixed(0)) >= 1 ? (
+                          ) : Number(PercenRemainingBatteryGo.toFixed(0)) >=
+                            1 ? (
                             <img
                               src="/image/battery_1-10_percent.png"
                               className="w-full max-h-10 object-contain aspect-video"
@@ -480,24 +572,25 @@ export default function Page() {
                             />
                           )}
                         </div>
-                        <div className="flex items-center w-20 gap-2">
-                          <span className="text-2xl sm:text-4xl font-bold">
-                            {percenRemainingBattery.toFixed(0)}
+                        <div className="flex items-end w-20 gap-2">
+                          <span className="text-3xl sm:text-4xl lg:text-5xl font-bold">
+                            {PercenRemainingBatteryGo.toFixed(0)}
                           </span>
                           <span className="text-sm">%</span>
-                          {Number(percenRemainingBattery.toFixed(0)) <= 11 && (
+                          {Number(PercenRemainingBatteryGo.toFixed(0)) <=
+                            10 && (
                             <i
                               className="bi bi-exclamation-triangle text-3xl cursor-pointer"
-                              onMouseEnter={() => setHovered(true)}
-                              onMouseLeave={() => setHovered(false)}
+                              onMouseEnter={() => setHoveredGo(true)}
+                              onMouseLeave={() => setHoveredGo(false)}
                             />
                           )}
                         </div>
                       </div>
                       <div
-                        className={`flex items-center justify-center ${hovered ? "bg-red-200" : ""}`}
+                        className={`flex items-center justify-center ${hoveredGo ? "bg-red-200" : ""}`}
                       >
-                        {hovered ? (
+                        {hoveredGo ? (
                           <div className="flex items-center justify-center w-full h-10 px-2 ">
                             <span className="whitespace-pre-line text-sm text-red-500">
                               {t("battery_remain")}
@@ -505,7 +598,7 @@ export default function Page() {
                           </div>
                         ) : (
                           <span className="whitespace-pre-line h-10">
-                            ( {remainingBatterykW.toFixed(0)} /{" "}
+                            ( {RemainingBatteryGo.toFixed(0)} /{" "}
                             {dataTruckSelected?.attributes?.battery_capacity ??
                               0}{" "}
                             kW )
@@ -609,8 +702,8 @@ export default function Page() {
                           <NumberInput2digit
                             min={0}
                             max={999}
-                            value={weightValue2}
-                            onChange={setWeightValue2}
+                            value={weightBack}
+                            onChange={setWeightBack}
                           />
                         </div>
                         <span className="text-left col-span-3">{t("ton")}</span>
@@ -620,35 +713,120 @@ export default function Page() {
                         </span>
                       </div>
                     </div>
-                    <div>
-                      <div
-                        className="grid gap-2 place-items-center pb-6
+                    <div
+                      className={`${Number(PercenRemainingBatteryBack.toFixed(0)) >= 11 ? "text-[#052C65]" : "text-red-500"}`}
+                    >
+                      <div className="w-full">
+                        <div
+                          className="grid grid-cols-1 justify-between place-items-center pb-3 gap-2 lg:pb-0
                         lg:border-l-2 lg:border-[#051C56]"
-                      >
-                        <div>
-                          <span className="text-xl">
-                            {t("remaining_battery")}
-                          </span>
-                        </div>
-                        <div className="flex items-center justify-center gap-3">
-                          <div>
-                            <span className="text-xl">soc</span>
+                        >
+                          <div className="grid gap-2 px-3 w-70">
+                            <div>
+                              <span className="text-xl">
+                                {t("remaining_battery")}
+                              </span>
+                            </div>
+                            <div className="flex items-center justify-center gap-3">
+                              <div>
+                                <span className="text-xl">soc</span>
+                              </div>
+                              <div>
+                                {Number(
+                                  PercenRemainingBatteryBack.toFixed(0),
+                                ) >= 71 ? (
+                                  <img
+                                    src="/image/battery_71-100_percent.png"
+                                    className="w-full max-h-10 object-contain aspect-video"
+                                  />
+                                ) : Number(
+                                    PercenRemainingBatteryBack.toFixed(0),
+                                  ) >= 51 ? (
+                                  <img
+                                    src="/image/battery_51-70_percent.png"
+                                    className="w-full max-h-10 object-contain aspect-video"
+                                  />
+                                ) : Number(
+                                    PercenRemainingBatteryBack.toFixed(0),
+                                  ) >= 31 ? (
+                                  <img
+                                    src="/image/battery_31-50_percent.png"
+                                    className="w-full max-h-10 object-contain aspect-video"
+                                  />
+                                ) : Number(
+                                    PercenRemainingBatteryBack.toFixed(0),
+                                  ) >= 11 ? (
+                                  <img
+                                    src="/image/battery_10-30_percent.png"
+                                    className="w-full max-h-10 object-contain aspect-video"
+                                  />
+                                ) : Number(
+                                    PercenRemainingBatteryBack.toFixed(0),
+                                  ) >= 1 ? (
+                                  <img
+                                    src="/image/battery_1-10_percent.png"
+                                    className="w-full max-h-10 object-contain aspect-video"
+                                  />
+                                ) : (
+                                  <img
+                                    src="/image/battery_empty.png"
+                                    className="w-full max-h-10 object-contain aspect-video"
+                                  />
+                                )}
+                              </div>
+                              <div className="flex items-end w-20 gap-2">
+                                <span className="text-3xl sm:text-4xl lg:text-5xl font-bold">
+                                  {PercenRemainingBatteryBack.toFixed(0)}
+                                </span>
+                                <span className="text-sm">%</span>
+                                {Number(
+                                  PercenRemainingBatteryBack.toFixed(0),
+                                ) <= 10 && (
+                                  <i
+                                    className="bi bi-exclamation-triangle text-3xl cursor-pointer"
+                                    onMouseEnter={() => setHoveredBack(true)}
+                                    onMouseLeave={() => setHoveredBack(false)}
+                                  />
+                                )}
+                              </div>
+                            </div>
+                            <div
+                              className={`flex items-center justify-center ${hoveredBack ? "bg-red-200" : ""}`}
+                            >
+                              {hoveredBack ? (
+                                <div className="flex items-center justify-center w-full h-10 px-2">
+                                  <span className="whitespace-pre-line text-sm text-red-500">
+                                    {t("battery_remain")}
+                                  </span>
+                                </div>
+                              ) : (
+                                <div className="block h-10">
+                                  <span className="whitespace-pre-line">
+                                    ( {RemainingBatteryBack.toFixed(0)} /{" "}
+                                    {dataTruckSelected?.attributes
+                                      ?.battery_capacity ?? 0}{" "}
+                                    kW )
+                                  </span>
+                                </div>
+                              )}
+                            </div>
                           </div>
-                          <div>
-                            <img
-                              src="/image/battery_71-100_percent.png"
-                              className="w-full max-h-10 object-contain aspect-video"
+                          <div className="flex items-center justify-end gap-2">
+                            <input
+                              type="checkbox"
+                              checked={batteryFull}
+                              onChange={(e) => setBatteryFull(e.target.checked)}
+                              className="w-8 h-8 rounded appearance-none border-2 cursor-pointer
+                                bg-white accent-lime-500 border-gray-400 checked:border-lime-500
+                                checked:after:content-['✔'] checked:after:text-lime-500 checked:after:flex 
+                                checked:after:justify-center checked:after:font-bold 
+                                checked:after:text-3xl checked:after:-mt-1"
                             />
-                          </div>
-                          <div>
-                            <span className="text-4xl">99 %</span>
+                            <span className="text-sm text-[#052C65]">
+                              แบตเตอรี่เต็ม
+                            </span>
                           </div>
                         </div>
-                        <span className="whitespace-pre-line">
-                          ( 350 /{" "}
-                          {dataTruckSelected?.attributes?.battery_capacity ?? 0}{" "}
-                          kW )
-                        </span>
                       </div>
                     </div>
                   </div>
@@ -748,17 +926,17 @@ export default function Page() {
                         <img src="/image/Energy.png" className="w-2/7" />
                       </div>
                       <div className="col-span-6">
-                        <span className=" text-[#051C56] ">
+                        <span className=" text-[#051C56]">
                           {t("energy_consumption")}
                         </span>
                       </div>
                       <div className="col-span-2">
                         <span className=" text-[#051C56] ">
-                          {EnergyConsumptionRate.toFixed(2)}
+                          {formatPrice2Digit(EnergyConsumptionRateTotal)}
                         </span>
                       </div>
                       <div className="col-span-2">
-                        <span className=" text-[#051C56] ">kWh</span>
+                        <span className=" text-[#051C56]">kWh</span>
                       </div>
                     </div>
                     <div className="grid grid-cols-12 items-center">
@@ -766,17 +944,17 @@ export default function Page() {
                         <img src="/image/carbon.png" className="w-2/7" />
                       </div>
                       <div className="col-span-6">
-                        <span className=" text-[#051C56] ">
+                        <span className=" text-[#051C56]">
                           {t("carbon_footprint")}
                         </span>
                       </div>
                       <div className="col-span-2">
                         <span className=" text-[#051C56] ">
-                          {CarbonFootprintReduction.toFixed(2)}
+                          {formatPrice2Digit(TotalCarbonFootprintReduction)}
                         </span>
                       </div>
                       <div className="col-span-2">
-                        <span className=" text-[#051C56] ">Credits</span>
+                        <span className=" text-[#051C56]">Credits</span>
                       </div>
                     </div>
                   </div>
@@ -802,7 +980,7 @@ export default function Page() {
                       </div>
                       <div className="col-span-2">
                         <span className=" text-[#051C56] ">
-                          {PrivateCost.toFixed(2)}
+                          {formatPrice2Digit(TotalPrivateCost)}
                         </span>
                       </div>
                       <div className="col-span-2">
@@ -817,7 +995,7 @@ export default function Page() {
                       </div>
                       <div className="col-span-2">
                         <span className=" text-[#051C56] ">
-                          {MEA_PEA_On_Peak.toFixed(2)}
+                          {formatPrice2Digit(TotalOnPeak)}
                         </span>
                       </div>
                       <div className="col-span-2">
@@ -832,7 +1010,7 @@ export default function Page() {
                       </div>
                       <div className="col-span-2">
                         <span className=" text-[#051C56] ">
-                          {MEA_PEA_Off_Peak.toFixed(2)}
+                          {formatPrice2Digit(TotalOffPeak)}
                         </span>
                       </div>
                       <div className="col-span-2">
@@ -944,7 +1122,7 @@ export default function Page() {
                 </div>
               </div>
             ) : (
-              <div className="px-3 bg-[#F4F4F9]">
+              <div className="px-12 bg-[#F4F4F9]">
                 <div className="flex items-center justify-between py-12 p-3">
                   <div className="w-1/20" />
                   <span className="font-medium text-2xl text-[#051C56]">
@@ -959,48 +1137,131 @@ export default function Page() {
                     </button>
                   </div>
                 </div>
-                <div className="max-w-7xl mx-auto">
-                  <table className="w-full ">
+                <div className="max-w-7xl mx-auto overflow-x-auto">
+                  <table className="w-full">
+                    {roundTrip && (
+                      <thead>
+                        <tr className="border-b-4 text-[#051C56] border-[#051C56]">
+                          <th className="p-3 text-end" colSpan={2}>
+                            ขาไป
+                          </th>
+                          <th className="p-3 text-end" colSpan={2}>
+                            ขากลับ
+                          </th>
+                          <th className="p-3 text-end" colSpan={2}>
+                            ทั้งหมด
+                          </th>
+                          <th className="block w-1"></th>
+                        </tr>
+                      </thead>
+                    )}
                     <tbody className="text-sm text-black">
                       <tr>
                         <td className="p-3">{t("travel_distance")}</td>
                         <td className="p-3 text-end">
-                          {totalDistance.toFixed(2)}
+                          {formatPrice2Digit(distraneGo)}
                         </td>
-                        <td className="p-3 w-1 text-end">{t("km")}</td>
+                        {roundTrip && (
+                          <>
+                            <td className="p-3">{t("km")}</td>
+                            <td className="p-3 text-end">
+                              {formatPrice2Digit(distraneBack)}
+                            </td>
+                            <td className="p-3">{t("km")}</td>
+                            <td className="p-3 text-end">
+                              {formatPrice2Digit(TotalDistance)}
+                            </td>
+                          </>
+                        )}
+
+                        <td className="p-3 w-1">{t("km")}</td>
                       </tr>
                       <tr>
                         <td className="p-3">{t("total_weight_result")}</td>
-                        <td className="p-3 w-1 text-end">
-                          {totalWeight.toFixed(2)}{" "}
+                        <td className="p-3 text-end">
+                          {formatPrice2Digit(totalWeightGo)}
                         </td>
-                        <td className="p-3 text-end">{t("ton")}</td>
+                        {roundTrip && (
+                          <>
+                            <td className="p-3">{t("ton")}</td>
+                            <td className="p-3 text-end">
+                              {formatPrice2Digit(totalWeightBack)}
+                            </td>
+                            <td className="p-3">{t("ton")}</td>
+                            <td className="p-3 text-end">
+                              {formatPrice2Digit(TotalWeight)}
+                            </td>
+                          </>
+                        )}
+                        <td className="p-3">{t("ton")}</td>
                       </tr>
                       <tr>
                         <td className="p-3">{t("remaining_battery")}</td>
-                        <td className="p-3 w-1 text-end">
-                          {percenRemainingBattery.toFixed(0)}
+                        <td className="p-3 text-end">
+                          {PercenRemainingBatteryGo.toFixed(0)}
                         </td>
-                        <td className="p-3 text-end">%</td>
+                        {roundTrip && (
+                          <>
+                            <td className="p-3">%</td>
+                            <td className="p-3 text-end">
+                              {PercenRemainingBatteryBack.toFixed(0)}
+                            </td>
+                            <td className="p-3">%</td>
+                            <td className="p-3 text-end">-</td>
+                          </>
+                        )}
+                        <td className="p-3">%</td>
                       </tr>
                       <tr>
                         <td className="p-3">{t("charge_count")}</td>
-                        <td className="p-3 w-1 text-end">50.50 </td>
-                        <td className="p-3 text-end">{t("round")}</td>
+                        <td className="p-3 text-end">50.50 </td>
+                        {roundTrip && (
+                          <>
+                            <td className="p-3">{t("round")}</td>
+                            <td className="p-3 text-end">test</td>
+                            <td className="p-3">{t("round")}</td>
+                            <td className="p-3 text-end"></td>
+                          </>
+                        )}
+                        <td className="p-3">{t("round")}</td>
                       </tr>
                       <tr>
                         <td className="p-3">{t("energy_consumption")}</td>
-                        <td className="p-3 w-1 text-end">
-                          {EnergyConsumptionRate.toFixed(2)}
+                        <td className="p-3 text-end">
+                          {formatPrice2Digit(EnergyConsumptionRateGo)}
                         </td>
-                        <td className="p-3 text-end">kW</td>
+                        {roundTrip && (
+                          <>
+                            <td className="p-3">kW</td>
+                            <td className="p-3 text-end">
+                              {formatPrice2Digit(EnergyConsumptionRateBack)}
+                            </td>
+                            <td className="p-3">kW</td>
+                            <td className="p-3 text-end">
+                              {formatPrice2Digit(EnergyConsumptionRateTotal)}
+                            </td>
+                          </>
+                        )}
+                        <td className="p-3">kW</td>
                       </tr>
                       <tr>
                         <td className="p-3">{t("carbon_footprint")}</td>
-                        <td className="p-3 w-1 text-end">
-                          {CarbonFootprintReduction.toFixed(2)}{" "}
+                        <td className="p-3 text-end">
+                          {formatPrice2Digit(CarbonFootprintReductionGo)}
                         </td>
-                        <td className="p-3 text-end">Credits</td>
+                        {roundTrip && (
+                          <>
+                            <td className="p-3">Credits</td>
+                            <td className="p-3 text-end">
+                              {formatPrice2Digit(CarbonFootprintReductionBack)}
+                            </td>
+                            <td className="p-3">Credits</td>
+                            <td className="p-3 text-end">
+                              {formatPrice2Digit(TotalCarbonFootprintReduction)}
+                            </td>
+                          </>
+                        )}
+                        <td className="p-3">Credits</td>
                       </tr>
                       <tr className="border-b-4 border-[#051C56]">
                         <td
@@ -1012,10 +1273,18 @@ export default function Page() {
                       </tr>
                       <tr>
                         <td className="p-3"> {t("oil_cost")}</td>
-                        <td className="p-3 w-1 text-end">
-                          {OilCost.toFixed(2)}{" "}
+                        <td className="p-3 text-end">
+                          {formatPrice2Digit(OilCost)}
                         </td>
-                        <td className="p-3 text-end">{t("baht")}</td>
+                        {roundTrip && (
+                          <>
+                            <td className="p-3">{t("baht")}</td>
+                            <td className="p-3 text-end">test</td>
+                            <td className="p-3">{t("baht")}</td>
+                            <td className="p-3 text-end"></td>
+                          </>
+                        )}
+                        <td className="p-3">{t("baht")}</td>
                       </tr>
                       <tr className="border-b-4 border-[#051C56]">
                         <td
@@ -1027,24 +1296,60 @@ export default function Page() {
                       </tr>
                       <tr>
                         <td className="p-3">• {t("private")} (7.5 บาท/kWh)</td>
-                        <td className="p-3 w-1 text-end">
-                          {PrivateCost.toFixed(2)}
+                        <td className="p-3 text-end">
+                          {formatPrice2Digit(PrivateGoCost)}
                         </td>
-                        <td className="p-3 text-end">{t("baht")}</td>
+                        {roundTrip && (
+                          <>
+                            <td className="p-3">{t("baht")}</td>
+                            <td className="p-3 text-end">
+                              {formatPrice2Digit(PrivateBackCost)}
+                            </td>
+                            <td className="p-3">{t("baht")}</td>
+                            <td className="p-3 text-end">
+                              {formatPrice2Digit(TotalPrivateCost)}
+                            </td>
+                          </>
+                        )}
+                        <td className="p-3">{t("baht")}</td>
                       </tr>
                       <tr>
                         <td className="p-3">• {t("on_peak")} (4.52 บาท/kWh)</td>
-                        <td className="p-3 w-1 text-end">
-                          {MEA_PEA_On_Peak.toFixed(2)}
+                        <td className="p-3 text-end">
+                          {formatPrice2Digit(OnPeakGo)}
                         </td>
-                        <td className="p-3 text-end">{t("baht")}</td>
+                        {roundTrip && (
+                          <>
+                            <td className="p-3">{t("baht")}</td>
+                            <td className="p-3 text-end">
+                              {formatPrice2Digit(OnPeakBack)}
+                            </td>
+                            <td className="p-3">{t("baht")}</td>
+                            <td className="p-3 text-end">
+                              {formatPrice2Digit(TotalOnPeak)}
+                            </td>
+                          </>
+                        )}
+                        <td className="p-3">{t("baht")}</td>
                       </tr>
                       <tr>
                         <td className="p-3">• {t("off_peak")}(2.99 บาท/kWh)</td>
-                        <td className="p-3 w-1 text-end">
-                          {MEA_PEA_Off_Peak.toFixed(2)}
+                        <td className="p-3 text-end">
+                          {formatPrice2Digit(OffPeakGo)}
                         </td>
-                        <td className="p-3 text-end">{t("baht")}</td>
+                        {roundTrip && (
+                          <>
+                            <td className="p-3">{t("baht")}</td>
+                            <td className="p-3 text-end">
+                              {formatPrice2Digit(OffPeakBack)}
+                            </td>
+                            <td className="p-3">{t("baht")}</td>
+                            <td className="p-3 text-end">
+                              {formatPrice2Digit(TotalOffPeak)}
+                            </td>
+                          </>
+                        )}
+                        <td className="p-3">{t("baht")}</td>
                       </tr>
                       <tr className="border-b-4 border-[#051C56]">
                         <td
@@ -1056,24 +1361,72 @@ export default function Page() {
                       </tr>
                       <tr>
                         <td className="p-3">• {t("private")}</td>
-                        <td className="p-3 w-1 text-end">
-                          {DifferencePrivate.toFixed(2)}
+                        <td className="p-3 text-end">
+                          {formatPrice2Digit(DifferencePrivateGo)}
                         </td>
-                        <td className="p-3 text-end">{t("baht")}</td>
+                        {roundTrip && (
+                          <>
+                            <td className="p-3">{t("baht")}</td>
+                            <td className="p-3 text-end">
+                              {formatPrice2Digit(DifferencePrivateBack)}
+                            </td>
+                            <td className="p-3">{t("baht")}</td>
+                            <td className="p-3 text-end">
+                              {formatPrice2Digit(TotalDifferencePrivate)}
+                            </td>
+                          </>
+                        )}
+                        <td className="p-3">{t("baht")}</td>
                       </tr>
                       <tr>
                         <td className="p-3">• {t("on_peak_electricity")}</td>
-                        <td className="p-3 w-1 text-end">
-                          {DifferencePrivateOnPeakElectricity.toFixed(2)}
+                        <td className="p-3 text-end">
+                          {formatPrice2Digit(
+                            DifferencePrivateOnPeakElectricityGo,
+                          )}
                         </td>
-                        <td className="p-3 text-end">{t("baht")}</td>
+                        {roundTrip && (
+                          <>
+                            <td className="p-3">{t("baht")}</td>
+                            <td className="p-3 text-end">
+                              {formatPrice2Digit(
+                                DifferencePrivateOnPeakElectricityBack,
+                              )}
+                            </td>
+                            <td className="p-3">{t("baht")}</td>
+                            <td className="p-3 text-end">
+                              {formatPrice2Digit(
+                                TotalDifferencePrivateOnPeakElectricity,
+                              )}
+                            </td>
+                          </>
+                        )}
+                        <td className="p-3">{t("baht")}</td>
                       </tr>
                       <tr>
                         <td className="p-3">• {t("off_peak_electricity")}</td>
-                        <td className="p-3 w-1 text-end">
-                          {DifferencePrivateOffPeakElectricity.toFixed(2)}
+                        <td className="p-3 text-end">
+                          {formatPrice2Digit(
+                            DifferencePrivateOffPeakElectricityGo,
+                          )}
                         </td>
-                        <td className="p-3 text-end">{t("baht")}</td>
+                        {roundTrip && (
+                          <>
+                            <td className="p-3">{t("baht")}</td>
+                            <td className="p-3 text-end">
+                              {formatPrice2Digit(
+                                DifferencePrivateOffPeakElectricityBack,
+                              )}
+                            </td>
+                            <td className="p-3">{t("baht")}</td>
+                            <td className="p-3 text-end">
+                              {formatPrice2Digit(
+                                TotalDifferencePrivateOffPeakElectricity,
+                              )}
+                            </td>
+                          </>
+                        )}
+                        <td className="p-3">{t("baht")}</td>
                       </tr>
                     </tbody>
                   </table>
