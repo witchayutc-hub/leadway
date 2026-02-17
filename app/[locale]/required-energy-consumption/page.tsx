@@ -11,7 +11,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import NumberInput from "@/components/input/numberInput";
-import NumberInput2digit from "@/components/input/numberInpur2digit";
+import NumberInput2digit from "@/components/input/numberInput2digit";
 import { apiRequiredEnergyTruck } from "@/api/getCalculate";
 import { Calculate } from "@/components/calculate/calculate";
 import NumberInputFuel from "@/components/input/numberInputFuel";
@@ -77,6 +77,10 @@ export default function Page() {
 
   // Battery Full
   const [batteryFull, setBatteryFull] = useState(true);
+
+  // Full Load
+  const [fullLoad, setFullLoad] = useState(true);
+  const [selectSlope, setSelectSlope] = useState(false);
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -277,7 +281,9 @@ export default function Page() {
 
   const PercenRemainingBatteryBack = Calculate.persenRemainingBattery(
     batteryCapacity ?? 0,
-    EnergyConsumptionRateBack,
+    batteryFull
+      ? EnergyConsumptionRateBack
+      : Calculate.total(EnergyConsumptionRateGo, EnergyConsumptionRateBack),
   );
 
   const RemainingBatteryGo = Calculate.remainingBatterykW(
@@ -476,49 +482,128 @@ export default function Page() {
                 )}
               </div>
               <div>
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 text-[#051C56]">
-                  <div className="grid grid-cols-12 items-center px-3 gap-2">
-                    <span className="text-right col-span-3">
-                      {t("distance")}
-                    </span>
-                    <div className="col-span-6">
-                      <NumberInput
-                        value={distraneGo}
-                        min={0}
-                        max={500}
-                        onChange={setDistraneGo}
-                      />
-                    </div>
-                    <span className="text-left col-span-3">{t("km")}</span>
-                    <div className="lg:h-10"></div>
-                  </div>
-                  <div
-                    className={`grid ${
-                      overWeightGo ? "text-red-500" : "text-[#051C56]"
-                    }`}
-                  >
-                    <div className="grid grid-cols-12 items-center px-3 gap-2">
-                      <span className="text-right col-span-3 lg:col-span-4">
-                        {t("weight")}
-                      </span>
-                      <div className="col-span-6">
-                        <NumberInput2digit
-                          min={0}
-                          max={999}
-                          value={weightGo}
-                          onChange={setWeightGo}
-                        />
+                <div
+                  className={`grid grid-cols-1 ${dataTruckSelected?.attributes?.usage_type === "On road" ? "lg:grid-cols-3" : "lg:grid-cols-4"} gap-y-6 text-[#051C56]`}
+                >
+                  {dataTruckSelected?.attributes?.usage_type === "On road" ? (
+                    <>
+                      <div className="grid grid-cols-12 items-center px-3 gap-2">
+                        <span className="text-right col-span-3">
+                          {t("distance")}
+                        </span>
+                        <div className="col-span-6">
+                          <NumberInput
+                            value={distraneGo}
+                            min={0}
+                            max={500}
+                            onChange={setDistraneGo}
+                          />
+                        </div>
+                        <span className="text-left col-span-3">{t("km")}</span>
+                        <div className="lg:h-10"></div>
                       </div>
-                      <span className="text-left col-span-3 lg:col-span-2">
-                        {t("ton")}
-                      </span>
-                      <span className="text-center col-span-12 mt-4">
-                        ( {t("total_weight")} {formatPrice2Digit(totalWeightGo)}{" "}
-                        / {t("weight_by_law")}{" "}
-                        {formatPrice2Digit(totalWeightByLaw)} )
-                      </span>
-                    </div>
-                  </div>
+                      <div
+                        className={`grid ${
+                          overWeightGo ? "text-red-500" : "text-[#051C56]"
+                        }`}
+                      >
+                        <div className="grid grid-cols-12 items-center px-3 gap-2">
+                          <span className="text-right col-span-3 lg:col-span-4">
+                            {t("weight")}
+                          </span>
+                          <div className="col-span-6">
+                            <NumberInput2digit
+                              min={0}
+                              max={999}
+                              value={weightGo}
+                              onChange={setWeightGo}
+                            />
+                          </div>
+                          <span className="text-left col-span-3 lg:col-span-2">
+                            {t("ton")}
+                          </span>
+                          <span className="text-center col-span-12 mt-4">
+                            ( {t("total_weight")}{" "}
+                            {formatPrice2Digit(totalWeightGo)} /{" "}
+                            {t("weight_by_law")}{" "}
+                            {formatPrice2Digit(totalWeightByLaw)} )
+                          </span>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="grid grid-cols-12 items-center px-3 gap-2">
+                        <span className="text-right col-span-3">
+                          {t("distance")}
+                        </span>
+                        <div className="col-span-6">
+                          <NumberInput
+                            value={distraneGo}
+                            min={0}
+                            max={4000}
+                            onChange={setDistraneGo}
+                          />
+                        </div>
+                        <span className="text-left col-span-3">
+                          {t("meter")}
+                        </span>
+                        <div className="lg:h-10"></div>
+                      </div>
+                      <div className="flex flex-col gap-3 px-3 mx-auto">
+                        <div>
+                          <button
+                            onClick={() => setFullLoad(!fullLoad)}
+                            className="w-60 h-12 flex items-center rounded-full p-1 transition-colors duration-300 cursor-pointer
+                              border-2 border-[#051C56] bg-gray-200"
+                          >
+                            <span
+                              className={`absolute font-semibold transition ease-out duration-300 ml-6 z-10
+                            ${fullLoad ? "opacity-50" : "opacity-100"}`}
+                            >
+                              Full-load
+                            </span>
+                            <div
+                              className={`w-30 h-11 bg-white rounded-full shadow-md transform transition-transform duration-300 z-0
+                          ${fullLoad ? "translate-x-28" : "-translate-x-1"}`}
+                            ></div>
+                            <span
+                              className={`font-semibold transition ease-out duration-300 ml-8 z-10
+                            ${fullLoad ? "opacity-100" : "opacity-50"}`}
+                            >
+                              Empty
+                            </span>
+                          </button>
+                        </div>
+                        <div>
+                          <span>
+                            ( {t("total_weight")}{" "}
+                            <span className="text-xl">
+                              {formatPrice2Digit(totalWeightGo)}{" "}
+                            </span>
+                            {t("ton")} )
+                          </span>
+                        </div>
+                      </div>
+                      <div>
+                        <select
+                          value={selectSlope ? "true" : "false"}
+                          onChange={(e) =>
+                            setSelectSlope(e.target.value === "true")
+                          }
+                          className="text-2xl font-bold text-center w-3/4 px-3 py-2 bg-gray-100 rounded"
+                        >
+                          <option value="1">-15%</option>
+                          <option value="2">-10%</option>
+                          <option value="3">-5%</option>
+                          <option value="4">0%</option>
+                          <option value="5">5%</option>
+                          <option value="6">10%</option>
+                          <option value="7">15%</option>
+                        </select>
+                      </div>
+                    </>
+                  )}
                   <div
                     className={`${Number(PercenRemainingBatteryGo.toFixed(0)) >= 11 ? "text-[#052C65]" : "text-red-500"}`}
                   >
@@ -673,7 +758,7 @@ export default function Page() {
                   <div className="flex text-xl justify-center pb-4 border-b-4 opacity-50 border-[#083e97] text-[#083e97]" />
                 </div>
                 <div className="mt-12">
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 text-[#051C56]">
+                  <div className="grid grid-cols-1 lg:grid-cols-3 text-[#051C56]">
                     <div className="grid grid-cols-12 items-center px-3 gap-2">
                       <span className="text-right col-span-3">
                         {t("distance")}
