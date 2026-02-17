@@ -673,7 +673,7 @@ export default function Page() {
                         </div>
                       </div>
                       <div
-                        className={`flex items-center justify-center ${hoveredGo ? "bg-red-200" : ""}`}
+                        className={`flex items-center justify-center ${hoveredGo ? "bg-red-200" : " "}`}
                       >
                         {hoveredGo ? (
                           <div className="flex items-center justify-center w-full h-10 px-2 ">
